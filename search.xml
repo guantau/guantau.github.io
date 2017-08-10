@@ -1,0 +1,2132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[我从linux上学习到了什么]]></title>
+      <url>http://blog.guantau.com/2017/08/10/learn-from-linux/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>如果把Linux、Windows、MacOS比作三种类型的姑娘的话：MacOS就是女神，漂亮昂贵；Windows就是普通姑娘，朴实耐用；Linux则是女汉子，结实能干。<br>谨以此文纪念过往十年纠缠在Linux上的那些时间。</p>
+</blockquote>
+<h2 id="我是怎么上路的"><a href="#我是怎么上路的" class="headerlink" title="我是怎么上路的"></a>我是怎么上路的</h2><p>作为一个上大学以前从未接触过电脑，上C语言程序设计课程时用VC6.0写个几十行程序都哆哆嗦嗦的土包子，我想我本没有机会碰到这个东西的。直到有一天去实验室参加项目，老师和师兄们说你得先学习Linux。于是乎，我便揣着安装盘、捧着入门书开始学习Linux。彼时，请高手帮忙才能装上Red Hat。只记得初见到那黑乎乎的界面和一串串的字符命令，顿时有种秒变黑客的感觉。</p>
+<p>接着，我修了一门《Linux程序设计》课程，系统性的学习了Linux的发展历史和程序设计的相关知识。这时，我才知道Unix、GNU、Linux的那些故事，知道除了Windows还有其他系统可以让计算机工作起来，知道操作系统史上那些鼎鼎大名的人物。与此同时，我还接触到了Knuth和TeX，知道除了Office以外还有这样一个东西可以让文章排版得这么漂亮，而且还免费，历史还那么悠长，当然TeX又是另外的故事了。</p>
+<p>然后，在网上看到了王垠写的《完全用GNU/Linux工作》，文中鲜明尖锐甚至有些极端的观点煽动性十足，简直像是能量满满的鸡血。他主页上晒出的各种狂拽酷炫叼炸天的奇淫巧计简直像是毒品一样，让人欲罢不能地一一尝试。当时的自己觉得仿佛找到了一条通往牛B闪闪的道路，好像可以成为一只特立独行的猪。</p>
+<p>再然后，我就开始一遍遍的被虐：不断地重装系统、配置中文、配置界面；不断地处理各种莫名其妙出现的错误；不断地解决各种依赖关系、编译调试；不断地奔走各个论坛和博客中求救。</p>
+<p>虽然我并没有因此变得牛逼或富有，但在这一路上，我发现我还是有所收获的。</p>
+<h2 id="从GUI到CLI"><a href="#从GUI到CLI" class="headerlink" title="从GUI到CLI"></a>从GUI到CLI</h2><p>CLI是与计算机交互的更本质的方式；而GUI则更像是将面向用户的再次包装。</p>
+<p>从GUI到CLI：</p>
+<ul>
+<li>可以提升效率，大部分情况下，相比于只利用了两个手指头的鼠标，十个手指头的敲击效率要高很多。</li>
+<li>可以有更大的操作空间，大部分情况下，相比于只能按照固定流程执行的GUI，CLI能够更加灵活地进行操作。</li>
+</ul>
+<h2 id="从代码到程序"><a href="#从代码到程序" class="headerlink" title="从代码到程序"></a>从代码到程序</h2><p>通过一遍遍的折腾，代码是怎么通过编译、链接进而生成可执行程序的过程是烂熟于心，这其中可能碰到的各种稀奇古怪的问题也几乎都见过。虽然没有什么高深的技术，但也让我在工作中碰到类似的情况时可以很轻松的面对。</p>
+<h2 id="Unix哲学"><a href="#Unix哲学" class="headerlink" title="Unix哲学"></a>Unix哲学</h2><p>Linux与Unix一脉相承，其哲学也得到了很好地继承。因此，虽然入门门槛高，但跨过以后，很多事情就变得一致起来。</p>
+<p>三条主要的哲学思想：</p>
+<ol>
+<li>程序应该只关注一个目标，并尽可能把它做好。</li>
+<li>让程序能够互相协同工作。</li>
+<li>应该让程序处理文本数据流，因为这是一个通用的接口。</li>
+</ol>
+<p>核心就是KISS原则：Keep It Simple, Stupid! 基础就是只有做好一件事情，你才能做更多地事情。</p>
+<p>不仅是系统设计，生活亦是如此。</p>
+<h2 id="自由是有代价的"><a href="#自由是有代价的" class="headerlink" title="自由是有代价的"></a>自由是有代价的</h2><p>自由是需要付出代价的，至少需要时间成本。当你需要某种工具时，Linux可能给你提供一堆自由软件，但你需要时间去折腾它，甚至去改造它。</p>
+<p>当系统将程序切分得很细时，虽然组合起来自由度很高，但同时也会带来依赖性的问题。程序A依赖于程序B，程序B又依赖于程序C，程序C又依赖于程序D，只要其中一环出了问题，程序就无法正常工作。</p>
+<p>需要思考的是，如何处理好其中的平衡。</p>
+<h2 id="创造与分享"><a href="#创造与分享" class="headerlink" title="创造与分享"></a>创造与分享</h2><p>工具就是工具，不管你用得再好，创造出有用的东西才是最重要的。那些载入史册的人物，是因为创造了优秀的东西才名流千古的，比如Dennis Ritchie、Ken Thompson、Richard Stallman、Linus Torvalds、Donald Knuth等等。</p>
+<p>当有一样东西你需要而又没有，或者有但不好用的时候，你就需要创造。虽然从学习到创造并不是那么容易，需要一定天赋和训练，但我们要朝着这个方向努力。</p>
+<p>创造出的东西只有分享才能发挥更大的作用，不管是在集市上还是教堂里，分享给其他人才能使其变得更好。开放自己与他人沟通的渠道，并尝试主动发出信号，而不仅仅是被动接收。分享的范围越大，可能带来的增益也会越大。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[vscode常用快捷键]]></title>
+      <url>http://blog.guantau.com/2017/04/30/vscode-keys/</url>
+      <content type="html"><![CDATA[<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>键绑定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>光标向下</td>
+<td>Ctrl-N</td>
+</tr>
+<tr>
+<td>光标向上</td>
+<td>Ctrl-P</td>
+</tr>
+<tr>
+<td>光标向左</td>
+<td>Ctrl-B</td>
+</tr>
+<tr>
+<td>光标向右</td>
+<td>Ctrl-F</td>
+</tr>
+<tr>
+<td>光标行首</td>
+<td>Ctrl-A</td>
+</tr>
+<tr>
+<td>光标行尾</td>
+<td>Ctrl-E</td>
+</tr>
+<tr>
+<td>光标指定行</td>
+<td>Ctrl-G</td>
+</tr>
+<tr>
+<td>向下插入行</td>
+<td>Cmd-Enter(一般改成Shift-Enter)</td>
+</tr>
+<tr>
+<td>向上插入行</td>
+<td>Cmd-Shift-Enter</td>
+</tr>
+<tr>
+<td>向下复制行</td>
+<td>Shift-Option-下</td>
+</tr>
+<tr>
+<td>向上复制行</td>
+<td>Shift-Option-上</td>
+</tr>
+<tr>
+<td>复制所选内容或当前行</td>
+<td>Cmd-C</td>
+</tr>
+<tr>
+<td>粘贴</td>
+<td>Cmd-V</td>
+</tr>
+<tr>
+<td>合并行</td>
+<td>Ctrl-J</td>
+</tr>
+<tr>
+<td>删除行</td>
+<td>Shift-Cmd-K</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Spark读取csv文件方法]]></title>
+      <url>http://blog.guantau.com/2017/03/16/spark-csv/</url>
+      <content type="html"><![CDATA[<p>直接采用split的方法是不太好的，比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sc.textFile(<span class="string">'file.csv'</span>)</div><div class="line">    .map(<span class="keyword">lambda</span> line: (line.split(<span class="string">','</span>)[<span class="number">0</span>], line.split(<span class="string">','</span>)[<span class="number">1</span>]))</div><div class="line">    .collect()</div></pre></td></tr></table></figure>
+<p>这种方法容易出错，且读取的值无法自动识别类型。</p>
+<p>可以稍微改进一下，比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> csv</div><div class="line">rdd = sc.textFile(<span class="string">"file.csv"</span>)</div><div class="line">rdd = rdd.mapPartitions(<span class="keyword">lambda</span> x: csv.reader(x))</div></pre></td></tr></table></figure>
+<p>或者，先将数据用pandas读入，然后再转化为DataFrame</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkContext</div><div class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SQLContext</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line">sc = SparkContext(<span class="string">'local'</span>,<span class="string">'example'</span>)  <span class="comment"># if using locally</span></div><div class="line">sql_sc = SQLContext(sc)</div><div class="line"></div><div class="line">Spark_Full = sc.emptyRDD()</div><div class="line">chunk_100k = pd.read_csv(<span class="string">"Your_Data_File.csv"</span>, chunksize=<span class="number">100000</span>)</div><div class="line"><span class="comment"># if you have headers in your csv file:</span></div><div class="line">headers = list(pd.read_csv(<span class="string">"Your_Data_File.csv"</span>, nrows=<span class="number">0</span>).columns)</div><div class="line"></div><div class="line"><span class="keyword">for</span> chunky <span class="keyword">in</span> chunk_100k:</div><div class="line">    Spark_Full +=  sc.parallelize(chunky.values.tolist())</div><div class="line"></div><div class="line">YourSparkDataFrame = Spark_Full.toDF(headers)</div><div class="line"><span class="comment"># if you do not have headers, leave empty instead:</span></div><div class="line"><span class="comment"># YourSparkDataFrame = Spark_Full.toDF()</span></div><div class="line">YourSparkDataFrame.show()</div></pre></td></tr></table></figure>
+<p>其实，Spark 2.0之后可以很方便使用SQLContext的读取csv文件，读取得到的格式为DataFrame：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkContext</div><div class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SQLContext</div><div class="line">sc = SparkContext()</div><div class="line">sqlctx = SQLContext(sc)</div><div class="line">sqlctx.read.csv(</div><div class="line">    <span class="string">"some_input_file.csv"</span>, header=<span class="keyword">True</span>, mode=<span class="string">"DROPMALFORMED"</span>, schema=schema</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(sqlctx.read</div><div class="line">    .schema(schema)</div><div class="line">    .option(<span class="string">"header"</span>, <span class="string">"true"</span>)</div><div class="line">    .option(<span class="string">"mode"</span>, <span class="string">"DROPMALFORMED"</span>)</div><div class="line">    .csv(<span class="string">"some_input_file.csv"</span>))</div></pre></td></tr></table></figure>
+<p>如果已知schema，则可以直接指定，防止自动推测发生错误</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField</div><div class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> DoubleType, IntegerType, StringType</div><div class="line"></div><div class="line">schema = StructType([</div><div class="line">    StructField(<span class="string">"A"</span>, IntegerType()),</div><div class="line">    StructField(<span class="string">"B"</span>, DoubleType()),</div><div class="line">    StructField(<span class="string">"C"</span>, StringType())</div><div class="line">])</div></pre></td></tr></table></figure>
+<p>如果是Spark1.x，那么可以采用Databricks推出的<a href="https://github.com/databricks/spark-csv" target="_blank" rel="external">spark-csv</a>，其实这就是2.0版本以后读取csv的代码。</p>
+<p>另外，github上还有另一个非官方版本的<a href="https://github.com/seahboonsiew/pyspark-csv" target="_blank" rel="external">spark-csv</a>。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ArduPilot修改记录]]></title>
+      <url>http://blog.guantau.com/2016/09/06/revise-ardupilot/</url>
+      <content type="html"><![CDATA[<p>下载原版ArduPilot，并进行初始化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> https://github.com/ArduPilot/ardupilot.git</div><div class="line">$ <span class="built_in">cd</span> ardupilot</div><div class="line">$ git submodule init</div><div class="line">$ git submodule update</div></pre></td></tr></table></figure>
+<h2 id="原版ArduPilot修改为DM1"><a href="#原版ArduPilot修改为DM1" class="headerlink" title="原版ArduPilot修改为DM1"></a>原版ArduPilot修改为DM1</h2><p>在<code>libraries/AP_HAL_Linux/</code>目录下增加文件<code>RCInput_DM1.h</code>，<code>RCInput_DM1.cpp</code>，<code>RCOutput_DM1.h</code>，<code>RCOutput_DM1.cpp</code>，<code>pak_stm32.h</code></p>
+<p>在<code>libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</code>文件中修改</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="keyword">static</span> RCInput_DM1 rcinDriver;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="keyword">static</span> RCOutput_DM1 rcoutDriver;</div></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL_Linux/Scheduler.cpp</code>文件中修改</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">if</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_NAVIO ||    \</span></div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_ERLEBRAIN2 || \</div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_BH || \</div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_PXFMINI || \</div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> APM_LINUX_RCIN_RATE             2000</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> APM_LINUX_TONEALARM_RATE        100</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> APM_LINUX_IO_RATE               50</span></div></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL_Linux/SPIDevice.cpp</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line">SPIDesc SPIDeviceManager::<span class="number">_</span>device[] = &#123;</div><div class="line">    SPIDesc(<span class="string">"mpu9250"</span>, <span class="number">0</span>, <span class="number">0</span>, SPI_MODE_0, <span class="number">8</span>, SPI_CS_KERNEL, <span class="number">1</span>*MHZ, <span class="number">10</span>*MHZ),</div><div class="line">    SPIDesc(<span class="string">"stm32"</span>, <span class="number">0</span>, <span class="number">1</span>, SPI_MODE_0, <span class="number">8</span>, SPI_CS_KERNEL,  <span class="number">1</span>*MHZ, <span class="number">10</span>*MHZ),</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL/AP_HAL_Boards.h</code>文件中增加DM1定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_SUBTYPE_LINUX_DM1        1016</span></div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_LOG_DIRECTORY <span class="meta-string">"/var/APM/logs"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_TERRAIN_DIRECTORY <span class="meta-string">"/var/APM/terrain"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_INS_DEFAULT HAL_INS_MPU9250_SPI</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_INS_MPU9250_NAME <span class="meta-string">"mpu9250"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_DEFAULT HAL_BARO_MS5611_I2C</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_I2C_BUS 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_I2C_ADDR 0x77</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_USE_TIMER false</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_COMPASS_DEFAULT HAL_COMPASS_AK8963_MPU9250</span></div></pre></td></tr></table></figure>
+<p>在<code>mk/environ.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ifneq ($(findstring dm1, $(MAKECMDGOALS)),)</div><div class="line">HAL_BOARD = HAL_BOARD_LINUX</div><div class="line">HAL_BOARD_SUBTYPE = HAL_BOARD_SUBTYPE_LINUX_DM1</div><div class="line">endif</div></pre></td></tr></table></figure>
+<p>在<code>mk/help.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@echo <span class="string">"  dm1 - the BPi + NavIO2 cape combination"</span></div></pre></td></tr></table></figure>
+<p>在<code>mk/targets.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dm1: HAL_BOARD = HAL_BOARD_LINUX</div><div class="line">dm1: TOOLCHAIN = RPI</div><div class="line">dm1: BUILDSYS_DEPRECATED = <span class="number">1</span></div><div class="line">dm1: all</div></pre></td></tr></table></figure>
+<p>在<code>Tools/ardupilotwaf/boards.py</code>文件中添加对dm1的支持，关于waf的使用方法可以参考<a href="http://blog.guantau.com/2016/09/06/waf-tool/">waf编译工具使用方法</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">dm1</span><span class="params">(linux)</span>:</span></div><div class="line">    toolchain = <span class="string">'arm-linux-gnueabihf'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">configure_env</span><span class="params">(self, cfg, env)</span>:</span></div><div class="line">        super(dm1, self).configure_env(cfg, env)</div><div class="line"></div><div class="line">        env.DEFINES.update(</div><div class="line">            CONFIG_HAL_BOARD_SUBTYPE = <span class="string">'HAL_BOARD_SUBTYPE_LINUX_DM1'</span>,</div><div class="line">        )</div></pre></td></tr></table></figure>
+<p>下面是在早期ArduPilot上面所做的修改</p>
+<h2 id="libraries-AP-HAL-Linux-HAL-Linux-Class-cpp"><a href="#libraries-AP-HAL-Linux-HAL-Linux-Class-cpp" class="headerlink" title="libraries/AP_HAL_Linux/HAL_Linux_Class.cpp"></a>libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</h2><p>目前RCInput_DM1还有问题，将其注释掉<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="comment">// #elif CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="comment">// static RCInput_DM1 rcinDriver;</span></div></pre></td></tr></table></figure></p>
+<h2 id="libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h</h2><p>添加函数<code>accumulate()</code>，该函数在AP_InertialSensor_Backend.h中申明为纯虚函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">accumulate</span><span class="params">()</span> override</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp</h2><p>实现函数<code>accumulate()</code>，用于非定时读取情况下手动读取数据<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="keyword">void</span> AP_InertialSensor_MPU9250::accumulate()</div><div class="line">&#123;</div><div class="line">    <span class="number">_</span>poll_data();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在函数<code>_hardware_init()</code>中，修改初始化代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> AP_InertialSensor_MPU9250::<span class="number">_</span>hardware_init(<span class="keyword">void</span>)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="number">_</span>dev-&gt;get_semaphore()-&gt;take(<span class="number">100</span>)) &#123;</div><div class="line">        AP_HAL::panic(<span class="string">"MPU6000: Unable to get semaphore"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// initially run the bus at low speed</span></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_LOW);</div><div class="line"></div><div class="line">    <span class="keyword">uint8_t</span> value = <span class="number">_</span>register_read(MPUREG_WHOAMI);</div><div class="line">    <span class="keyword">if</span> (value != MPUREG_WHOAMI_MPU9250 &amp;&amp; value != MPUREG_WHOAMI_MPU9255) &#123;</div><div class="line">        hal.console-&gt;<span class="built_in">printf</span>(<span class="string">"MPU9250: unexpected WHOAMI 0x%x\n"</span>, (<span class="keyword">unsigned</span>)value);</div><div class="line">        <span class="number">_</span>dev-&gt;get_semaphore()-&gt;give();</div><div class="line">        <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Clock Source</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_CLK_XGYRO);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Enable Acc &amp; Gyro</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_PWR_MGMT_2, <span class="number">0x00</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Use DLPF set Gyroscope bandwidth 184Hz, temperature bandwidth 188Hz</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_CONFIG, BITS_DLPF_CFG_188HZ);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Gyro scale 2000º/s</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_GYRO_CONFIG, BITS_GYRO_FS_2000DPS);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// RM-MPU-9250A-00.pdf, pg. 15, select accel full scale 16g</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_ACCEL_CONFIG, <span class="number">0x18</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Set Acc Data Rates, Enable Acc LPF , Bandwidth 184Hz</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_ACCEL_CONFIG_2, <span class="number">0x09</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// clear interrupt on any read, and hold the data ready pin high</span></div><div class="line">    <span class="comment">// until we clear the interrupt</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_INT_PIN_CFG, <span class="number">0x30</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Chip reset</span></div><div class="line">    <span class="comment">// uint8_t tries;</span></div><div class="line">    <span class="comment">// for (tries = 0; tries &lt; 5; tries++) &#123;</span></div><div class="line">        <span class="comment">//uint8_t user_ctrl = _register_read(MPUREG_USER_CTRL);</span></div><div class="line"></div><div class="line">        <span class="comment">/* First disable the master I2C to avoid hanging the slaves on the</span></div><div class="line">         * aulixiliar I2C bus - it will be enabled again if the AuxiliaryBus</div><div class="line">         * is used */</div><div class="line">        <span class="comment">//if (user_ctrl &amp; BIT_USER_CTRL_I2C_MST_EN) &#123;</span></div><div class="line">        <span class="comment">//    _register_write(MPUREG_USER_CTRL, user_ctrl &amp; ~BIT_USER_CTRL_I2C_MST_EN);</span></div><div class="line">        <span class="comment">//    hal.scheduler-&gt;delay(10);</span></div><div class="line">        <span class="comment">//&#125;</span></div><div class="line"></div><div class="line">        <span class="comment">// reset device</span></div><div class="line">        <span class="comment">//_register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_DEVICE_RESET);</span></div><div class="line">        <span class="comment">//hal.scheduler-&gt;delay(100);</span></div><div class="line"></div><div class="line">        <span class="comment">/* bus-dependent initialization */</span></div><div class="line">        <span class="comment">//if (_dev-&gt;bus_type == AP_HAL::Device::BUS_TYPE_SPI) &#123;</span></div><div class="line">            <span class="comment">/* Disable I2C bus if SPI selected (Recommended in Datasheet to be</span></div><div class="line">             * done just after the device is reset) */</div><div class="line">            <span class="comment">//_register_write(MPUREG_USER_CTRL, BIT_USER_CTRL_I2C_IF_DIS);</span></div><div class="line">        <span class="comment">//&#125;</span></div><div class="line"></div><div class="line">        <span class="comment">// Wake up device and select GyroZ clock. Note that the</span></div><div class="line">        <span class="comment">// MPU9250 starts up in sleep mode, and it can take some time</span></div><div class="line">        <span class="comment">// for it to come out of sleep</span></div><div class="line"></div><div class="line">        <span class="comment">// _register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_CLK_ZGYRO);</span></div><div class="line">        <span class="comment">// hal.scheduler-&gt;delay(5);</span></div><div class="line"></div><div class="line">        <span class="comment">// // check it has woken up</span></div><div class="line">        <span class="comment">// if (_register_read(MPUREG_PWR_MGMT_1) == BIT_PWR_MGMT_1_CLK_ZGYRO) &#123;</span></div><div class="line">            <span class="comment">// break;</span></div><div class="line">        <span class="comment">// &#125;</span></div><div class="line"></div><div class="line">        <span class="comment">// hal.scheduler-&gt;delay(10);</span></div><div class="line">        <span class="comment">// if (_data_ready()) &#123;</span></div><div class="line">            <span class="comment">// break;</span></div><div class="line">        <span class="comment">// &#125;</span></div><div class="line"></div><div class="line"><span class="comment">// #if MPU9250_DEBUG</span></div><div class="line">        <span class="comment">// _dump_registers();</span></div><div class="line"><span class="comment">// #endif</span></div><div class="line">    <span class="comment">// &#125;</span></div><div class="line">    <span class="comment">// if (tries == 5) &#123;</span></div><div class="line">        <span class="comment">// hal.console-&gt;println("Failed to boot MPU9250 5 times");</span></div><div class="line">        <span class="comment">// goto fail_tries;</span></div><div class="line">    <span class="comment">// &#125;</span></div><div class="line"></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</div><div class="line">    <span class="number">_</span>dev-&gt;get_semaphore()-&gt;give();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line"><span class="comment">// fail_tries:</span></div><div class="line"><span class="comment">// fail_whoami:</span></div><div class="line">    <span class="comment">// _dev-&gt;get_semaphore()-&gt;give();</span></div><div class="line">    <span class="comment">// _dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</span></div><div class="line">    <span class="comment">// return false;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在函数<code>start()</code>中，去掉初始化代码，去掉定时读取的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> AP_InertialSensor_MPU9250::start()</div><div class="line">&#123;</div><div class="line">    hal.scheduler-&gt;suspend_timer_procs();</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!<span class="number">_</span>dev-&gt;get_semaphore()-&gt;take(<span class="number">100</span>)) &#123;</div><div class="line">        AP_HAL::panic(<span class="string">"MPU92500: Unable to get semaphore"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// initially run the bus at low speed</span></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_LOW);</div><div class="line"></div><div class="line">    <span class="comment">// // only used for wake-up in accelerometer only low power mode</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_PWR_MGMT_2, 0x00);</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></div><div class="line"></div><div class="line">    <span class="comment">// // disable sensor filtering</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_CONFIG, BITS_DLPF_CFG_256HZ_NOLPF2);</span></div><div class="line"></div><div class="line">    <span class="comment">// // set sample rate to 1kHz, and use the 2 pole filter to give the</span></div><div class="line">    <span class="comment">// // desired rate</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_SMPLRT_DIV, DEFAULT_SMPLRT_DIV); // guantau</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></div><div class="line"></div><div class="line">    <span class="comment">// // Gyro scale 2000º/s</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_GYRO_CONFIG, BITS_GYRO_FS_2000DPS);</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></div><div class="line"></div><div class="line">    <span class="number">_</span>product_id = AP_PRODUCT_ID_MPU9250;</div><div class="line"></div><div class="line">    <span class="comment">// // RM-MPU-9250A-00.pdf, pg. 15, select accel full scale 16g</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_ACCEL_CONFIG,3&lt;&lt;3);</span></div><div class="line"></div><div class="line">    <span class="comment">// // configure interrupt to fire when new data arrives</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_INT_ENABLE, BIT_RAW_RDY_EN);</span></div><div class="line"></div><div class="line">    <span class="comment">// // clear interrupt on any read, and hold the data ready pin high</span></div><div class="line">    <span class="comment">// // until we clear the interrupt</span></div><div class="line">    <span class="comment">// uint8_t value = _register_read(MPUREG_INT_PIN_CFG);</span></div><div class="line">    <span class="comment">// value |= BIT_INT_RD_CLEAR | BIT_LATCH_INT_EN;</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_INT_PIN_CFG, value);</span></div><div class="line"></div><div class="line">    <span class="comment">// now that we have initialised, we set the bus speed to high</span></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</div><div class="line"></div><div class="line">    <span class="number">_</span>dev-&gt;get_semaphore()-&gt;give();</div><div class="line"></div><div class="line">    <span class="comment">// grab the used instances</span></div><div class="line">    <span class="number">_</span>gyro_instance = <span class="number">_</span>imu.register_gyro(DEFAULT_SAMPLE_RATE);</div><div class="line">    <span class="number">_</span>accel_instance = <span class="number">_</span>imu.register_accel(DEFAULT_SAMPLE_RATE);</div><div class="line"></div><div class="line">    hal.scheduler-&gt;resume_timer_procs();</div><div class="line"></div><div class="line">    <span class="comment">// start the timer process to read samples</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;register_timer_process(</span></div><div class="line">        <span class="comment">// FUNCTOR_BIND_MEMBER(&amp;AP_InertialSensor_MPU9250::_poll_data, void));</span></div><div class="line"></div><div class="line">    <span class="comment">//guantau</span></div><div class="line">    <span class="number">_</span>poll_data();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在函数<code>_configure_slaves()</code>中修改初始化代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> AP_MPU9250_AuxiliaryBus::<span class="number">_</span>configure_slaves()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">auto</span> &amp;backend = AP_InertialSensor_MPU9250::from(<span class="number">_</span>ins_backend);</div><div class="line"></div><div class="line">    <span class="comment">// guantau</span></div><div class="line">    <span class="comment">// I2C Master mode</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_USER_CTRL, BIT_USER_CTRL_I2C_MST_EN);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// I2C configuration multi-master  IIC 400KHz</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_MST_CTRL, I2C_MST_CLOCK_400KHZ);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Set the I2C slave addres of AK8963 and set for write.</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_ADDR, <span class="number">0x0C</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// I2C slave 0 register address from where to begin data transfer</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_REG, <span class="number">0x0B</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Reset AK8963</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_DO, <span class="number">0x01</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Enable I2C and set 1 byte</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_CTRL, <span class="number">0x81</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// I2C slave 0 register address from where to begin data transfer</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_REG, <span class="number">0x0A</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Register value to continuous measurement in 16bit</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_DO, <span class="number">0x12</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Enable I2C and set 1 byte</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_CTRL, <span class="number">0x81</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line"><span class="comment">//    /* Enable the I2C master to slaves on the auxiliary I2C bus*/</span></div><div class="line"><span class="comment">//    uint8_t user_ctrl = backend._register_read(MPUREG_USER_CTRL);</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_USER_CTRL, user_ctrl | BIT_USER_CTRL_I2C_MST_EN);</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    /* stop condition between reads; clock at 400kHz */</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_MST_CTRL,</span></div><div class="line"><span class="comment">//                            I2C_MST_CLOCK_400KHZ | I2C_MST_P_NSR);</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    /* Hard-code divider for internal sample rate, 1 kHz, resulting in a</span></div><div class="line"><span class="comment">//     * sample rate of 100Hz */</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_SLV4_CTRL, 9);</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    /* All slaves are subject to the sample rate */</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_MST_DELAY_CTRL,</span></div><div class="line"><span class="comment">//                            I2C_SLV0_DLY_EN | I2C_SLV1_DLY_EN |</span></div><div class="line"><span class="comment">//                            I2C_SLV2_DLY_EN | I2C_SLV3_DLY_EN);</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="libraries-AP-Compass-AP-Compass-AK8963-h"><a href="#libraries-AP-Compass-AP-Compass-AK8963-h" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.h"></a>libraries/AP_Compass/AP_Compass_AK8963.h</h2><p>添加函数<code>accumulate()</code>，该函数在AP_Compass_Backend.h中申明为纯虚函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">accumulate</span><span class="params">()</span> override</span>;</div></pre></td></tr></table></figure>
+<h2 id="libraries-AP-Compass-AP-Compass-AK8963-cpp"><a href="#libraries-AP-Compass-AP-Compass-AK8963-cpp" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.cpp"></a>libraries/AP_Compass/AP_Compass_AK8963.cpp</h2><p>实现函数<code>accumulate()</code>，用于非定时读取情况下手动读取数据</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="keyword">void</span> AP_Compass_AK8963::accumulate()</div><div class="line">&#123;</div><div class="line">    <span class="number">_u</span>pdate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改初始化代码<code>init()</code>，去除定时读取的任务</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> AP_Compass_AK8963::init()</div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    <span class="comment">/* timer needs to be called every 10ms so set the freq_div to 10 */</span></div><div class="line">    <span class="comment">// _timesliced = hal.scheduler-&gt;register_timer_process(FUNCTOR_BIND_MEMBER(&amp;AP_Compass_AK8963::_update, void), 10);</span></div><div class="line">    <span class="comment">//guantau</span></div><div class="line">    <span class="number">_u</span>pdate();</div><div class="line">	...</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp"><a href="#libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp" class="headerlink" title="libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp"></a>libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp</h2><p>在函数<code>loop()</code>中，若循环读取SPI总线的时延过小，则会出现死机的情况。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[waf编译工具使用方法]]></title>
+      <url>http://blog.guantau.com/2016/09/06/waf-tool/</url>
+      <content type="html"><![CDATA[<p>ArduPilot现在采用了新的编译工具waf，为方便使用，可以设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">alias</span> waf=<span class="string">"<span class="variable">$PWD</span>/modules/waf/waf-light"</span></div></pre></td></tr></table></figure></p>
+<p>waf可以完成主要的操作如下：<br><a id="more"></a></p>
+<h2 id="设置开发板类型"><a href="#设置开发板类型" class="headerlink" title="设置开发板类型"></a>设置开发板类型</h2><p>在使用waf之前需要首先进行设置开发板类型。ArduPilot目前支持的开发板类型包括：<br>apm1 apm2 apm2beta apm1-1280 px4 px4-v1 px4-v2 px4-v4 sitl flymaple linux vrbrain vrbrain-v40 vrbrain-v45 vrbrainv-50 vrbrain-v51 vrbrain-v52 vrubrain-v51 vrubrain-v52 vrhero-v10 erle pxf navio navio2 raspilot bbbmini minlure erlebrain2 bhat qflight pxfmini<br>默认为sitl。<br>用于设置的命令为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 设置开发板为linux</span></div><div class="line">waf configure --board=linux</div></pre></td></tr></table></figure></p>
+<p>如果需要添加新的开发板类型，可以在<code>$PWD/Tools/ardupilotwaf/boards.py</code>中进行添加。</p>
+<h2 id="设置程序组类型"><a href="#设置程序组类型" class="headerlink" title="设置程序组类型"></a>设置程序组类型</h2><p>程序组用于指定要生成哪些程序，主要的程序组包括：</p>
+<ul>
+<li>bin：可执行程序，ArduPilot的主体程序，包括<ul>
+<li>antennatracker</li>
+<li>copter</li>
+<li>plane</li>
+<li>rover</li>
+</ul>
+</li>
+<li>tools</li>
+<li>examples：库文件的使用示例</li>
+<li>benchmarks：需要设置<code>--enable-benchmarks</code></li>
+<li>tests：单元测试用于保证代码修改不破坏系统逻辑<br>  用于设置的命令为<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 设置程序组bin，编译Antenna Tracker、copter、plane、rover</span></div><div class="line">waf --program-group bin</div><div class="line"><span class="comment"># 设置程序组benchmarks和tests</span></div><div class="line">waf --program-group benchmarks --program-group tests</div><div class="line"><span class="comment"># 第一条命令可以简写为</span></div><div class="line">waf bin</div><div class="line"><span class="comment"># 编译copter的简写命令</span></div><div class="line">waf copter</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="设置无人机类型"><a href="#设置无人机类型" class="headerlink" title="设置无人机类型"></a>设置无人机类型</h2><p>目前只有copter可以设置不同的无人机类型，它们包括：<br>quad tri hexa y6 octa octa-quad heli single coax obc nologging<br>用于设置的命令为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 仅编译quad类型</span></div><div class="line">waf configure --targets bin/arducopter-quad</div><div class="line"><span class="comment"># 查看targets类型</span></div><div class="line">waf list</div></pre></td></tr></table></figure></p>
+<h2 id="其他有用的命令"><a href="#其他有用的命令" class="headerlink" title="其他有用的命令"></a>其他有用的命令</h2><ul>
+<li><p>设置调试开关：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">waf configure --debug</div></pre></td></tr></table></figure>
+</li>
+<li><p>清除编译文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 保留configure信息</span></div><div class="line">waf clean</div><div class="line"><span class="comment"># 清除所有文件，包括configure信息</span></div><div class="line">waf distclean</div></pre></td></tr></table></figure>
+</li>
+<li><p>上传可执行文件<br>编译时使用<code>--upload</code>选项就可以上传可执行文件，不是所有的开发板都支持。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">waf --targes bin/arducopter-quad --upload</div></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[房产投资收益计算]]></title>
+      <url>http://blog.guantau.com/2016/08/25/house-money/</url>
+      <content type="html"><![CDATA[<p>假设当前房产价格为$V$，首付款为$P$，需要贷款$D=V-P$，贷款利率为$d\%$（月利率为$\beta=d\%/12$），贷款年限为$N$个月，贷款方式为等额本息。</p>
+<h1 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h1><p>如果在第$M$个月时出售房产，出售价格为$V’$，该套房产的收益为多少？</p>
+<a id="more"></a>
+<h2 id="贷款利息计算"><a href="#贷款利息计算" class="headerlink" title="贷款利息计算"></a>贷款利息计算</h2><p>每个月需要还款为<br>$$x=D\cdot \beta \cdot \frac{(1+\beta)^N}{(1+\beta)^N-1}$$<br>第$n$个月需要还的利息为<br>$$x_n=D\cdot \beta \cdot (1+\beta)^{n-1} - x \cdot [(1+\beta)^{n-1}-1],n=1,2,\dots,N$$<br>总共需要支付利息<br>$$X = x\cdot N-D$$</p>
+<h2 id="房产持有成本"><a href="#房产持有成本" class="headerlink" title="房产持有成本"></a>房产持有成本</h2><p>若购买房产需要的手续费为$F$，在购入房产后，第$m$个月我们所用掉的成本为<br>$$A_m=P+F+x\cdot (m-1)$$<br>还欠银行的钱为<br>$$B_m=D \cdot (1+\beta)^{m-1} - x \cdot [(1+\beta)^{m-1}-1]/\beta$$<br>即，此时的持有成本为<br>$$C_m=A_m+B_m$$</p>
+<h2 id="房产收益"><a href="#房产收益" class="headerlink" title="房产收益"></a>房产收益</h2><p>在第$m$个月时，房产以价格$Q_m$出售，利润为$E_m=Q_m-C_m$。</p>
+<p>假设房价每年的上涨幅度为$q\%$（月涨幅$\gamma=q\%/12$），则第$m$个月时，房价为<br>$$<br>Q_m=V\cdot(1+\gamma)^m<br>$$</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>假设购买房产时的条件如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">变量</th>
+<th style="text-align:left">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">房产价格</td>
+<td style="text-align:left">430万元</td>
+</tr>
+<tr>
+<td style="text-align:left">首付款</td>
+<td style="text-align:left">30%</td>
+</tr>
+<tr>
+<td style="text-align:left">贷款</td>
+<td style="text-align:left">70%</td>
+</tr>
+<tr>
+<td style="text-align:left">利率</td>
+<td style="text-align:left">4.9%</td>
+</tr>
+<tr>
+<td style="text-align:left">贷款期数</td>
+<td style="text-align:left">360</td>
+</tr>
+<tr>
+<td style="text-align:left">契税</td>
+<td style="text-align:left">1.5%</td>
+</tr>
+<tr>
+<td style="text-align:left">增值税</td>
+<td style="text-align:left">5%</td>
+</tr>
+<tr>
+<td style="text-align:left">中介费</td>
+<td style="text-align:left">1%</td>
+</tr>
+</tbody>
+</table>
+<p>那么，画出房产持有成本随月数的曲线如下图所示：<br><img src="http://oc7urqs4c.bkt.clouddn.com/house_money.png" alt="房产持有成本曲线"></p>
+<p>假设房价每年的上涨幅度为$6\%$，画出房价随月数的变化曲线如下图所示<br><img src="http://oc7urqs4c.bkt.clouddn.com/price-money.png" alt="房价上涨曲线"></p>
+<p>对应至每一年的持有成本如下表所示，在相应的时间点将售价减去持有成本即为得到的收益。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">年数</th>
+<th style="text-align:left">持有成本(万元)</th>
+<th style="text-align:left">收益（万元）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">452.95</td>
+<td style="text-align:left">-20.8</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">467.59</td>
+<td style="text-align:left">-8.794</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">482.02</td>
+<td style="text-align:left">5.0819</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">496.20</td>
+<td style="text-align:left">20.941</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">510.13</td>
+<td style="text-align:left">38.904</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left">523.80</td>
+<td style="text-align:left">59.096</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left">537.20</td>
+<td style="text-align:left">81.652</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left">550.31</td>
+<td style="text-align:left">106.71</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left">563.11</td>
+<td style="text-align:left">134.43</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left">575.59</td>
+<td style="text-align:left">164.97</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left">587.74</td>
+<td style="text-align:left">198.50</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left">599.54</td>
+<td style="text-align:left">235.20</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left">610.97</td>
+<td style="text-align:left">275.26</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left">622.00</td>
+<td style="text-align:left">318.88</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left">632.64</td>
+<td style="text-align:left">366.28</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left">642.84</td>
+<td style="text-align:left">417.69</td>
+</tr>
+<tr>
+<td style="text-align:left">16</td>
+<td style="text-align:left">652.59</td>
+<td style="text-align:left">473.34</td>
+</tr>
+<tr>
+<td style="text-align:left">17</td>
+<td style="text-align:left">661.88</td>
+<td style="text-align:left">533.51</td>
+</tr>
+<tr>
+<td style="text-align:left">18</td>
+<td style="text-align:left">670.66</td>
+<td style="text-align:left">598.45</td>
+</tr>
+<tr>
+<td style="text-align:left">19</td>
+<td style="text-align:left">678.93</td>
+<td style="text-align:left">668.46</td>
+</tr>
+<tr>
+<td style="text-align:left">20</td>
+<td style="text-align:left">686.65</td>
+<td style="text-align:left">743.84</td>
+</tr>
+<tr>
+<td style="text-align:left">21</td>
+<td style="text-align:left">693.80</td>
+<td style="text-align:left">824.93</td>
+</tr>
+<tr>
+<td style="text-align:left">22</td>
+<td style="text-align:left">700.34</td>
+<td style="text-align:left">912.06</td>
+</tr>
+<tr>
+<td style="text-align:left">23</td>
+<td style="text-align:left">706.25</td>
+<td style="text-align:left">1005.5</td>
+</tr>
+<tr>
+<td style="text-align:left">24</td>
+<td style="text-align:left">711.50</td>
+<td style="text-align:left">1105.9</td>
+</tr>
+<tr>
+<td style="text-align:left">25</td>
+<td style="text-align:left">716.05</td>
+<td style="text-align:left">1213.4</td>
+</tr>
+<tr>
+<td style="text-align:left">26</td>
+<td style="text-align:left">719.87</td>
+<td style="text-align:left">1328.6</td>
+</tr>
+<tr>
+<td style="text-align:left">27</td>
+<td style="text-align:left">722.91</td>
+<td style="text-align:left">1451.9</td>
+</tr>
+<tr>
+<td style="text-align:left">28</td>
+<td style="text-align:left">725.15</td>
+<td style="text-align:left">1583.8</td>
+</tr>
+<tr>
+<td style="text-align:left">29</td>
+<td style="text-align:left">726.54</td>
+<td style="text-align:left">1724.9</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>30</th>
+<th>727.04</th>
+<th>1875.6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h1><p>如果将首付款、手续费以及月供用于理财，这种方式是否会比购买房产更划算？</p>
+<h2 id="理财总收入"><a href="#理财总收入" class="headerlink" title="理财总收入"></a>理财总收入</h2><p>假设投资理财的年收益率为$p\%$（月利率为$\alpha=p\%/12$），那么，第m个月的投资理财总收入为<br>$$<br>\begin{align}<br>L_m &amp;=(P+F)\cdot(1+\alpha)^m+x\cdot (1+\alpha)^{m-1}+\cdots+x\\<br>&amp;=(P+F)\cdot(1+\alpha)^m+x\cdot\frac{(1+\alpha)^m-1}{\alpha}<br>\end{align}<br>$$</p>
+<h2 id="理财收益"><a href="#理财收益" class="headerlink" title="理财收益"></a>理财收益</h2><p>在第m个月，投资理财的利润为$L_m-A_m$。</p>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><p>以上一节中的数据为例，假设投资理财的年收益率为6%，那么投资理财收入如下图所示<br><img src="http://oc7urqs4c.bkt.clouddn.com/fin_money.png" alt="投资理财收入"></p>
+<p>具体到每一年，投资理财所得收入及相应的利润为</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">月数</th>
+<th style="text-align:left">收入（万元）</th>
+<th style="text-align:left">利润（万元）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">154.30</td>
+<td style="text-align:left">2.3572</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">183.53</td>
+<td style="text-align:left">12.410</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">214.55</td>
+<td style="text-align:left">24.266</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">247.49</td>
+<td style="text-align:left">38.035</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">282.46</td>
+<td style="text-align:left">53.836</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left">319.59</td>
+<td style="text-align:left">71.794</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left">359.01</td>
+<td style="text-align:left">92.042</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left">400.86</td>
+<td style="text-align:left">114.72</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left">445.29</td>
+<td style="text-align:left">139.98</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left">492.46</td>
+<td style="text-align:left">167.98</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left">542.54</td>
+<td style="text-align:left">198.89</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left">595.70</td>
+<td style="text-align:left">232.89</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left">652.15</td>
+<td style="text-align:left">270.16</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left">712.08</td>
+<td style="text-align:left">310.92</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left">775.71</td>
+<td style="text-align:left">355.38</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left">843.26</td>
+<td style="text-align:left">403.76</td>
+</tr>
+<tr>
+<td style="text-align:left">16</td>
+<td style="text-align:left">914.98</td>
+<td style="text-align:left">456.31</td>
+</tr>
+<tr>
+<td style="text-align:left">17</td>
+<td style="text-align:left">991.12</td>
+<td style="text-align:left">513.28</td>
+</tr>
+<tr>
+<td style="text-align:left">18</td>
+<td style="text-align:left">1071.9</td>
+<td style="text-align:left">574.94</td>
+</tr>
+<tr>
+<td style="text-align:left">19</td>
+<td style="text-align:left">1157.7</td>
+<td style="text-align:left">641.60</td>
+</tr>
+<tr>
+<td style="text-align:left">20</td>
+<td style="text-align:left">1248.8</td>
+<td style="text-align:left">713.54</td>
+</tr>
+<tr>
+<td style="text-align:left">21</td>
+<td style="text-align:left">1345.6</td>
+<td style="text-align:left">791.11</td>
+</tr>
+<tr>
+<td style="text-align:left">22</td>
+<td style="text-align:left">1448.3</td>
+<td style="text-align:left">874.64</td>
+</tr>
+<tr>
+<td style="text-align:left">23</td>
+<td style="text-align:left">1557.3</td>
+<td style="text-align:left">964.50</td>
+</tr>
+<tr>
+<td style="text-align:left">24</td>
+<td style="text-align:left">1673.1</td>
+<td style="text-align:left">1061.0</td>
+</tr>
+<tr>
+<td style="text-align:left">25</td>
+<td style="text-align:left">1796.0</td>
+<td style="text-align:left">1164.8</td>
+</tr>
+<tr>
+<td style="text-align:left">26</td>
+<td style="text-align:left">1926.5</td>
+<td style="text-align:left">1276.1</td>
+</tr>
+<tr>
+<td style="text-align:left">27</td>
+<td style="text-align:left">2065.0</td>
+<td style="text-align:left">1395.4</td>
+</tr>
+<tr>
+<td style="text-align:left">28</td>
+<td style="text-align:left">2212.1</td>
+<td style="text-align:left">1523.4</td>
+</tr>
+<tr>
+<td style="text-align:left">29</td>
+<td style="text-align:left">2368.2</td>
+<td style="text-align:left">1660.3</td>
+</tr>
+<tr>
+<td style="text-align:left">30</td>
+<td style="text-align:left">2534.0</td>
+<td style="text-align:left">1806.9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>从上述例子可以得出一个初步结论：当房价上涨速度与投资理财收益率相同时，我们获得的利润是差不多的。但是，考虑到房子的居住属性和其带来的心理作用，投资房产似乎更划算一些。此外，由于没有考虑到房子的损耗等因素，可能还需要更精确的计算。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[编译dronekit-tower的一点问题]]></title>
+      <url>http://blog.guantau.com/2016/08/21/dronekit-tower/</url>
+      <content type="html"><![CDATA[<p>从Github上直接clone下Tower（ <a href="https://github.com/DroidPlanner/Tower" target="_blank" rel="external">https://github.com/DroidPlanner/Tower</a> ）进行编译总是报错</p>
+<blockquote>
+<p>Gradle sync failed: Authentication scheme ‘all’(Authentication) is not support</p>
+</blockquote>
+<p>其实解决方法很简单，删除Tower/build.gradle中带认证的Maven库地址（第47-53行），变为以下内容即可：</p>
+<pre><code>allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+
+        maven { url &apos;https://maven.fabric.io/public&apos; }
+
+        flatDir {
+            dirs &apos;libs&apos;
+        }
+    }
+}
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[手机数据分析的最新研究进展]]></title>
+      <url>http://blog.guantau.com/2016/08/21/mobile-data/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>Selected from <a href="http://oc7urqs4c.bkt.clouddn.com/mobile-data.pdf" target="_blank" rel="external"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
+<p>Translated by tau @ 2015.8.16</p>
+</blockquote>
+<h2 id="5-基于时空数据的人类移动行为分析"><a href="#5-基于时空数据的人类移动行为分析" class="headerlink" title="5. 基于时空数据的人类移动行为分析"></a>5. 基于时空数据的人类移动行为分析</h2><p>手机数据中记录了大量用户的移动行为，目前已有许多项目对此开展了研究。大量的手机APP提供了基于位置的服务（LBS, Location Based Service）表明了时空数据挖掘上面还有很多潜在应用。本节中，我们主要关注那些在人类移动行为建模和分析上给出了新结论或新方法的研究。</p>
+<a id="more"></a>
+<h3 id="5-1-个人移动行为规律"><a href="#5-1-个人移动行为规律" class="headerlink" title="5.1 个人移动行为规律"></a>5.1 个人移动行为规律</h3><p>这里用于分析的移动轨迹指的是基站编号序列。如图14所示，通过对100,000个用户超过6个月数据的分析，Gonzalez等人发现人类轨迹表现出非常强的时空规律性[97]。不同于以往将人类行为建模为随机行走或Levy飞行。他们的结果显示，人类在不同的活动半径下都表现出非常类似的行为模式。个人移动的规律性主要表现为在绝大部分时间里用户都活动在一小部分位置。如果进行归一化处理，并把零点移至合适的位置，所有用户的移动模式都可以用一个函数来描述。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-14.png" alt="图14 用户在某个位置的概率分布"></p>
+<p>这些结论得到了Song等人[98]的支持，他们也给出了数据表现出的行为模式与传统随机行走和Levy飞行模型的差别。此外，作者还给出了一种模型用来判断用户移动的倾向性。在他们的模型中，每当用户改变位置时，用户选择新位置的概率与已访问的位置数成反比，即$p_{new}=S^{-\gamma}$，其中$S$是已访问的位置数，$\gamma$是常数。当然，用户也可能直接访问以前已访问的地址。尽管他们的模型很简单，但是可以解释用户访问的地址数目随时间增长的变化规律，以及用户访问每个位置的概率分布。</p>
+<p>在另一项研究中，Csaji等人发现每个人经常访问地点的数目非常少[99]。这里经常访问的地点定义为用户有超过5%的电话由该基站位置发出。作者从Portugal手机数据集中随机选出100,000个用户，统计结果表明平均经常访问地点数为2.14，95%的用户经常访问的地点少于4个。</p>
+<p>Bagrow等人则将经常访问地点聚类成为“栖息地”[100]。主要的“栖息地”代表了每天典型的移动行为，而次要的“栖息地”则代表了偶发的旅行行为。有趣的是，他们认为在每个“栖息地”的移动行为都表现出统一的变化模式，即相比于总体的移动行为，“栖息地”的活动半径通常都小很多。</p>
+<p>然而，这些研究结果都给出了移动行为具有一致性的和可预测性，但它们大多是基于发达国家的数据，而在发展中国家则还要考虑文化和语言的因素。Amini等人分析比较了葡萄牙和科特迪瓦人们的移动模式，并指出那些在发达国家数据中表现比较好的模型在科特迪瓦的数据中并不适用[101]。例如，他们指出科特迪瓦的上班族比葡萄牙的要移动更长的距离，且他们的移动模式要更加多样化。</p>
+<p>如果人的移动轨迹不是随机的，如果人经常会回到他以前到过的地方，那么人类的移动行为是否可以预测。Song等人[102]研究了这个问题，并给出了在已知位置访问历史的条件下，在多大程度上可以预测用户接下来的位置。他们采用用户位置序列的熵率来描述可预测性。在计算熵率时，除了要考虑每个位置的访问频率，还要考虑这些访问之间的时间相关性。如图15所示，他们的结果表明，对于某个特定用户，其移动的时间相关性将大大降低不确定性。利用Fano不等式，他们推断出只要有合适的算法，就可能平均意义上预测出用户93%的位置。最有意思的是，不仅平均意义上用户具有高可预测性，而且所有人类都具有很高的预测性。那些经常进行长距离旅行的可预测性并不比经常呆在某个地方的人要差，Song的结果表明所有人类的可预测性是一致的。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-15.png" alt="图15 用户位置序列的熵率"></p>
+<p>前面这些研究工作都集中在人类的移动行为的可预测性到底有多大，但他们并没有提供任何预测算法，也就是说这些研究仅具有理论价值。Calabrese等人则提出了人类位置的预测模型[103]。他们的算法不仅基于当前用户的历史移动行为，并且基于群体的移动行为，比如需要利用地理特征和POI（Point of Interest）。预测则是综合个体行为和群体行为的结果。个体行为采用的是一阶近似模型，利用Markov链来表示，其中，状态是用户访问的位置，从状态i转移到状态j的概率与数据中观测到的次数成正比。群体行为则用距离影响、POI和访问密度进行加权平均。在包含1百万个人4个月的数据集上，他们的模型在预测用户下一个位置上可以达到60%的准确率。</p>
+<p>Calabrese等人使用的Markov链方法是基于Park等人的研究[104]。他们指出，用户活动半径随时间的变化可以用Markov链转移矩阵的特征分解来解释。更准确地说，转移矩阵的特征向量包含了用户移动的信息。</p>
+<p>除了细粒度的移动行为，Simini等人研究了城市之间的移动行为，并提出了辐射模型[105]，突破了重力模型的一些局限。<br>辐射模型是一种随机模型，城市$i$的人进入另一个城市$j$工作，其概率与城市$i$中的类似工作的数目相关。<br>在给定城市中，工作数目也是随机变量，与城市的总人口相关。如果我们把城市 $i$ 和 $j$ 的距离定义为 $d_{ij}$ ，在两个城市之间平均移动次数与两个城市的人口相关（假设分别为 $m_i$ 和 $n<em>j$ ），还与 $d</em>{ij}$ 范围内的人口数目 $s<em>{ij}$ 相关。<br>$$<br>\langle T</em>{ij} \rangle=T_i \frac{m_i n_j}{(m<em>i+s</em>{ij})(m_i+n<em>j+s</em>{ij})}<br>$$<br>其中，$T_i$是从城市$i$出发的移动次数。</p>
+<p>然而，辐射模型的有效性依赖于人口分布，这有可能在某些发展中国家很难获得。<br>为了克服这些局限，Palchykov等人建议使用一种只用通信模式的模型[106]。<br>该模型认为两个地方$i$和$j$的移动次数是两个地方距离$d<em>{ij}$，以及两个地方的通信密度的函数<br>$$<br>T</em>{ij}=k \frac{c<em>{ij}}{d</em>{ij}^{\beta}}<br>$$<br>其中，$k$是归一化常数。作者建议参数$\beta$的取值为0.98或1.08，这取决于是考虑城市之间还是城市内部。</p>
+<p>移动行为乍看是随机运动，可是却遵守严格的规律。数学模型、预测算法和可视化工具（比如Martino的工作[107]）做了开拓性的研究，可以用来构建更好的人类移动模型，可以用来预测流行病爆发。从个体层面来看，这种规律看起来严格地主宰我们日常的行为，比如Eagle和Pentland表明用户移动模式的6个特征向量就足够描述90%的差异[108]。他们还观察到群体行为具有一致性，这将在下一节描述。</p>
+<h3 id="5-2-群体行为的一致性"><a href="#5-2-群体行为的一致性" class="headerlink" title="5.2 群体行为的一致性"></a>5.2 群体行为的一致性</h3><p>这些数据集可以从更高的层面进行研究。更实际地说，这些大量的数据允许我们去观察和测量人类和环境的交互，还可以度量这些交互的一致性。</p>
+<p>最早得项目，比如Mobile Landscape[109]和Real Time Rome[110]已经开拓了这种研究。然而，Reades等人做了进一步研究[111]，他们利用基站信号作为社区的数字特征。他们指出类似的地点表现出类似的特征，基于基站天线记录的数据，可以对城市空间聚类。聚类表明了城市的划分，比如居民区、商业区、酒吧或公园。简短来说，这种技术可作为简单地人口普查方法，某些地方政府可能对此有兴趣。通过特征分解，有可能进一步获得空间使用的差异[112]。图16中给出了工作日中的四种主要特征向量。通过类似的方法，Csaji等人[99]用k-means聚类不同地方的活动模式，用来检测哪些地方表现出相同的呼叫模式，从而识别出哪些地方表现出显著的工作或家庭呼叫模式。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-16.png" alt="图16 工作日的4个特征向量"></p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-17.png" alt="图17 集群的周模式"></p>
+<p>Karikoski和Soikkeli研究了非常类似的问题，他们利用了Aalto大学OtaSizzle项目中收集的手机数据[113]。作者研究了是否不同环境条件下是否会引发不同的手机使用模式。从用户的移动轨迹中，他们将地点分为了几类：家、办公室、其它有意义的地方、其他地方（指的是路过的地方）。他们指出了在不同的位置环境下，用户有不同的手机使用模式。比如，当人们在家时语音通话通常更长且更频繁使用，而在办公室时则更常使用短信且通话时间也更短。在使用了相同数据的论文中，Jo等人研究了环境、时间与服务使用之间的关联，并给出了典型的手机服务使用模式[114]。作者进一步采用了k-means方法对典型的行为进行聚类，并将用户分为morning-type和evening-type。Trestian等人也研究了类似的问题，他们发现不同的地点对人们使用哪些手机应用也有影响[115]。Naboulsi等人采用类似的方法通过网络快照区分通话模式，网络快照指的是在给定时间窗口内的流量聚合[116]。他们通过对比通过网络的流量的大小和分布计算两个快照之间的相似性。他们进一步给出了典型的使用模式，并提出了一种方法检测网络中的异常行为。有趣的是，虽然方法是类似的，但Naboulsi等人的研究仅仅是基于天线到天线之间的流量，而与前面的研究使用的数据有所差异。</p>
+<p>除了对城市内部的分析外，Isaacman等人研究不同城市居住地的行为差异[117]。通过分析洛杉矶和纽约上万个居住地的移动行为，他们发现洛杉矶人们的平均移动距离是纽约的2倍。他们对于这个现象的解释是人群密度的不均和城市地形的差异。Noulas等人的工作中[53]，通过分析Foursquare位置数据，给出了不同城市的距离指数。距离指数反映了两个地方$i$和$j$关于可能的机会的个数（人口、POI）的差异。给定地理距离$r_{ij}$以及以$i$为圆心的机会个数分布，距离指数可以计算为</p>
+<p>$$<br>rank(i,j)=\int_0^{2\pi}\int<em>0^{r</em>{ij}} p_i(r,\theta)r\, \mathrm{d} r \mathrm{d}\theta<br>$$</p>
+<p>相比于人口密度小的城市，人口密度大的城市会在更短的物理距离中有更多的机会，因此人们移动的距离要更短。这里物理距离需要用指数距离来加权。在近期的研究中，Louail等人提出了另一种通过分析城市地理结构量化这种差别的方法，数据采用了31个西班牙大都市的热点或POI[118]。通过利用热点的地理结构，以及不同类型城市的不同和相似性，作者展示了人们之间的平均距离在一天中是变化的。他们将城市区分为单中心城市和多中心城市，单中心城市更依赖于土地利用，而多中心城市更注重土地混合使用。Trasarti等人也分析了人们密度的相关性，并在城市和国家层面上揭示了人口随时间变化的高度相关性[119]。</p>
+<p>如果在城市中检测热点和POI是可行的，那么是否可以进一步推断人们参与活动的类型。Jiang等人最初提出了一种方法[120]，先对人们待过的或经过的地方进行刻画，然后依据他们访问特定地点的时间来推断他们参与的活动。在许多情况下，对用户的移动行为进行建模可以从“起点-终点”矩阵开始，它描述了人们在特定时间段中在“起点-终点”地址之间移动次数[121-123]。通过给出哪些时空点和哪些活动对应，Alexander等人提出了预测“起点-终点”矩阵的方法。作者从Boston地区数据得到的结果和调查的结果是一致的。</p>
+<h3 id="5-3-异常情况监测"><a href="#5-3-异常情况监测" class="headerlink" title="5.3 异常情况监测"></a>5.3 异常情况监测</h3><p>如果数据包含大量人口的时空数据，它既可以用来对群体的活动规律进行研究，也可以用来研究对群体对紧急情况的反应。许多近期的论文研究了这个问题。Candia等人最开始关注天线端的时序活动[93]。他们提出了一种基于个体行为波动的方法。从图18来看，在异常的情况下，用户将与他们平常的行为表现出很大得波动，但总体平均和普通行为接近。方差可以表示为<br>$$<br>\sigma(a,t,T)=\sqrt{\frac{1}{N-1} \sum_{i=1}^N \left(n_i(a,t,T)-\langle n(a,t,T) \rangle \right)^2}<br>$$<br>其中，地点为$a$，时间区间为$[t,t+T]$，个体行为$n_i(a,t,T)$，平均期望行为为$\langle n(a,t,T) \rangle$。与平常的方差比较，可以识别出那些用户表现异常的位置，以及那些可能在异常情况下在空间上聚集的地方。在异常情况下，人群的反应可以看做是时间和空间上的错乱。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-18.png" alt="图18 异常事件中活动的变化"></p>
+<p>在相关的论文中，Bagrow等人分析了在不同情况下人群的反应，比如爆炸、飞机失事或地震[124]。他们观察到，目击者和他们的邻居在事件后马上会表现出信息的扰动。这种反应通常表现在会与平常不经常联系的人的通话，而不是在经常联系节点的通话提升上。通过对信息传播路径的更详细的分析表明群体反应的有效性。在事件发生的数分钟内，从目击者开始的3-4度范围的人都被联系上。Gao等人进一步分析了这些动态变化[125]，在爆炸或飞机失事中相互通话的情况急剧增加，比如回拨。尽管有着不同的特性，同类型的行为扰动都在大规模事件中表现出来，比如音乐会或者游行[125,126]。Altshuler等人最近提出了一种“社会放大器”的方法用来检测异常行为，进而检测突发事件[127]。网络的胶合点是指那些具有高度数的节点，他们可以很好地连接剩余的网络，通过激活他们可以很快地通过社交网络扩散信息。利用这些特殊的节点作为社交放大器，作者指出只要分析那些和网络胶合点行为类似的节点就可以有效地检测整个网络的异常，从而发现突发事件。这种方法具有计算上的优势，因为它只需关注网络中的部分节点，这比监视整个网络要容易得多。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-19.png" alt="图19 突发事件中活动的变化"></p>
+<p>除了检测突发事件意外，Lu等人研究在灾难以后人群的移动行为是否可以预测，他们采用的是2010年海地地震前后的数据[128]。有趣的是，人们的移动轨迹的可预测性很高，且在地震后的三个月内逐步提高。作者的研究表明人们离开首都后的目的地和他们以前的移动模式高度相关。因此，只要稍加利用，手机数据可以用来监视突发事件，并预测自然灾害后人们的移动行为。这些结果对许多人道主义组织来说将非常有帮助，他们可以尝试通过大数据来挽救生命。2011年日本地震和海啸，许多研究小组共同发起项目，通过联合多种大数据源（比如GPS设备、手机、Twitter和Facebook）来分析将来如何通过这些数据挽救生命。Kryvasheyeu等人做了类似的研究，他们对2012年Sandy飓风期间的Twitter数据进行研究，通过测量朋友关系强度来给出警告[129]。这个领域的研究还需要继续，尤其是目前这么多数据源可以利用的条件下，如何协同使用这些数据源。</p>
+<h3 id="5-4-移动行为和社会网络关系"><a href="#5-4-移动行为和社会网络关系" class="headerlink" title="5.4 移动行为和社会网络关系"></a>5.4 移动行为和社会网络关系</h3><p>移动轨迹和社会交往通常会在一个数据集中出现，从而可以用来研究移动行为和社会网络关系。Calabrese等人的工作发现，相互联系的用户大多数在至少一年的时间内在物理空间中碰面一次[130]。而且，用户绝大多数在碰面之前或之后会相互联系。有趣的是，用户之间的碰面频率和他们联系的频率以及相隔的距离高度相关。</p>
+<p>是否可以进一步通过移动数据预测社会网络关系呢？Wang等人研究发现社交网络中未连接的节点，但是拓扑位置相近、移动模式类似的人容易建立连接。也就是说，通过移动相似性和拓扑距离，他们能够提高传统链路预测算法的性能，从而获得平均准确率75%和召回率66%[131]。类似地，Eagle等人在跨度4年的数据中发现，当从一个地方搬到另一个地方时，人们的社交网络发生剧烈地变化[132]。</p>
+<p>Toole等人通过用户移动行为测量用户相似性，从而来区分不同的社会关系，并通过移动模式来区分不同的社交类型[133]。作者提出了一个移动模型，基于随机决策来决定用户是回到以前访问的地点或者访问新的地点。他们的模型在衡量移动模式和社交类型的相似性上能达到很好地准确率。</p>
+<h2 id="7-应用"><a href="#7-应用" class="headerlink" title="7. 应用"></a>7. 应用</h2><h3 id="7-5-犯罪检测"><a href="#7-5-犯罪检测" class="headerlink" title="7.5 犯罪检测"></a>7.5 犯罪检测</h3><p>在犯罪分析中，警察经常需要调取犯罪嫌疑人的手机数据进行侦查，从而获取证据。这种数据分析不仅可以得到某个犯罪人的行为模式，还可以通过社交网络获得可能的犯罪组织。社交网络分析可以用来分析犯罪网络的结构，还可以用来度量成员之间的信息流动。Messina大学的研究组提出了一个“LogAnalysis”的工具箱用来分析CDR和关联的社交网络，用来检测犯罪组织[178,179]。这个工具箱可以得到一系列网络和节点的指标，例如节点中心度、聚集系数，还可以进一步给出网络的动态变化。作者添加了可视化工具用于分析，从而让分析专家可以很容易地定位更中心的节点、可视化紧密关联的集群和子群。</p>
+<p>这种类型的研究和前面基于CDR数据的研究有所不同，它不是对匿名数据进行研究从而得到人类的行为特征，而是研究围绕特定人的网络，或者是某个嫌疑人群体。</p>
+<p>Bogomolov等人通过另一种方式，从手机数据中提取指标用来预测特定区域在下个月是否会成为犯罪热点[180]。利用动态更新的特征，比如该区域的人口、年龄、性别以及工作/居住/旅游群体等。在预测某个区域在下个月是否会成为犯罪热点，他们的模型可以达到70%的准确率。这种类型的研究可以被用来获得更好地反应时间，或者提前重点关注那些可能发生犯罪的区域。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[智力游戏自动求解2——智力拼图]]></title>
+      <url>http://blog.guantau.com/2016/08/21/puzzle/</url>
+      <content type="html"><![CDATA[<p>智力拼图（n-puzzle），是一种滑块类游戏，常见的类型有15数字滑块和8数字滑块，也有用图画代替数字的。这种游戏最早可能由Noyes Palmer Chapman在19世纪70年代发明的，也有说起源于中国的重排九宫，来自洛书，是华容道的祖先。</p>
+<a id="more"></a>
+<p>一般意义上来说，(n+1)=m×k，m为问题宽度，k为问题高度，但通常情况下m=k。15-puzzle是十六宫格排布，有15个方块和1个空位；而8-puzzle是九宫格排布，有8个方块和1个空位。方块上的数字开始是乱序排列的，需要通过移动方块，使得数字最终按顺序排列，且空格位于右下角。</p>
+<p>以15-puzzle为例，假设最初排列为：</p>
+<pre><code>12   1    10  2
+7    11   4   14
+5    0    9   15
+8    13   6   3
+</code></pre><p>最后排列为</p>
+<pre><code>1   2   3   4
+5   6   7   8
+9   10  11  12
+13  14  15  0
+</code></pre><p>则取得胜利。</p>
+<p>对于一个n-puzzle问题，有两个问题需要解决：</p>
+<ol>
+<li>对于任何一种排列的n-puzzle问题，是否都可解？</li>
+<li>对于一个可解的n-puzzle，是否存在最优的自动解法？</li>
+</ol>
+<p>下面对于这两个问题分别进行分析。</p>
+<h2 id="一、n-puzzle问题的可解性"><a href="#一、n-puzzle问题的可解性" class="headerlink" title="一、n-puzzle问题的可解性"></a>一、n-puzzle问题的可解性</h2><p>当数字随机排列时，问题不一定可解，当(n+1)=m×k，m&gt;1，k&gt;1时，有(m×k)!/2个排列是无解。</p>
+<p>下面先定义n-puzzle的逆序个数：将宫格中的数字按照从左到右从上到下的顺序一字排开，空格不计入序列。以上面的15-puzzle为例，排列后得到的序列为</p>
+<pre><code>12    1    10    2    7    11    4    14    5    9    15    8    13    6    3
+</code></pre><p>序列中某个位置的逆序个数为其之后位置数字比该位置小的个数，如第1个位置数字为12，其逆序个数为11；第2个位置数字为1，其逆序个数为0。序列中所有位置的逆序数之和定义为该n-puzzle问题的逆序数。</p>
+<p>假设空位处于第i行，对于n-puzzle问题的可解性，结论是：</p>
+<ol>
+<li>如果问题宽度m为奇数，逆序个数为偶数，问题可解；</li>
+<li>如果问题宽度m为偶数，且空位距离底部的行数k-i为奇数，逆序个数为奇数，问题可解；</li>
+<li>如果问题宽度为偶数，且空位距离底部的行数k-i为偶数，逆序个数为偶数，问题可解。</li>
+</ol>
+<p>对于上面的15-puzzle，其宫格宽度为偶数，排列后序列对应的逆序个数为</p>
+<pre><code>11    0    8    0    4    6    1    6    1    3    4    2    2    1    0
+</code></pre><p>总逆序个数为49，为奇数。空位距离底部为1行，为奇数，此问题可解。</p>
+<p>具体的证明过程可以参考：<br><a href="http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html" target="_blank" rel="external">http://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html</a><br><a href="http://kevingong.com/Math/SixteenPuzzle.html" target="_blank" rel="external">http://kevingong.com/Math/SixteenPuzzle.html</a> 给出了更一般的情况的证明。</p>
+<h2 id="二、n-puzzle问题的自动解法"><a href="#二、n-puzzle问题的自动解法" class="headerlink" title="二、n-puzzle问题的自动解法"></a>二、n-puzzle问题的自动解法</h2><p>n-puzzle问题的求解实际上还是一个解空间的自动搜索，通过空位的移动形成不同的解状态，直至获得正确解。组合问题的搜索方式分为两大类：一是无信息的搜索，即盲搜索，如宽度优先搜索、深度优先搜索；二是有信息的搜索，即启发式搜索，如A<em>搜索、IDA</em>搜索等。</p>
+<h3 id="1、无信息搜索"><a href="#1、无信息搜索" class="headerlink" title="1、无信息搜索"></a>1、无信息搜索</h3><p>常用的宽度搜索和深度搜索都可以达到目的，二者互有优劣。从理论上分析来说，空位的每一次移动都会形成一个新解，这比较适合使用宽度优先搜索。</p>
+<p>对于n-puzzle问题，这两种方法的搜索效率都不高。每个节点存储的为一个序列，随着搜索量的增加，其存储量也急剧增加。</p>
+<h3 id="2、启发式搜索"><a href="#2、启发式搜索" class="headerlink" title="2、启发式搜索"></a>2、启发式搜索</h3><p>A<em>搜索是一种经典的启发式搜索方法，与无信息搜索相比，A</em>利用了当前状态与最终状态之间的距离信息作为前进的指引方向，自然要比盲目的搜索效率要高很多。</p>
+<p>从最短路径搜索的角度来说，A*算法被认为是最好的算法，其核心要点在于选取好的代价函数。通常代价函数可以表示为f(n)=g(n)+h(n)，其中g(n)表示起点到顶点n的实际距离，h(n)表示顶点n到目标的估算距离。</p>
+<p>当h(n)=0时，则只需要求g(n)，则转化为单源最短路径问题，即Dijkstra算法。</p>
+<p>当h(n)&lt;=n到目标的实际距离，则一定可以求得最优解，且h(n)越小，需要计算的节点越多，算法效率越低。</p>
+<p>关于A*搜索，有些比较好的介绍：<br><a href="http://www.policyalmanac.org/games/aStarTutorial.htm" target="_blank" rel="external">http://www.policyalmanac.org/games/aStarTutorial.htm</a><br><a href="http://blog.minstrel.idv.tw/2004/12/star-algorithm.html" target="_blank" rel="external">http://blog.minstrel.idv.tw/2004/12/star-algorithm.html</a></p>
+<p>对于n-puzzle问题，每个状态可以看作是一个节点，移动空格位置后状态发生变化，由一个节点跳转到另一个节点。</p>
+<p>比如将以下状态作为当前节点，</p>
+<pre><code>12   1    10   2
+7    11   4    14
+5    0    9    15
+8    13   6    3
+</code></pre><p>向下移动后获得新的状态</p>
+<pre><code>12   1    10   2
+7    11   4    14
+5    13   9    15
+8    0    6    3
+</code></pre><p>这作为新的节点。</p>
+<p>空格最多可以可以向上下左右四个方向移动，即每个节点最多有四个子节点。已知起始状态和最终状态，我们可以很容易地用A*算法解决n-puzzle问题。代价函数中h(n)采用的是Manhattan距离，即到达目标所需的最小移动格数。例如，上图中，数字12当前坐标为(0,0)，正确状态下坐标为(4,3)，其Manhattan距离为7。当前状态n中所有数字（不包括0）的Manhattan距离之和即为h(n)。很容易判断出来，h(n)&lt;到目标的实际距离，则A*算法一定可以求得最优解。</p>
+<p>此外，对于规模更大问题，可以考虑采用A*算法的变形IDA*。IDA*算法全称是Iterative Deepening A*，它不保存之前的搜索状态，搜索效率会稍低于A*，但所需的内存开销要小。</p>
+<p>n-puzzle问题的A*搜索代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="string">'''</span></div><div class="line">File Name: puzzle.py</div><div class="line">Author: tau</div><div class="line">Mailto: guantau@163.com</div><div class="line">Created Time: 2014.05.31</div><div class="line">Description: solve n-puzzle</div><div class="line">'''</div><div class="line"><span class="keyword">from</span> copy <span class="keyword">import</span> copy</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(seq)</span>:</span></div><div class="line">    <span class="string">"""move blank left, right, up, down"""</span></div><div class="line">    pos = seq.index(<span class="number">0</span>)</div><div class="line">    r = pos / m</div><div class="line">    c = pos % m</div><div class="line">    result = []</div><div class="line">    <span class="keyword">if</span> c != <span class="number">0</span>:</div><div class="line">        left = copy(seq)</div><div class="line">        left[pos] = left[pos - <span class="number">1</span>]</div><div class="line">        left[pos - <span class="number">1</span>] = <span class="number">0</span></div><div class="line">        result.append(left)</div><div class="line">    <span class="keyword">if</span> c != m - <span class="number">1</span>:</div><div class="line">        right = copy(seq)</div><div class="line">        right[pos] = right[pos + <span class="number">1</span>]</div><div class="line">        right[pos + <span class="number">1</span>] = <span class="number">0</span></div><div class="line">        result.append(right)</div><div class="line">    <span class="keyword">if</span> r != <span class="number">0</span>:</div><div class="line">        up = copy(seq)</div><div class="line">        up[pos] = up[pos - m]</div><div class="line">        up[pos - m] = <span class="number">0</span></div><div class="line">        result.append(up)</div><div class="line">    <span class="keyword">if</span> r != k - <span class="number">1</span>:</div><div class="line">        down = copy(seq)</div><div class="line">        down[pos] = down[pos + m]</div><div class="line">        down[pos + m] = <span class="number">0</span></div><div class="line">        result.append(down)</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> result</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc_metric</span><span class="params">(seq)</span>:</span></div><div class="line">    <span class="string">"""calcuate the distance to the answer from current state"""</span></div><div class="line">    metric = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, m * k):</div><div class="line">        ind = seq.index(i)</div><div class="line">        metric += (ind / m - (i - <span class="number">1</span>) / m) + (ind % m - (i - <span class="number">1</span>) % m)</div><div class="line">    <span class="keyword">return</span> metric</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_best_state</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""find the state with lowest metric in the open list"""</span></div><div class="line">    f = []</div><div class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> open_list:</div><div class="line">        f.append(s[<span class="number">1</span>] + s[<span class="number">2</span>])</div><div class="line">    <span class="keyword">return</span> open_list[np.argmin(f)]</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Astar</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""solve puzzle using A* algorithm"""</span></div><div class="line">    open_list.append((puzzle, <span class="number">0</span>, calc_metric(puzzle), <span class="number">0</span>))</div><div class="line"> </div><div class="line">    <span class="keyword">while</span> len(open_list) != <span class="number">0</span>:</div><div class="line">        best_state = find_best_state()</div><div class="line">        open_list.remove(best_state)</div><div class="line">        close_list.append(best_state)</div><div class="line">        neighbors = move(best_state[<span class="number">0</span>])</div><div class="line"> </div><div class="line">        open_set = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> open_list]</div><div class="line">        close_set = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> close_list]</div><div class="line"> </div><div class="line">        <span class="keyword">if</span> answer <span class="keyword">in</span> close_set:</div><div class="line">            <span class="keyword">break</span></div><div class="line"> </div><div class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> neighbors:</div><div class="line">            <span class="keyword">if</span> n <span class="keyword">in</span> close_set:</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> n <span class="keyword">not</span> <span class="keyword">in</span> open_set:</div><div class="line">                open_list.append((n, best_state[<span class="number">1</span>] + <span class="number">1</span>,</div><div class="line">                                  calc_metric(n), best_state[<span class="number">0</span>]))</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                ind = open_set.index(n)</div><div class="line">                <span class="keyword">if</span> best_state[<span class="number">1</span>] + <span class="number">1</span> &lt; open_list[ind][<span class="number">5</span>]:</div><div class="line">                    open_list[ind] = (n, best_state[<span class="number">1</span>] + <span class="number">1</span>,</div><div class="line">                                      calc_metric(n), best_state[<span class="number">0</span>])</div><div class="line"> </div><div class="line">    <span class="keyword">if</span> len(open_list) == <span class="number">0</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_path</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""get the path to answer"""</span></div><div class="line">    close_set = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> close_list]</div><div class="line">    path = [answer]</div><div class="line">    <span class="keyword">while</span> path[<span class="number">-1</span>] != puzzle:</div><div class="line">        path.append(close_list[close_set.index(path[<span class="number">-1</span>])][<span class="number">6</span>])</div><div class="line">    <span class="keyword">return</span> path</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_mat</span><span class="params">(mat)</span>:</span></div><div class="line">    <span class="string">"""docstring for print_mat"""</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">        a = <span class="string">""</span></div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</div><div class="line">            a += str(mat[i * m + j]) + <span class="string">" "</span></div><div class="line">        <span class="keyword">print</span> a</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_solvable</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""check whether the puzzle is solvable"""</span></div><div class="line">    seq = copy(puzzle)</div><div class="line">    seq.remove(<span class="number">0</span>)</div><div class="line">    inversions = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(seq)):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, len(seq)):</div><div class="line">                <span class="keyword">if</span> seq[i] &gt; seq[j]:</div><div class="line">                    inversions += <span class="number">1</span></div><div class="line"> </div><div class="line">    r = (k - <span class="number">1</span>) - puzzle.index(<span class="number">0</span>) / m</div><div class="line">    solvable = ((m % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">and</span> inversions % <span class="number">2</span> == <span class="number">0</span>) <span class="keyword">or</span></div><div class="line">                (m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> r % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">and</span> inversions % <span class="number">2</span> == <span class="number">1</span>) <span class="keyword">or</span></div><div class="line">                (m % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> r % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">and</span> inversions % <span class="number">2</span> == <span class="number">0</span>))</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> solvable</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    m = <span class="number">4</span>    <span class="comment"># width</span></div><div class="line">    k = <span class="number">4</span>    <span class="comment"># height</span></div><div class="line">    puzzle = [<span class="number">2</span>, <span class="number">10</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">14</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">9</span>, <span class="number">13</span>, <span class="number">15</span>, <span class="number">12</span>]</div><div class="line"> </div><div class="line">    <span class="comment"># the right answer</span></div><div class="line">    answer = range(<span class="number">1</span>, m * k + <span class="number">1</span>)</div><div class="line">    answer[m * k - <span class="number">1</span>] = <span class="number">0</span></div><div class="line">    <span class="comment"># state=(seq,g,h,parent)</span></div><div class="line">    open_list = []</div><div class="line">    close_list = []</div><div class="line"> </div><div class="line">    <span class="keyword">if</span> is_solvable():</div><div class="line">        <span class="keyword">print</span> <span class="string">"The puzzle is solvable!"</span></div><div class="line">        <span class="keyword">if</span> Astar():</div><div class="line">            steps = get_path()</div><div class="line">            <span class="keyword">print</span> <span class="string">"Total steps %d, as follow:"</span> % len(steps)</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(steps) - <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</div><div class="line">                print_mat(steps[i])</div><div class="line">                <span class="keyword">print</span> <span class="string">"\n"</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"The puzzle is unsolvable!"</span></div></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[智力游戏自动求解1——数独]]></title>
+      <url>http://blog.guantau.com/2016/08/21/sudoku/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>引：单位强制使用定制的非智能手机，只能打电话发短信，此外还有一些智力小游戏，比如推箱子、拼图、数独、俄罗斯方块等等。许久没有玩过这些智力小游戏了，玩着玩着就突然想找一些自动求解的方法来攻破这些小游戏。恰好最近在学习python，刚好写点小程序练练手。</p>
+</blockquote>
+<p>先从最简单的数独开始，其求解思想很简单：在给定的初始数字的条件下进行深度优先搜索，当搜索完所有9x9个格子时，就获得了最终的解。</p>
+<p>具体步骤：</p>
+<ol>
+<li>数据结构采用一维数组表示9x9格，0表示未填，1-9表示要填的数字；</li>
+<li>搜索时采用递归函数，当某个格子没有可填的数字时，回退到上一状态；</li>
+<li>搜索到达数组尾部时，找到答案。</li>
+</ol>
+<a id="more"></a>
+<p>为实现方便，coding时采用的是顺序搜索，求到一个答案后立即返回。因此，两方面可以改进：</p>
+<ol>
+<li>求解所有答案，搜索得到答案后不返回，保存答案并回退状态继续搜索；</li>
+<li>改变搜索顺序，每次优先从可能取值最少的格子开始，这可以减少搜索时间，但也会增加一些代码量。</li>
+</ol>
+<p>实现代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># encoding=utf8</span></div><div class="line"><span class="string">'''</span></div><div class="line">File Name: number.py</div><div class="line">Author: tau</div><div class="line">Mailto: guantau@163.com</div><div class="line">Created Time: 2014.05.04</div><div class="line">Description: solve sudoku</div><div class="line">'''</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">possible_value</span><span class="params">(ind, nums)</span>:</span></div><div class="line">    <span class="string">"""return possible values in position ind"""</span></div><div class="line">    pv = range(<span class="number">1</span>, <span class="number">10</span>)</div><div class="line">    nummat = nums.reshape(<span class="number">9</span>, <span class="number">9</span>)</div><div class="line">    ri = ind / <span class="number">9</span></div><div class="line">    ci = ind - ind / <span class="number">9</span> * <span class="number">9</span></div><div class="line">    row = nummat[ri, :]</div><div class="line">    col = nummat[:, ci]</div><div class="line">    blk = nummat[ri / <span class="number">3</span> * <span class="number">3</span>:(ri / <span class="number">3</span> + <span class="number">1</span>) * <span class="number">3</span>, ci / <span class="number">3</span> * <span class="number">3</span>:(ci / <span class="number">3</span> + <span class="number">1</span>) * <span class="number">3</span>]</div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">10</span>):</div><div class="line">        <span class="keyword">if</span> x <span class="keyword">in</span> row <span class="keyword">or</span> x <span class="keyword">in</span> col <span class="keyword">or</span> x <span class="keyword">in</span> blk:</div><div class="line">            pv.remove(x)</div><div class="line">    <span class="keyword">return</span> pv</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sudoku</span><span class="params">(ind, nums)</span>:</span></div><div class="line">    <span class="string">"""recursion"""</span></div><div class="line">    <span class="keyword">while</span> ind &lt; len(nums) <span class="keyword">and</span> nums[ind] != <span class="number">0</span>:</div><div class="line">        ind = ind + <span class="number">1</span></div><div class="line">    <span class="keyword">if</span> ind == len(nums):</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">for</span> v <span class="keyword">in</span> possible_value(ind, nums):</div><div class="line">            nums[ind] = v</div><div class="line">            <span class="keyword">if</span> sudoku(ind + <span class="number">1</span>, nums) <span class="keyword">is</span> <span class="keyword">True</span>:</div><div class="line">                <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">            nums[ind] = <span class="number">0</span></div><div class="line"></div><div class="line"></div><div class="line">numbers = np.array([</div><div class="line">    <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">0</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">8</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,</div><div class="line">    <span class="number">0</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span></div><div class="line">])</div><div class="line"></div><div class="line">t0 = time.time()</div><div class="line"><span class="keyword">print</span> <span class="string">"Question:"</span></div><div class="line"><span class="keyword">print</span> numbers.reshape(<span class="number">9</span>, <span class="number">9</span>)</div><div class="line">sudoku(<span class="number">0</span>, numbers)</div><div class="line"><span class="keyword">print</span> <span class="string">"Answer:"</span></div><div class="line"><span class="keyword">print</span> numbers.reshape(<span class="number">9</span>, <span class="number">9</span>)</div><div class="line">t1 = time.time()</div><div class="line"><span class="keyword">print</span> <span class="string">"Time: %f s"</span> % (t1 - t0)</div></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[WiFi密码破解笔记]]></title>
+      <url>http://blog.guantau.com/2016/08/21/wifi-crack/</url>
+      <content type="html"><![CDATA[<p>WiFi常用的安全机制有三种：WEP、WPA、WPA2。</p>
+<p>由于存在协议漏洞，WEP只要抓取到足够多的初始向量数据包（一般2w个），即可实现完全破解，这类的工具非常多。</p>
+<p>WPA和WPA2则相对安全得多，目前破解的思路有两种：</p>
+<a id="more"></a>
+<h2 id="1-字典攻击："><a href="#1-字典攻击：" class="headerlink" title="1. 字典攻击："></a>1. 字典攻击：</h2><p>获取客户端和路由器之间得握手协议包，采用字典攻击的方式暴力破解密码。</p>
+<p>当采用一些简单的生日、单词、电话号码作为密码时，很容易实现破解，网上已有相关字典。若采用稍微复杂的密码，如密码采用8位大小写字母和数字混合，在运算速度为500K个/秒时，暴力破解需要时间14年（暴力破解时间可参考  <a href="http://lastbit.com/pswcalc.asp" target="_blank" rel="external">http://lastbit.com/pswcalc.asp</a> ）。</p>
+<p>WPA/WPA2密码支持8-63位，如果设置较长较复杂的密码，字典攻击破解难度将很大。<br>字典攻击方法需要两步，一是抓取握手协议包，二是穷举字典破解。</p>
+<p>常用的工具：</p>
+<ul>
+<li>开源工具aircrack-ng（<a href="http://www.aircrack-ng.org/" target="_blank" rel="external">http://www.aircrack-ng.org/</a>），包括了无线抓包和密码破解程序</li>
+<li>抓包工具Omnipeek（<a href="http://www.wildpackets.com/products/omnipeek_network_analyzer" target="_blank" rel="external">http://www.wildpackets.com/products/omnipeek_network_analyzer</a>）</li>
+<li>国产软件无线网络分析软件科来（<a href="http://www.colasoft.com.cn/download/capsa.php" target="_blank" rel="external">http://www.colasoft.com.cn/download/capsa.php</a>）</li>
+<li>密码计算软件ewsa（<a href="http://cn.elcomsoft.com/ewsa.html" target="_blank" rel="external">http://cn.elcomsoft.com/ewsa.html</a>）优势是可以用GPU加速密码破解过程</li>
+</ul>
+<p>网上有很多公开的字典库，直接搜索即可下载。还有一些字典生成器，如黑刀、万能钥匙、木头字典生成器等等。</p>
+<h2 id="2-WPS攻击："><a href="#2-WPS攻击：" class="headerlink" title="2. WPS攻击："></a>2. WPS攻击：</h2><p>当路由器开启了WPS功能，可采用WPS攻击，破解路由器PIN码，从而获得其密码。</p>
+<p>采用字典攻击的方式无疑是一种效率很低的方法，如果没有估计到别人的密码模式，要破解是十分困难的。现在很多路由器开启了WPS，通过攻击路由器PIN码这种方式可以将破解效率大大提高。路由器PIN码只有8位，破解时可分为前后4位分别破解，只需要11000次的尝试即可实现破解（每次尝试可能需要数秒，视信号强度和路由器而定）。一旦已知PIN码，就可立即计算出WiFi密码。即使更换了WiFi密码，只要PIN码不变，也能立刻算出密码。</p>
+<p>主要工具为：</p>
+<ul>
+<li>Reaver（WPS Cracker，<a href="http://code.google.com/p/reaver-wps/" target="_blank" rel="external">http://code.google.com/p/reaver-wps/</a>）</li>
+</ul>
+<hr>
+<p>WiFi密码破解的方法就是这些，总的来说，要保证WiFi的足够安全，原则就是：关闭WEP，关闭WPS，使用WPA2，提高密码强度。</p>
+<p>现在有一些系统把WiFi破解的工具进行了集成，并做了图形化界面方便使用，比如XiaoPanOS、CDLinux、Beini等。这些系统镜像都比较小，可以直接烧制在U盘上随身携带，以后到了其他地方，就不愁没有WiFi了。：）</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[在小米路由器mini上实现去广告]]></title>
+      <url>http://blog.guantau.com/2016/08/21/xiaomi-mini/</url>
+      <content type="html"><![CDATA[<p>所谓去广告，指的是去掉网页上弹出的乱七八糟的广告，还有视频网站播放前的广告。常见的几款去广告软件包括：</p>
+<ol>
+<li>ADSafe：目前支持Windows和Android，去除效果还不错。</li>
+<li>AD Muncher（奶牛）：老牌的广告去除软件，原来收费，现在已免费，仅支持Windows。</li>
+<li>bloxy（保护伞）：仅支持Windows。</li>
+<li>adbyby：目前支持平台最全的，包括Windows、Linux、Mac、Openwrt。</li>
+<li>ADMon：目前支持Windows平台。</li>
+<li>Adblock：浏览器插件，也就是只能在浏览器上使用。</li>
+</ol>
+<p>对于非插件的去广告软件来讲，其原理是用带过滤功能的开源代理服务器privoxy加上Adblock-Easylist China及Easylist的开源广告规则库来实现的，通过正则表达式和CSS进行过滤。</p>
+<p>在路由器上部署是最理想的，这样所有的设备都能共享了，这么看来只有用adbyby了。</p>
+<p>小米路由器mini开通ssh后就可以干活了，用scp把下载的adbyby传到/tmp目录下，修改配置文件adhook.ini中扩展规则为 <a href="https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" target="_blank" rel="external">https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt</a> 即可。</p>
+<p>广告无踪影，生活顿时又美好了一点点！</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[zotero的一些使用经验]]></title>
+      <url>http://blog.guantau.com/2016/08/21/zotero-tips/</url>
+      <content type="html"><![CDATA[<p>在科研活动中，我们需要参考大量的科技文献。科技文献管理一般要经历获取、存储、应用三个过程，不管怎么看，科技文献管理都是一件挺麻烦的事情：</p>
+<ol>
+<li>在查找文献时，我们通常会得到很多附加的信息，比如下载的网址、与文献相关的代码、期刊名称等等。这些信息对于我们应用文献有着比较重要的作用，但是它们记录起来可是相当麻烦。</li>
+<li>随着工作的开展，各种各样的文件堆积如山，而资源管理器一般只用目录名和文件名进行索引，丢失了大量的元数据信息，此时想要寻找特定内容时将会变得非常困难。</li>
+<li>撰写期刊论文、学位论文、项目申请报告的时候，标注参考文献出处是一项考验耐性、细心和记忆力的工作。如何高效地建立参考文献列表是所有研究者都会遇到的实际问题。</li>
+</ol>
+<p>好在是有一些工具是能够帮助处理这些麻烦的，比如Endnote、Mendeley、Zotero、NoteExpress、NoteFirst等，这其中我觉得最顺手的就是Zotero。如果你也有遇到上面提到的那些问题，不妨试试它。</p>
+<a id="more"></a>
+<h2 id="Zotero是什么"><a href="#Zotero是什么" class="headerlink" title="Zotero是什么"></a>Zotero是什么</h2><p>zotero用于管理参考文献，本质上是FireFox浏览器的插件。它突破了传统管理参考文献的思路：参考文献应该直接从浏览器获取，而不是间接性地由人工下载添加进某个管理软件中，而且参考文献中的各项信息应该由计算机和软件自动识别完成，而不是由人主观识别复制粘贴到管理软件中。</p>
+<p>它最初基于FireFox开发，现已有支持Chrome及Safari版的插件，但功能较FireFox版的少很多。现已推出有standalone版本，支持Win、Mac和Linux，功能完整。</p>
+<p>已经有人写了一系列的好文章来介绍Zotero了：</p>
+<ul>
+<li><a href="http://www.yangzhiping.com/tech/zotero1.html" target="_blank" rel="external">Zotero（1）：文献管理软件Zotero基础及进阶示范</a> </li>
+<li><a href="http://www.yangzhiping.com/tech/zotero2.html" target="_blank" rel="external">Zotero（2）：作为知识管理工具的Zotero </a> </li>
+<li><a href="http://www.yangzhiping.com/tech/zotero3.html" target="_blank" rel="external">Zotero（3）：平板与社交：再谈研究辅助工具Zotero兼配套APP</a> </li>
+<li><a href="http://www.yangzhiping.com/tech/zotero4.html" target="_blank" rel="external">Zotero（4）：Zotero之Zotfile插件的使用</a> </li>
+<li><a href="http://www.yangzhiping.com/tech/zotero5.html" target="_blank" rel="external">Zotero（5）：电子文献管理攻略</a> </li>
+<li><a href="http://www.yangzhiping.com/tech/zotero6.html" target="_blank" rel="external">Zotero（6）：如何批量下载PDF与组建个性化知识库</a></li>
+</ul>
+<h2 id="Zotero数据目录"><a href="#Zotero数据目录" class="headerlink" title="Zotero数据目录"></a>Zotero数据目录</h2><p>Zotero的管理架构是：<strong>库-分类-条目</strong>。库条目可以同时属于多个分类，条目可以设置多个标签，从而可以从多个角度组织文献。</p>
+<p>Zotero数据目录主要包含以下文件和目录：</p>
+<ul>
+<li>zotero.sqlite 数据库文件，保存所有文献的相关信息；</li>
+<li>storage/ 数据目录，保存附件中的各种文件；</li>
+<li>styles/ 样式目录，存放参考文献样式；</li>
+<li>translators/ 抓取器目录，一系列js脚本，用来从各种网站上抓取信息。</li>
+</ul>
+<h2 id="第三方同步方案"><a href="#第三方同步方案" class="headerlink" title="第三方同步方案"></a>第三方同步方案</h2><p>Zotero的云同步功能可以同步笔记和文献pdf等到云端，从而解决了异地、异机、异设备终端的办公问题。该功能非常好，但Zotero只提供100 M的免费空间，该空间显然不够文献的存储使用，当然你可以通过购买增大空间。</p>
+<p>我采用的是第三方的同步方案。Zotero官方建议在用第三方同步工具时，安全的办法是仅同步storage目录，因为如果同步数据库文件很容易造成损坏。Zotero的数据文件可以分为两个部分，一个是存放便签、笔记等的数据文件，一个是存放原始pdf文献文件的附件，后者存放在storage文件夹里。实现时很简单，就是将storage拷贝至第三方的同步盘目录中，然后在Zotero数据目录中建立符号链接即可。</p>
+<h2 id="强制设为英文界面"><a href="#强制设为英文界面" class="headerlink" title="强制设为英文界面"></a>强制设为英文界面</h2><p>在安装目录下找到 defaults/preferences/perfs.js，将</p>
+<pre><code>pref(&quot;intl.locale.matchOS&quot;, true)
+</code></pre><p>改为</p>
+<pre><code>pref(&quot;intl.locale.matchOS&quot;, false)
+</code></pre><p>即可。</p>
+<h2 id="查看条目所属分类"><a href="#查看条目所属分类" class="headerlink" title="查看条目所属分类"></a>查看条目所属分类</h2><p>一个条目可以指定很多分类，选中某个条目后，按住Ctrl键（Mac下是option键，Linux下是Alt键），包含该条目的分类将会高亮。</p>
+<h2 id="参考文献样式"><a href="#参考文献样式" class="headerlink" title="参考文献样式"></a>参考文献样式</h2><p>可以在 <a href="http://www.zotero.org/styles/" target="_blank" rel="external">http://www.zotero.org/styles/</a> 找到常见的参考文献样式，你可以自定义样式，比如在线编辑器 <a href="http://steveridout.com/csl/visualEditor/" target="_blank" rel="external">http://steveridout.com/csl/visualEditor/</a>  。</p>
+<h2 id="常用扩展"><a href="#常用扩展" class="headerlink" title="常用扩展"></a>常用扩展</h2><h3 id="Zotfile"><a href="#Zotfile" class="headerlink" title="Zotfile"></a><a href="http://www.columbia.edu/~jpl2136/zotfile.html" target="_blank" rel="external">Zotfile</a></h3><p>Zotero默认存储附件时用的是随机符号作为目录名，这可能会让你直接打开数据目录寻找文件时造成一定的困扰。而Zotfile可以按一定格式进行组织，并用链接的方式进行关联。Zotfile默认是用绝对路径的方式关联，这样会导致在不同的机器上找不到文件。我的做法是：</p>
+<ol>
+<li>更改Zotero的链接方式为相对路径，基准路径为Zotero数据目录所在位置；</li>
+<li>在Zotero数据目录中建立zotfile目录用来存储附件；</li>
+<li>更改Zotfile的文件路径为上述建立的zotfile目录位置，子目录按年份存放；</li>
+<li>为了实现第三方同步盘进行同步，可以将实际的目录放在同步盘中，只在Zotero数据目录下建立软链接即可。</li>
+</ol>
+<h3 id="abbreviations-for-zotero"><a href="#abbreviations-for-zotero" class="headerlink" title="abbreviations-for-zotero"></a><a href="http://citationstylist.org/abbreviations-for-zotero/" target="_blank" rel="external">abbreviations-for-zotero</a></h3><p>期刊名简写插件。</p>
+<h3 id="Better-bibtex"><a href="#Better-bibtex" class="headerlink" title="Better bibtex"></a><a href="https://zotplus.github.io/better-bibtex/" target="_blank" rel="external">Better bibtex</a></h3><p>可以选择在导出bibtex格式时保留哪些域，去掉哪些域。</p>
+<h2 id="配合工具"><a href="#配合工具" class="headerlink" title="配合工具"></a>配合工具</h2><h3 id="Docear"><a href="#Docear" class="headerlink" title="Docear"></a><a href="http://www.docear.org" target="_blank" rel="external">Docear</a></h3><p>仅仅用Zotero将文献按照一定的分类、标签组织起来其实还是不够的。要文献真正能派上用场，还需要进一步精细地对文献进行组织。比如文献[5]给出的这几张图：</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/docear-1.jpg" alt="1.jpg"><br><img src="http://oc7urqs4c.bkt.clouddn.com/docear-2.jpg" alt="2.jpg"><br><img src="http://oc7urqs4c.bkt.clouddn.com/docear-3.jpg" alt="3.jpg"></p>
+<p>Docear就是这样一种文献整理工具，并能够将Zotero中存储的大量信息链接起来。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>[1] <a href="https://www.zotero.org/support/zh/quick_start_guide" target="_blank" rel="external">Zotero快速入门</a><br>[2] <a href="https://www.zotero.org/support/zh/tips_and_tricks" target="_blank" rel="external">Zotero常用技巧</a><br>[3] <a href="http://emuch.net/html/201410/7981977.html" target="_blank" rel="external">参考文献管理工具zotero的使用经验分享</a><br>[4] <a href="http://blog.sina.com.cn/s/blog_565e747c01014toj.html" target="_blank" rel="external">Zotero文献管理、科研笔记不完全教程</a><br>[5] <a href="http://blog.sina.com.cn/s/blog_6daf1c5b0100z8nn.html" target="_blank" rel="external">科研文献资料的高效管理</a><br>[6] <a href="http://www.douban.com/group/topic/48495741/" target="_blank" rel="external">Zotero同步不足的解决方案</a><br>[7] <a href="http://www.cnblogs.com/huashiyiqike/p/3265177.html" target="_blank" rel="external">文献管理软件Zotero的一点使用感受</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[高效文本编辑的七个习惯]]></title>
+      <url>http://blog.guantau.com/2016/08/21/texting-habits/</url>
+      <content type="html"><![CDATA[<p>这是Vim作者Bram Moolenaar受到《高效能人士的七个习惯》启发所写的一篇，阐述了他对高效文本编辑的一些看法，或者说他设计Vim的一些初衷。</p>
+<p>读后感受有四：</p>
+<ol>
+<li>绝大部分文本为有格式的，这是高效编辑的前提。</li>
+<li>一定有自动化的方法用来减少重复性的劳动。</li>
+<li>勤加练习，习惯成自然；否则，好记性不如烂笔头。</li>
+<li>过犹不及，只要适合自己就可以。</li>
+</ol>
+<p>其实这些道理是可以推广的，它们对于很多事情都是适用的。</p>
+<a id="more"></a>
+<hr>
+<blockquote>
+<p>原文地址：<a href="http://www.moolenaar.net/habits.html" target="_blank" rel="external">http://www.moolenaar.net/habits.html</a><br>作者：Bram Moolenaar<br>日期：2000.11<br>翻译：guantau</p>
+</blockquote>
+<hr>
+<p>如果你需要花大量时间编辑文本，比如写程序、写HTML文件，那么你需要一个好的编辑器并高效地使用它，这样你才能节约大量的时间。本文将给出文本编辑的几条建议，以帮助你更快更好地完成你的工作。</p>
+<p>本文将采用开源编辑器Vim来展示如何进行文本高效编辑，当然这些建议也可以推广至其它编辑器。选择合适的编辑器是高效编辑的第一步，这里不讨论哪款编辑器是最好的，适合的就是最好的。如果你不知道使用哪款编辑器，或者对你现在用的编辑器不满意，不妨试一试Vim，它不会让你你失望的。</p>
+<h1 id="第一部分：编辑单个文件"><a href="#第一部分：编辑单个文件" class="headerlink" title="第一部分：编辑单个文件"></a>第一部分：编辑单个文件</h1><h2 id="1、快速移动："><a href="#1、快速移动：" class="headerlink" title="1、快速移动："></a>1、快速移动：</h2><p>花费在阅读和查找的时间其实要比插入或修改文本多得多。阅读和查找这些在文本中移动的操作是非常频繁的，因此你需要了解怎么才能移动得更快。比如需要查找某段文本并找到其出现的所有位置。在Vim中，你可以输入查找命令<code>/pattern</code>来做这件事情。但其实，你还可以做得更快更好：</p>
+<ul>
+<li>如果你看见某个词，希望找到这个词出现的其它位置，使用命令<code>*</code>。它会自动抓取当前光标所在的词语，并找到它出现的下一位置；</li>
+<li>如果你设置了<code>incsearch</code>选项，Vim会在你输入搜索词时动态显示它出现的第一个位置；</li>
+<li>如果你设置了<code>hlsearch</code>选项，Vim会高亮所有匹配的位置。比如在程序时，你可以看到某个变量到底在哪些地方使用了。</li>
+</ul>
+<p>在结构化文本里，还有更多可以快速移动的可能性。比如，对于C语言，Vim有一些特定的命令：</p>
+<ul>
+<li>使用命令<code>%</code>可以跳到成对符号的另一端，比如()、{}、甚至#if和#endif，这样你可以检查符号是否匹配；</li>
+<li>使用命令<code>[{</code>可以跳到当前代码块的起始位置；</li>
+<li>使用命令<code>gd</code>可以跳到局部变量的定义位置；</li>
+</ul>
+<p>当然，还有许多这样的命令。问题的关键是你是否知道这些命令。</p>
+<p>你可能会说你不可能记住所有这些命令，所有命令大概有数百个，有些简单、有些复杂。要全部学会这些命令，大概需要数周的时间。但这么做是没有必要地，你需要做的是认清自己的编辑习惯，并只记住那些让你更加高效编辑的命令。</p>
+<p>一般有三个基本步骤：</p>
+<ol>
+<li>当你在编辑时，留意你需要不断重复的动作；</li>
+<li>去寻找是否有某个编辑器命令可以使你更快地完成这个动作，可以查帮助文档或问下周围朋友；</li>
+<li>练习使用这些命令，直到你不需要思考就可以使用它。</li>
+</ol>
+<p>举例来说：在写C程序的时候，你发现你需要花费大量时间去寻找函数定义在哪里。你现在使用的是命令<code>*</code>来搜索该函数名出现的位置，结果你发现匹配出很多它被调用的位置，而不是它定义的位置。那你应该想，是不是能有更快的方法来做这件事情。</p>
+<p>通过阅读帮助文件，你发现有跳转到tags的命令。文档解释了如何使用命令来跳转到函数定义位置，这正是你需要的。因此，你需要用程序ctags生成tags文件，然后使用命令<code>CTRL-]</code>来跳转到函数定义位置。为了自动生成tags文件，你还可以把相关命令写到Makefile中。</p>
+<p>当你使用上述三个步骤时，还需要注意的是：</p>
+<ul>
+<li><strong>工欲善其事，必先利其器</strong>。“我只想把工作完成，我没有时间看帮助文件来找合适的新命令”。如果你这么想，你永远将停步不前。</li>
+<li><strong>过犹不及</strong>。如果对每件事情，你都想要找到完美的命令，那么你将没有时间来思考你本该完成的工作。仅仅选出那些会花费你更多时间的动作，然后学习完成这些动作的命令，这样你就可以专心在真正的工作上了。</li>
+</ul>
+<h2 id="2、相同的事情不做第二次："><a href="#2、相同的事情不做第二次：" class="headerlink" title="2、相同的事情不做第二次："></a>2、相同的事情不做第二次：</h2><p>我们需要编辑的词语是有限的，甚至是局限在某些短语或句子里，比如在计算机程序中关键词集合是固定的。很显然，你不想两次输入完全相同的内容。</p>
+<p>很多时候，你想把某个单词改变为另一个。如果需要在整个文件里完成这件事情，你可以使用替换命令<code>:s</code>来做。但如果只有某几个地方需要替换，一种方式是用命令<code>*</code>找到它出现的下个位置，并用命令<code>cw</code>来替换这个词。然后按下<code>n</code>跳到下一个位置，并按下<code>.</code>重复<code>cw</code>命令。</p>
+<p>按下<code>.</code>可以重复上一个编辑命令，比如插入、删除、替换等。如果你在重新组织你的文件，有很多地方需要作出变化。那么你可以将某一种编辑用命令<code>.</code>做完，然后再去做另一种编辑。而那些需要作出变化的位置可以用命令<code>m</code>做好标记。</p>
+<p>某些函数名或变量名输入起来非常费劲，且容易出错。Vim提供了补全机制使这件事情更容易完成。当你写下名字的一部分时，可以通过命令<code>CTRL-N</code>来进行补全。</p>
+<p>当你需要重复输入一个短语或一段话时，Vim提供了宏录制的功能。你可以按下<code>qa</code>开始录制，你的所有操作将记录到寄存器’a’里面，按下<code>q</code>停止录制。当你想重复这些命令时，你只需要按下<code>@a</code>就可以了。</p>
+<p>当那些你需要重复的命令变得复杂时，想要一次正确输入它们将变得很困难。这时，你应该写一个脚本或宏来完成。比如，你可以为你的代码写一些模板，像函数头等等。</p>
+<h2 id="3、错了就改："><a href="#3、错了就改：" class="headerlink" title="3、错了就改："></a>3、错了就改：</h2><p>没有人可以避免在输入的时候不出错，这时你需要做的就是快速定位并改正它。编辑器应该帮助你完成这件事情，但你需要告诉编辑器哪些是对的、哪些是错的。</p>
+<p>你可能会重复写错某个单词，这可以用缩写来纠正，比如，<code>:abbr Lunix Linux</code>、<code>:abbr accross across</code>、<code>:abbr hte the</code>。当你输入错误的单词时，编辑器会自动纠正它们。</p>
+<p>同样的原理可以用于简化输入，尤其是那些你觉得打起来比较麻烦的词语。比如，<code>:abbr pn penguin</code>、<code>:abbr MS Mandrake Software</code>。</p>
+<p>识别错误还可以用语法高亮的方式来解决。也就是对程序进行语法高亮，并标记错误出现的位置，比如，书写错误、注释错了、括号不匹配之类的。</p>
+<h1 id="第二部分：编辑多个文件"><a href="#第二部分：编辑多个文件" class="headerlink" title="第二部分：编辑多个文件"></a>第二部分：编辑多个文件</h1><h2 id="4、文件总是相关联的"><a href="#4、文件总是相关联的" class="headerlink" title="4、文件总是相关联的"></a>4、文件总是相关联的</h2><p>通常我们不会只编辑一个文件，而是在许多相互关联的文件之间来回切换，甚至有时同时编辑多个文件。因此，我们需要编辑器帮助我们更加高效地编辑多个文件。</p>
+<p>前面提到的标签功能可以在多个文件之间跳转。通常的做法是为整个工程生成一个标签文件。这样，我们可以在当前工程中多个文件之间快速跳转，从而找到函数、结构体、宏等。与手动查找相比，跳转能节约的时间是非常可观的。因此，在浏览程序的第一件事就是为其生成标签文件。</p>
+<p>另一个很重要的功能是在多个文件中找到某个词语出现的所有地方，这可以使用<code>:grep</code>命令。Vim会列出匹配的结果，并跳转到第一个匹配处。命令<code>:cn</code>会跳转到下一个匹配处。当你需要改变某个函数的调用参数时，这将非常有用。</p>
+<p>头文件包含许多有用的信息。但是在include文件中找到所需的定义需要花费大量时间。Vim会自动解析头文件，并搜索它们从而找到你需要的词。最常用的操作就是查找函数原型。在光标处使用命令<code>[I:</code>，Vim会列出当前光标所在词语在所有头文件中的匹配列表。如果你需要查看更多的上下文，你可以直接跳转到其定义的位置。类似的命令也可以用来检查你是否包含了正确的头文件。</p>
+<p>在Vim中，编辑区域可以分割为多个窗口，从而对多个不同的文件进行编辑。这样你可以同时对两个或多个文件的内容进行对比，并在它们之间进行拷贝粘贴。关于打开和关闭窗口、窗口间跳转、临时隐藏某个文件等等，有许多有用的命令。同样地，你可以采用前面列出的三个基本步骤来判断你需要学习哪些命令。</p>
+<p>多窗口还有更多的用处。预览标签就是个很好的例子。保持光标在当前编辑位置不变，通过打开一个特殊的预览窗口显示当前光标下函数的定义。如果你把光标移动到另一个函数名上，那么预览窗口会显示这个函数的定义。这种方式同样适用于使用头文件的情况。</p>
+<h2 id="5、协同工作"><a href="#5、协同工作" class="headerlink" title="5、协同工作"></a>5、协同工作</h2><p>编辑器用来编辑文本，email程序用来发送接收消息，操作系统用来运行程序。每个程序有自己擅长的事情。因此，将多个程序联合起来将可以完成更多地工作。</p>
+<p>一个简单的例子：你需要写一个不超过500个词的总结。你可以选择当前段落并把它写到wc程序中来统计字数，命令为<code>:w !wc -w</code>。其中，<code>wc -w</code>是用来统计单词数的。</p>
+<p>编辑器是不可能包罗所有的功能的。使用其他程序进行过滤文本意味着你可以额外地增加其他功能。Unix哲学之一就是每个程序只专注地完成一种功能，联合起来完成更复杂的功能。很不幸，大多数编辑器不能和其他程序联合工作。例如，你不能把Netscape中的email编辑器替换成其他的编辑器。这使得很多时候你只能使用半残的编辑器。另一个极端是在编辑器中包含各种各样的功能。Emacs是一个很好的例子（有时它被称为一个可以用来编辑文本的操作系统）。</p>
+<p>Vim尝试与其他程序进行联合，但这也并不那么容易。目前还无法在MS开发工具、Sniff中把Vim当做编辑器。一些email程序支持外部编辑器，比如Mutt。总之，在多个程序间协同工作还需要改进，这样我们才可能获得一个比各部分之和更好的系统。</p>
+<h2 id="6、格式化文本"><a href="#6、格式化文本" class="headerlink" title="6、格式化文本"></a>6、格式化文本</h2><p>我们经常需要编辑具有某种结构的文本，只是文本的语法有所不同。因此，你可能需要根据文本的语法重新书写相应的插件。这是一件比较复杂的事情。</p>
+<p>一种相对简单的事情是借鉴“编辑-编译-修改”循环流程。Vim可以使用<code>:make</code>命令进行编译，并显示错误信息从而跳转到相应位置进行修改。你不需要针对该编译器写新的插件，你只需要调整<code>errorformat</code>选项即可。它会告诉Vim错误是什么形式的，应该如何跳转到相应位置。对于复杂的gcc编译错误都能搞定，因而其它大多数的编译器也是没有问题的。</p>
+<p>有些时候，对于一种类型的文件仅仅是设置一些选项或写一些宏就可以搞定的。比如，跳转到帮助文件，你可以写一个宏提取当前光标的词语，清除缓存并将帮助内容读取到缓存中。这是进行交叉查询的一种简单且高效地方法。</p>
+<p>通过前面提到的三个基本步骤，你可以很高效地对任何一种结构化文件进行编辑。记住你需要对这种文件经常要做的操作，找到可以完成这些操作的命令并记住它们。听起来很简单，你只需要开始做。</p>
+<h1 id="第三部分：勤加练习"><a href="#第三部分：勤加练习" class="headerlink" title="第三部分：勤加练习"></a>第三部分：勤加练习</h1><h2 id="7、养成习惯"><a href="#7、养成习惯" class="headerlink" title="7、养成习惯"></a>7、养成习惯</h2><p>学习驾驶汽车需要付出很多努力，难道这是你继续骑自行车的理由？你需要花费时间去学习新技能。文本编辑也不例外。你需要学习新的命令，并使之成为习惯。</p>
+<p>但是，你也不应该尝试去学习编辑器提供的所有命令。那完全是浪费时间。绝大部分人只需要学习10%到20%的命令。只是每个人的命令集合是不一样的。这需要你好好想想哪些重复的工作是可以自动化完成的。如果你只需要做一次，且不希望再次做它，那么不要尝试去优化它。但如果你意识到在过去的一个小时里你多次重复了某件事情。那么，试着查看文档需找可以加快它的速度，或者写一个宏来完成它。如果它是一个较大的任务，比如去除某种特殊排列的文本，那么你可能需要在网上找找是不是有人已经解决了类似的问题。</p>
+<p>最基本的步骤是最后一个。对于一个重复性任务，你可能找到了一个很好的解决方案，但周末之后你可能就忘掉了。你需要不断重复这种解决方案直到你可以不加思考地使用它。只有这样你才可能达到你所需要的效率。不要尝试一次学习过多的东西，每次只做一些事情效果会更好。对于那些你不是特别经常要用的命令，你可能要把它写下来，以后再用到的时候可以查询。不管怎样，如果你始终保持目标，你将找到使你编辑更加高效的方法。</p>
+<hr>
+<p>最后一点要说的，十个手指不只比两个手指高效，也没有那么累。</p>
+<blockquote>
+<p>作者简介：<br>Bram Moolenaar是Vim的主要开发者。他写了Vim的核心功能，并决定哪些开发者写的代码可以进入Vim。他毕业于Delft大学计算机专业。目前，他主要做软件开发，但他还知道怎么做焊工。他是荷兰ICCF的创建者和资助者，主要是帮助乌干达的孤儿。他是系统架构方面的自由作家，但事实上在Vim上花费了他主要的精力。他的邮件是Bram@moolenaar.net。</p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[武装你的vim]]></title>
+      <url>http://blog.guantau.com/2016/08/21/vim-plugins/</url>
+      <content type="html"><![CDATA[<p>vim自带的编辑、快速移动等等强大的功能，但它还不够强大，它还可以有更多的武器。</p>
+<h2 id="1、vim插件相关："><a href="#1、vim插件相关：" class="headerlink" title="1、vim插件相关："></a>1、vim插件相关：</h2><p>（1）vundle：vim插件管理必备。<br>（2）genutils：提供了一些书写vim插件有用的函数。<br>（3）L9：同样提供了许多书写vim插件有用的函数。</p>
+<a id="more"></a>
+<h2 id="2、浏览类："><a href="#2、浏览类：" class="headerlink" title="2、浏览类："></a>2、浏览类：</h2><p>（1）minibufexpl.vim：以不同的缓冲区显示不同的文件。<br>（2）Tabbar：对文件中出现的类、函数、变量等提供概要浏览<br>（3）taglist：类似Tagbar。<br>（4）The-NERD-Tree：对目录中的文件进行浏览。</p>
+<h2 id="3、查找类"><a href="#3、查找类" class="headerlink" title="3、查找类"></a>3、查找类</h2><p>（1）文件快速查找：<br>Command-T：根据部分文件名快速找到所需要的文件，需要vim编译时支持ruby。<br>（2）文件切换：<br>FSwitch：在头文件和源文件之间快速切换。<br>（3）类/函数/变量定义查找（类C语言）：<br>cscope.vim：需要有cscope可执行程序，创建数据库后可以实现查找。</p>
+<h2 id="4、补全类："><a href="#4、补全类：" class="headerlink" title="4、补全类："></a>4、补全类：</h2><p>（1）neocomplcache：强大的补全功能，集所有的补全方式于一身。<br>（2）xptemplate：强大的snippet功能，帮助快速写代码。<br>（3）omnicppcomplete：为C/C++提供补全，在./-&gt;/::等等后面自动补全，需要ctags支持。<br>（4）pythoncomplete：为python提供补全功能。</p>
+<h2 id="5、括号配对"><a href="#5、括号配对" class="headerlink" title="5、括号配对"></a>5、括号配对</h2><p>Auto-Pairs：自动补齐成对的符号，提供了flymode来跳出多层括号。</p>
+<h2 id="6、注释类"><a href="#6、注释类" class="headerlink" title="6、注释类"></a>6、注释类</h2><p>（1）The-NERD-Commenter：快速注释功能<br>（2）自动形成doxygen风格的注释：<br>DoxygenToolkit.vim：为文件、类、函数自动形成doxygen风格的注释。</p>
+<h2 id="7、可视化显示内容："><a href="#7、可视化显示内容：" class="headerlink" title="7、可视化显示内容："></a>7、可视化显示内容：</h2><p>（1）Gundo：将undo内容用树形可读方式展示。<br>（2）Marks-Browser：将marks标记用可视化方式展示。<br>（3）Tasklist：对文件中标记TODO的内容可视化展示。<br>（4）YankRing.vim：可视化显示最近删除的内容。。</p>
+<h2 id="8、各种语言相关："><a href="#8、各种语言相关：" class="headerlink" title="8、各种语言相关："></a>8、各种语言相关：</h2><p>（1）PHP：<br>phpfolding.vim：为php提供代码折叠功能。<br>（2）python：<br>pyhon-mode-klen：为python提供了许多实用功能，包括了pylint（pep8规范性检查、语法错误检查）、rope（部分功能）、pydoc（帮助查找）<br>ropevim：为python提供了定义查找、帮助查找、代码重构等功能。<br>（3）HTML：<br>sparkup：为html代码书写提供一些实用功能。<br>（4）LaTeX：<br>vim-latex：书写latex必备插件。</p>
+<h2 id="9、版本控制："><a href="#9、版本控制：" class="headerlink" title="9、版本控制："></a>9、版本控制：</h2><p>vim-fugitive：提供Git相关功能</p>
+<h2 id="10、调试："><a href="#10、调试：" class="headerlink" title="10、调试："></a>10、调试：</h2><p>vimgdb：与gdb接口可实现可视化调试功能。</p>
+<h2 id="11、缩进："><a href="#11、缩进：" class="headerlink" title="11、缩进："></a>11、缩进：</h2><p>vim-pasta：粘贴时自动根据语法进行缩进。<br>vim-indent-guides：可视化显示缩进级别。</p>
+<h2 id="12、状态栏："><a href="#12、状态栏：" class="headerlink" title="12、状态栏："></a>12、状态栏：</h2><p>vim-powerline：可以各种设置vim状态栏。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[vim使用笔记]]></title>
+      <url>http://blog.guantau.com/2016/08/21/vim-notes/</url>
+      <content type="html"><![CDATA[<h1 id="一、vim插件管理"><a href="#一、vim插件管理" class="headerlink" title="一、vim插件管理"></a>一、vim插件管理</h1><p>作为编辑器之神，vim强大之处在于可以通过下载或编写各种插件来增强其功能，但对各种插件管理确实是个麻烦事。幸亏有相关的插件管理工具可以使用，vim常用的插件管理工具有两种：pathogen和vundle。vundle可以看作是pathogen的升级版，完全兼容pathogen，除了能够方便组织插件，还能够方便的安装、卸载、升级插件。</p>
+<p>安装vundle非常简单，输入命令</p>
+<pre><code># git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</code></pre><p>然后就可以把想要安装的插件名字写入.vimrc中即可。</p>
+<a id="more"></a>
+<p>示例文件：</p>
+<pre><code>set nocompatible          &quot; be iMproved 
+filetype off              &quot; required! 
+set rtp+=~/.vim/bundle/vundle/ 
+call vundle#rc() 
+&quot; let Vundle manage Vundle 
+&quot; required! 
+Bundle &apos;gmarik/vundle&apos; 
+&quot; My bundles here: 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+&quot; original repos on GitHub 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+Bundle &apos;tpope/vim-fugitive&apos; 
+Bundle &apos;Lokaltog/vim-easymotion&apos; 
+Bundle &apos;rstacruz/sparkup&apos;, {&apos;rtp&apos;: &apos;vim/&apos;} 
+Bundle &apos;tpope/vim-rails.git&apos; 
+Bundle &apos;Lokaltog/vim-powerline&apos; 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot; 
+&quot; vim-scripts repos http://www.vim-scripts.org/vim/scripts.html 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot; 
+&quot; Vim-script library 
+Bundle &apos;L9&apos; 
+&quot; General utility functions 
+Bundle &apos;genutils&apos; 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot; 
+&quot; non-GitHub repos 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+Bundle &apos;git://git.wincent.com/command-t.git&apos; 
+&quot; Git repos on your local machine (i.e. when working on your own plugin) 
+&quot; Bundle &apos;file:///Users/gmarik/path/to/plugin&apos; 
+&quot; ... 
+filetype plugin indent on     &quot; required! 
+&quot; 
+&quot; Brief help 
+&quot; :BundleList          - list configured bundles 
+&quot; :BundleInstall(!)    - install (update) bundles 
+&quot; :BundleSearch(!) foo - search (or refresh cache first) for foo 
+&quot; :BundleClean(!)      - confirm (or auto-approve) removal of unused bundles 
+&quot; 
+&quot; see :h vundle for more details or wiki for FAQ &quot; NOTE: comments after Bundle commands are not allowed.
+</code></pre><h1 id="二、查找类插件"><a href="#二、查找类插件" class="headerlink" title="二、查找类插件"></a>二、查找类插件</h1><h2 id="1-command-t"><a href="#1-command-t" class="headerlink" title="1. command-t"></a>1. command-t</h2><h3 id="（1）简介"><a href="#（1）简介" class="headerlink" title="（1）简介"></a>（1）简介</h3><p>command-t用于快速查找和跳转文件及缓冲区，其名称来源于TextMate中“Go to File”的快捷键Command-T。command-t的思想是文件路径名与文件名同样具有重要的标识作用，它在查找时利用了文件完整路径中的所有字符。其强大之处在于可以模糊匹配，输入的任意字符之间可以看作包含通配符。</p>
+<p>command-t采用了ruby来实现，若在安装和使用时出现错误，可以参考：<br><a href="http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu" target="_blank" rel="external">http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu</a></p>
+<h3 id="（2）使用"><a href="#（2）使用" class="headerlink" title="（2）使用"></a>（2）使用</h3><p>可以使用<code>:CommandT</code>命令打开文件跳转界面，用<code>:CommandTBuffer</code>命令打开缓冲区跳转界面。<br>如果需要对某个特定路径进行搜索时，使用<code>:CommandT path</code>。可以设置相应快捷键</p>
+<pre><code>nnoremap &lt;silent&gt; &lt;Leader&gt;ff :CommandT&lt;CR&gt;
+nnoremap &lt;silent&gt; &lt;Leader&gt;fb :CommandTBuffer&lt;CR&gt;
+</code></pre><p>在字符输入条件下有效的快捷键：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;BS&gt;</td>
+<td style="text-align:left">delete the character to the left of the cursor    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Del&gt;</td>
+<td style="text-align:left">delete the character at the cursor    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Left&gt;</td>
+<td style="text-align:left">move the cursor one character to the left   </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-h&gt;</td>
+<td style="text-align:left">move the cursor one character to the left    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Right&gt;</td>
+<td style="text-align:left">move the cursor one character to the right    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-l&gt;</td>
+<td style="text-align:left">move the cursor one character to the right    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-a&gt;</td>
+<td style="text-align:left">move the cursor to the start (left)    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-e&gt;</td>
+<td style="text-align:left">move the cursor to the end (right)    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-u&gt;</td>
+<td style="text-align:left">clear the contents of the prompt    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Tab&gt;</td>
+<td style="text-align:left">change focus to the file listing</td>
+</tr>
+</tbody>
+</table>
+<p>在文件列表条件下有效的快捷键：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;Tab&gt;</td>
+<td style="text-align:left">change focus to the prompt </td>
+</tr>
+</tbody>
+</table>
+<p>在上述两种情况下都有效的快捷键：    </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;CR&gt;</td>
+<td style="text-align:left">open the selected file    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-CR&gt;</td>
+<td style="text-align:left">open the selected file in a new split window    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-s&gt;</td>
+<td style="text-align:left">open the selected file in a new split window    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-v&gt;</td>
+<td style="text-align:left">open the selected file in a new vertical split window    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-t&gt;</td>
+<td style="text-align:left">open the selected file in a new tab    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-j&gt;</td>
+<td style="text-align:left">select next file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-n&gt;</td>
+<td style="text-align:left">select next file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Down&gt;</td>
+<td style="text-align:left">select next file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-k&gt;</td>
+<td style="text-align:left">select previous file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-p&gt;</td>
+<td style="text-align:left">select previous file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Up&gt;</td>
+<td style="text-align:left">select previous file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-c&gt;</td>
+<td style="text-align:left">cancel (dismisses file listing)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（3）其它"><a href="#（3）其它" class="headerlink" title="（3）其它"></a>（3）其它</h3><p>在查找文件、缓冲区等还有些其它的插件，比如：</p>
+<ul>
+<li>lookupfile，和Command-T相比，它支持通配符和正则表达式，但其对文件的定位能力不及Command-T。</li>
+<li>FuzzyFinder，Command-T基本涵盖FuzzyFinder所有功能。</li>
+</ul>
+<h2 id="2-FSwitch"><a href="#2-FSwitch" class="headerlink" title="2. FSwitch"></a>2. FSwitch</h2><p>在互补文件之间进行切换，互补规则以及文件位置可以由用户指定，主要用于C/C++中的头文件和源文件之间的快速切换。</p>
+<p>常用设置为：</p>
+<pre><code>au! BufEnter *.cc,*.cpp let b:fswitchdst = &apos;h&apos; | let b:fswitchlocs = &apos;reg:/src/include/,reg:|src|include/**|,../inc,../include,.&apos; 
+au! BufEnter *.h let b:fswitchdst = &apos;cc,cpp&apos; | let b:fswitchlocs = &apos;reg:/include/src/,reg:/include.*/src/,../src,../source,.&apos; 
+let g:fsnonewfiles = &quot;on&quot; 
+nmap &lt;silent&gt; &lt;Leader&gt;fo :FSHere&lt;cr&gt;
+</code></pre><h1 id="三、浏览类插件"><a href="#三、浏览类插件" class="headerlink" title="三、浏览类插件"></a>三、浏览类插件</h1><h2 id="1-minibufexpl"><a href="#1-minibufexpl" class="headerlink" title="1. minibufexpl"></a>1. minibufexpl</h2><p>可以在编辑区上方显示缓冲区名，可方便的查看并切换缓冲区。可以对其进行一定的配置：</p>
+<h3 id="（1）使用C-HJKL在窗口之间进行移动，注意这里是大写"><a href="#（1）使用C-HJKL在窗口之间进行移动，注意这里是大写" class="headerlink" title="（1）使用C-HJKL在窗口之间进行移动，注意这里是大写"></a>（1）使用C-HJKL在窗口之间进行移动，注意这里是大写</h3><pre><code>let g:miniBufExplMapWindowNavVim = 1
+</code></pre><p>为使用方便，我们可以进行额外的设置</p>
+<pre><code>nmap &lt;C-j&gt; &lt;C-W&gt;j
+nmap &lt;C-k&gt; &lt;C-W&gt;k
+nmap &lt;C-h&gt; &lt;C-W&gt;h
+nmap &lt;C-l&gt; &lt;C-W&gt;l
+</code></pre><h3 id="（2）使用-在缓冲区中进行切换"><a href="#（2）使用-在缓冲区中进行切换" class="headerlink" title="（2）使用 在缓冲区中进行切换"></a>（2）使用<c-tab> <c-s-tab>在缓冲区中进行切换</c-s-tab></c-tab></h3><pre><code>let g:miniBufExplMapCTabSwitchBufs = 1
+</code></pre><p>由于bash已有这两个键映射，我们可以使用其它的映射</p>
+<pre><code>map &lt;leader&gt;bn :bn&lt;cr&gt;
+map &lt;leader&gt;bp :bp&lt;cr&gt;
+</code></pre><h3 id="（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口"><a href="#（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口" class="headerlink" title="（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口"></a>（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口</h3><pre><code>&quot; Count buffer numbers
+function! NrBufs()
+    let i = bufnr(&apos;$&apos;)    
+    let j = 0    
+    while i &gt;= 1        
+        if buflisted(i)            
+            let j+=1        
+        endif        
+        let i-=1    
+    endwhile    
+    return j 
+endfunction 
+&quot; Close window when there is only one buffer 
+function! BufClose()    
+    let buffer_count = NrBufs()    
+    if buffer_count == 1        
+        execute(&quot;quit&quot;)    
+    else        
+        execute(&quot;bdelete&quot;)    
+    endif 
+endfunction
+nmap &lt;silent&gt; &lt;leader&gt;qq :call BufClose()&lt;cr&gt;
+</code></pre><h2 id="2-The-NERD-Tree"><a href="#2-The-NERD-Tree" class="headerlink" title="2. The-NERD-Tree"></a>2. The-NERD-Tree</h2><p>以树形的方式显示文件列表，可以映射显示的快捷键：</p>
+<pre><code>nmap &lt;silent&gt; &lt;leader&gt;tt :NERDTreeToggle&lt;cr&gt;
+</code></pre><p>当然，它还提供了很多书签之类的功能，可以参考其文档。</p>
+<h2 id="3-taglist"><a href="#3-taglist" class="headerlink" title="3. taglist"></a>3. taglist</h2><p>支持多种语言的源码浏览，包括C/C++、java、perl、python、tcl、sql、php等。常用设置：</p>
+<pre><code>let Tlist_Ctags_Cmd = &apos;ctags&apos; 
+let Tlist_Show_One_File = 1 
+let Tlist_Exit_OnlyWindow = 1 
+let Tlist_Use_Right_Window = 1
+nmap &lt;silent&gt; &lt;leader&gt;tl :Tlist&lt;cr&gt;
+</code></pre><h2 id="4-tagbar"><a href="#4-tagbar" class="headerlink" title="4. tagbar"></a>4. tagbar</h2><p>与taglist类似，但它对其对tag的组织是按照所在范围进行组织，与taglist按照通用类别如‘function’或‘variable’组织方式不同。常用设置：</p>
+<pre><code>let g:tagbar_width = 40 
+let g:tagbar_expand = 1 
+nmap &lt;silent&gt; &lt;Leader&gt;tb :TagbarToggle&lt;cr&gt;
+</code></pre><h1 id="四、补全类插件"><a href="#四、补全类插件" class="headerlink" title="四、补全类插件"></a>四、补全类插件</h1><p>vim内置有很多补全方式：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">补全方式</th>
+<th style="text-align:left">快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">整行补全</td>
+<td style="text-align:left">CTRL-X CTRL-L</td>
+</tr>
+<tr>
+<td style="text-align:left">根据当前文件里关键字补全</td>
+<td style="text-align:left">CTRL-X CTRL-N 或 CTRL-X CTRL-P</td>
+</tr>
+<tr>
+<td style="text-align:left">根据头文件内关键字补全</td>
+<td style="text-align:left">CTRL-X CTRL-I</td>
+</tr>
+<tr>
+<td style="text-align:left">根据标签补全</td>
+<td style="text-align:left">CTRL-X CTRL-]</td>
+</tr>
+<tr>
+<td style="text-align:left">补全宏定义</td>
+<td style="text-align:left">CTRL-X CTRL-D</td>
+</tr>
+<tr>
+<td style="text-align:left">补全文件名</td>
+<td style="text-align:left">CTRL-X CTRL-F</td>
+</tr>
+<tr>
+<td style="text-align:left">补全vim命令</td>
+<td style="text-align:left">CTRL-X CTRL-V</td>
+</tr>
+<tr>
+<td style="text-align:left">全能补全</td>
+<td style="text-align:left">CTRL-X CTRL-O，即omni补全</td>
+</tr>
+<tr>
+<td style="text-align:left">用户自定义补全方式</td>
+<td style="text-align:left">CTRL-X CTRL-U</td>
+</tr>
+<tr>
+<td style="text-align:left">根据字典补全</td>
+<td style="text-align:left">CTRL-X CTRL-K</td>
+</tr>
+<tr>
+<td style="text-align:left">拼写建议</td>
+<td style="text-align:left">CTRL-X CTRL-S</td>
+</tr>
+<tr>
+<td style="text-align:left">根据同义词字典补全</td>
+<td style="text-align:left">CTRL-X CTRL-T</td>
+</tr>
+</tbody>
+</table>
+<p>除此之外，还有很多插件也提供了更为便捷的补全方法</p>
+<h2 id="1-neocomplcache"><a href="#1-neocomplcache" class="headerlink" title="1. neocomplcache"></a>1. neocomplcache</h2><p>非常强大的自动补全插件，可以智能识别需要用哪种模式来补全代码，配置后可以实现使用tab在补全代码之间跳转，并使用Enter来输入选中的代码。</p>
+<p>典型配置：</p>
+<pre><code>&quot; Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+&quot; Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+&quot; Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+&quot; Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+&quot; Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+&quot; Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = &apos;\*ku\*&apos;
+&quot; Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {    \ 
+&apos;default&apos; : &apos;&apos;,    \ 
+&apos;vimshell&apos; : $HOME.&apos;/.vimshell_hist&apos;,    \ 
+&apos;scheme&apos; : $HOME.&apos;/.gosh_completions&apos;    \ 
+} 
+&quot; Define keyword. 
+if !exists(&apos;g:neocomplcache_keyword_patterns&apos;)    
+let g:neocomplcache_keyword_patterns = {} 
+endif 
+let g:neocomplcache_keyword_patterns[&apos;default&apos;] = &apos;\h\w*&apos; 
+&quot; Plugin key-mappings. 
+inoremap &lt;expr&gt;&lt;C-g&gt;     neocomplcache#undo_completion() 
+inoremap &lt;expr&gt;&lt;C-l&gt;     neocomplcache#complete_common_string() 
+&quot; Recommended key-mappings. 
+&quot; &lt;CR&gt;: close popup and save indent. 
+inoremap &lt;expr&gt;&lt;CR&gt;  neocomplcache#smart_close_popup() . &quot;\&lt;CR&gt;&quot; 
+&quot; &lt;TAB&gt;: completion. 
+inoremap &lt;expr&gt;&lt;TAB&gt;  pumvisible() ? &quot;\&lt;C-n&gt;&quot; : &quot;\&lt;TAB&gt;&quot; 
+&quot; &lt;C-h&gt;, &lt;BS&gt;: close popup and delete backword char. 
+inoremap &lt;expr&gt;&lt;C-h&gt; neocomplcache#smart_close_popup().&quot;\&lt;C-h&gt;&quot; 
+inoremap &lt;expr&gt;&lt;BS&gt; neocomplcache#smart_close_popup().&quot;\&lt;C-h&gt;&quot; 
+inoremap &lt;expr&gt;&lt;C-y&gt;  neocomplcache#close_popup() 
+inoremap &lt;expr&gt;&lt;C-e&gt;  neocomplcache#cancel_popup() 
+inoremap &lt;expr&gt;&lt;Enter&gt;  pumvisible() ? &quot;\&lt;C-Y&gt;&quot; : &quot;\&lt;Enter&gt;&quot; 
+&quot; AutoComplPop like behavior. 
+let g:neocomplcache_enable_auto_select = 1
+</code></pre><h2 id="2-snipMate"><a href="#2-snipMate" class="headerlink" title="2. snipMate"></a>2. snipMate</h2><p>snipMate可以对各种语言进行补全，从而快速插入代码块。其默认使用的补全键为Tab，这与其它一些补全插件可能有冲突，按照其文档说明可以对其进行重定义：</p>
+<pre><code>ino &lt;c-j&gt; &lt;c-r&gt;=TriggerSnippet()&lt;cr&gt; 
+snor &lt;c-j&gt; &lt;esc&gt;i&lt;right&gt;&lt;c-r&gt;=TriggerSnippet()&lt;cr&gt;
+</code></pre><h2 id="3-Auto-Pairs"><a href="#3-Auto-Pairs" class="headerlink" title="3. Auto-Pairs"></a>3. Auto-Pairs</h2><p>可以成对地自动插入和删除括号、引号等等，并可以自动定位到括号或引号的尾部。</p>
+<h1 id="五、注释类插件"><a href="#五、注释类插件" class="headerlink" title="五、注释类插件"></a>五、注释类插件</h1><h2 id="1-The-NERD-Commenter"><a href="#1-The-NERD-Commenter" class="headerlink" title="1. The NERD Commenter"></a>1. The NERD Commenter</h2><p>可对多种类型的文件进行快速注释与取消，常用的快捷键有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;leader&gt;cc</td>
+<td style="text-align:left">注释当前行或选中的块</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;cu</td>
+<td style="text-align:left">取消注释当前行或选中的块</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;ci</td>
+<td style="text-align:left">取反注释状态</td>
+</tr>
+</tbody>
+</table>
+<h1 id="六、标签类插件"><a href="#六、标签类插件" class="headerlink" title="六、标签类插件"></a>六、标签类插件</h1><h2 id="1-ShowMarks"><a href="#1-ShowMarks" class="headerlink" title="1. ShowMarks"></a>1. ShowMarks</h2><p>智能插入标签以及可视化展示标签，常用的快捷键有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;leader&gt;mt</td>
+<td style="text-align:left">可视化开关</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;mh</td>
+<td style="text-align:left">隐藏当前标签</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;ma</td>
+<td style="text-align:left">隐藏缓冲区中所有标签</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;mm</td>
+<td style="text-align:left">自动添加标签</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-Marks-Browser"><a href="#2-Marks-Browser" class="headerlink" title="2. Marks-Browser"></a>2. Marks-Browser</h2><p>显示当前文件的标签列表，可设置快捷键：</p>
+<pre><code>nmap &lt;silent&gt; &lt;leader&gt;mk :MarksBrowser&lt;cr&gt;
+</code></pre><p>由于插件默认在窗口上方打开列表，在退出时与minibufexpl有一些冲突，使得minibufexpl显示不正常。<br>可以在插件源码中将显示位置改为下方：<br>在marksbrowser的第60行，将</p>
+<pre><code>exec &quot;to sp&quot; . escape(s:win_title, &apos; &apos;)
+</code></pre><p>改为</p>
+<pre><code>exec &quot;bo sp&quot; . escape(s:win_title, &apos; &apos;)
+</code></pre><h2 id="3-Tasklist"><a href="#3-Tasklist" class="headerlink" title="3. Tasklist"></a>3. Tasklist</h2><p>类似eclipse的任务列表，自动抽取文件中的FIXME、TODO、XXX或自定义关键词，并形成列表展示。</p>
+<h2 id="4-YankRing"><a href="#4-YankRing" class="headerlink" title="4. YankRing"></a>4. YankRing</h2><p>vim本身提供了最近9次删除记录，用<code>registers</code>命令可以查看，用<code>&quot;1p</code>可以粘贴最近删除内容，<code>&quot;2p</code>可以粘贴上次的删除内容。但是vim没有提供记录复制的内容，yankring则将vim中所有的改动记录下来，并提供一个列表用来粘贴想要的内容。可设置快捷键：</p>
+<pre><code>let g:yankring_enabled=1
+let g:yankring_history_file=&apos;.yankring_history_file&apos;
+map &lt;leader&gt;yr :YRShow&lt;cr&gt;
+</code></pre><h1 id="七、python相关插件"><a href="#七、python相关插件" class="headerlink" title="七、python相关插件"></a>七、python相关插件</h1><h2 id="1-Python-mode-klen"><a href="#1-Python-mode-klen" class="headerlink" title="1. Python-mode-klen"></a>1. Python-mode-klen</h2><p>集成了包括pylint、ropevim、pydoc、pyflakes、pep8和mccabe等插件，可以方便的进行静态检查、代码重构、折叠、补全、查看文档等等。</p>
+<h3 id="（1）快速浏览"><a href="#（1）快速浏览" class="headerlink" title="（1）快速浏览"></a>（1）快速浏览</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">[[</td>
+<td style="text-align:left">Jump to previous class or function (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">]]</td>
+<td style="text-align:left">Jump to next class or function  (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">[M</td>
+<td style="text-align:left">Jump to previous class or method (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">]M</td>
+<td style="text-align:left">Jump to next class or method (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">aC</td>
+<td style="text-align:left">Select a class. Ex: vaC, daC, yaC, caC (normal, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">iC</td>
+<td style="text-align:left">Select inner class. Ex: viC, diC, yiC, ciC (normal, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">aM</td>
+<td style="text-align:left">Select a function or method. Ex: vaM, daM, yaM, caM (normal, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">iM</td>
+<td style="text-align:left">Select inner function or method. Ex: viM, diM, yiM, ciM (normal, operator modes)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（2）查看文档"><a href="#（2）查看文档" class="headerlink" title="（2）查看文档"></a>（2）查看文档</h3><p>利用pydoc查看文档，快捷键K会将当前光标所在词作为关键词进行查找。</p>
+<h3 id="（3）运行调试"><a href="#（3）运行调试" class="headerlink" title="（3）运行调试"></a>（3）运行调试</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">运行代码</td>
+<td style="text-align:left">&lt;leader&gt;r</td>
+</tr>
+<tr>
+<td style="text-align:left">插入断点</td>
+<td style="text-align:left">&lt;leader&gt;b</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（4）代码检查"><a href="#（4）代码检查" class="headerlink" title="（4）代码检查"></a>（4）代码检查</h3><p>支持pylint、pep257、pep8、pyflakes、mccabe等检查器，在代码保存时自动检查，自动去除多余的空格。</p>
+<p>可以使用命令<code>:PymodeLint</code>和<code>:PymodeLintToggle</code>开启检查，用<code>:PymodeLintAuto</code>自动校正pep8格式错误。</p>
+<h3 id="（5）转到定义"><a href="#（5）转到定义" class="headerlink" title="（5）转到定义"></a>（5）转到定义</h3><p>可以查看和跳转到函数和类的定义：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">转到定义</td>
+<td style="text-align:left">&lt;C-c&gt;g</td>
+</tr>
+<tr>
+<td style="text-align:left">查看定义</td>
+<td style="text-align:left">&lt;C-c&gt;d</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（6）代码重构"><a href="#（6）代码重构" class="headerlink" title="（6）代码重构"></a>（6）代码重构</h3><p>重命名光标所在的method/function/class/variables </p>
+<pre><code>let g:pymode_rope_rename_bind = &apos;&lt;C-c&gt;rr&apos;
+</code></pre><p>重命名当前模块</p>
+<pre><code>let g:pymode_rope_rename_bind = &apos;&lt;C-c&gt;rr&apos;
+</code></pre><p>根据pep8规定重排import模块</p>
+<pre><code>let g:pymode_rope_organize_imports_bind = &apos;&lt;C-c&gt;ro&apos;
+</code></pre><p>插入当前光标所在词的模块</p>
+<pre><code>let g:pymode_rope_autoimport_bind = &apos;&lt;C-c&gt;ra&apos;
+</code></pre><p>Python-mode和neocomplcache有些重叠，且neocomplcache占用了Tab键，可以在python文件中将neocomplcache禁止，并映射python-mode的补全键为tab：</p>
+<pre><code>au filetype python let g:neocomplcache_disable_auto_complete = 1
+let g:pymode_rope_completion_bind = &apos;&lt;tab&gt;&apos;
+</code></pre><p>Python-mode与minibufexpl配合时，当查看定义、运行测试时，缓冲区跳转得并不正确。可以将autoload/pymode目录下的相关文件中的wincmd p命令注释掉：</p>
+<ul>
+<li>rope.vim文件show_doc函数中，注释掉wincmd p，加上normal gg</li>
+<li>run.vim文件code_run函数中，注释掉wincmd p</li>
+<li>doc.vim文件show函数中，注释掉wincmd p</li>
+</ul>
+<h2 id="2-调试"><a href="#2-调试" class="headerlink" title="2. 调试"></a>2. 调试</h2><p>调试并没有找到比较好的插件，Python-mode与pdb、ipdb、pudb配合都有问题，vim-debug的界面并不十分友好，vimpdb插件也有问题。我比较喜欢pudb的调试界面，目前解决办法是映射快捷键调用pudb进行调试：</p>
+<pre><code>map &lt;F6&gt; :!pudb %&lt;CR&gt;
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[vim-latex-suite使用手册]]></title>
+      <url>http://blog.guantau.com/2016/08/21/vim-latex-suite/</url>
+      <content type="html"><![CDATA[<h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><blockquote>
+<p>快捷键是提高效率的不二法则，毕竟十个手指头比两个手指头要快得多。<br>使用vim-latex-suite的关键亦是如此。</p>
+</blockquote>
+<p>说明：</p>
+<ul>
+<li><code>||</code>中为在普通模式下输入的命令；</li>
+<li><code>&lt;&gt;</code>中为按键，C表示Ctrl，A表示Alt，S表示Shift；</li>
+</ul>
+<a id="more"></a>
+<h2 id="一、模板"><a href="#一、模板" class="headerlink" title="一、模板"></a>一、模板</h2><h3 id="1-使用方法"><a href="#1-使用方法" class="headerlink" title="1. 使用方法"></a>1. 使用方法</h3><p>模板存放在$VIM/ftplugin/latex-suite/templates/中，使用命令<code>|:TTemplate|</code>或者从菜单中可以调出可用的模板。</p>
+<h3 id="2-定制方法"><a href="#2-定制方法" class="headerlink" title="2. 定制方法"></a>2. 定制方法</h3><p>在$VIM/ftplugin/latex-suite/templates/中建立相应的文件即可。</p>
+<h2 id="二、包"><a href="#二、包" class="headerlink" title="二、包"></a>二、包</h2><h3 id="1-使用方法-1"><a href="#1-使用方法-1" class="headerlink" title="1. 使用方法"></a>1. 使用方法</h3><p>宏包存放在$VIM/ftplugin/latex-suite/packages/中，从菜单中或者使用按键<code>&lt;F5&gt;</code>、命令<code>|:TPackage|</code>都可以调出可用宏包。</p>
+<h3 id="2-定制方法-1"><a href="#2-定制方法-1" class="headerlink" title="2. 定制方法"></a>2. 定制方法</h3><p>在$VIM/ftplugin/latex-suite/packages/中建立相应的文件即可，可参考exmpl。</p>
+<h2 id="三、环境"><a href="#三、环境" class="headerlink" title="三、环境"></a>三、环境</h2><h3 id="1-使用方法-2"><a href="#1-使用方法-2" class="headerlink" title="1. 使用方法"></a>1. 使用方法</h3><h4 id="（1）插入"><a href="#（1）插入" class="headerlink" title="（1）插入"></a>（1）插入</h4><ul>
+<li>方法1：<code>&lt;F5&gt;</code>，读取当前行的单词并形成环境，如果是空行，则给出环境列表；</li>
+<li>方法2：<code>&lt;S-F1&gt;</code>-<code>&lt;S-F4&gt;</code>，每一个对应一个自定义的环境；</li>
+<li>方法3：使3字母序列<code>Exx</code>，第一个字母E代表Environment，后两个字母是环境名的简写，比如EFI插入figure环境。</li>
+</ul>
+<h4 id="（2）包围"><a href="#（2）包围" class="headerlink" title="（2）包围"></a>（2）包围</h4><ul>
+<li>方法1：选中需要放入环境中的内容，按<code>&lt;F5&gt;</code>；</li>
+<li>方法2：选中需要放入环境中的内容，按3字母序列，这里的3字母序列和插入中不同的在于首字母需要改为<code>&lt;,&gt;</code>，后两个字母保持不变（小写即可）；</li>
+</ul>
+<h4 id="（3）修改"><a href="#（3）修改" class="headerlink" title="（3）修改"></a>（3）修改</h4><ul>
+<li>方法1：选中需要修改环境名的内容，然后按<code>&lt;S-F5&gt;</code>，多重环境时先改变最内层环境；</li>
+</ul>
+<h3 id="2-定制方法-2"><a href="#2-定制方法-2" class="headerlink" title="2.定制方法"></a>2.定制方法</h3><p>设置变量<code>g:Tex_Env_name</code>即可，其中’name’是环境名，例如</p>
+<pre><code>let g:Tex_Env_frame = &quot;\\begin{frame}\&lt;cr&gt;\\frametitle{&lt;+title+&gt;}\&lt;cr&gt;&lt;++&gt;\&lt;cr&gt;\\end{frame}&lt;++&gt;&quot;
+</code></pre><p>有些带标签的环境可设置变量<code>g:Tex_EnvLabelprefix_name</code>，例如</p>
+<pre><code>figure, table, theorem, definition,lemma, proposition, corollary, assumption, remark, equation, eqnarray, align, multline
+</code></pre><p>默认给出的环境列表由变量<code>g:Tex_PromptedEnvironments</code>设置，默认值为</p>
+<pre><code>&apos;eqnarray\*,eqnarray, equation,equation\*,\[,$$,align,align\*&apos;
+</code></pre><p><code>&lt;S-F1&gt;</code>-<code>&lt;S-F4&gt;</code>对应的环境名由<code>g:Tex_HotKeyMappings</code>设置，默认值为</p>
+<pre><code>&apos;eqnarray*,eqnarray,bmatrix&apos;
+</code></pre><h2 id="四、命令"><a href="#四、命令" class="headerlink" title="四、命令"></a>四、命令</h2><h3 id="1-使用方法-3"><a href="#1-使用方法-3" class="headerlink" title="1. 使用方法"></a>1. 使用方法</h3><h4 id="（1）插入-1"><a href="#（1）插入-1" class="headerlink" title="（1）插入"></a>（1）插入</h4><ul>
+<li>方法1：<code>&lt;F7&gt;</code>，提取当前光标所在单词构成命令，如果是空单词，则给出命令列表；</li>
+</ul>
+<h4 id="（2）包围-1"><a href="#（2）包围-1" class="headerlink" title="（2）包围"></a>（2）包围</h4><ul>
+<li>方法1：选中需要放入命令的内容，按<code>&lt;F7&gt;</code>；</li>
+</ul>
+<h4 id="（3）修改-1"><a href="#（3）修改-1" class="headerlink" title="（3）修改"></a>（3）修改</h4><ul>
+<li>方法1：选中需要修改命令名的内容，按<code>&lt;S-F7&gt;</code>。</li>
+</ul>
+<h3 id="2-定制方法-3"><a href="#2-定制方法-3" class="headerlink" title="2. 定制方法"></a>2. 定制方法</h3><p>设置变量<code>g:Tex_Com_name</code>即可，其中’name’是变量名。</p>
+<p>默认给出的命令列表由变量<code>g:Tex_PromptedCommands</code>控制，默认值为</p>
+<pre><code>&apos;footnote,cite,pageref,label&apos;
+</code></pre><h2 id="五、参考文献"><a href="#五、参考文献" class="headerlink" title="五、参考文献"></a>五、参考文献</h2><h3 id="1-使用方法-4"><a href="#1-使用方法-4" class="headerlink" title="1. 使用方法"></a>1. 使用方法</h3><p>共提供四种插入模式：<code>BBB</code>、<code>BBL</code>、<code>BBH</code>和<code>BBX</code>。<br>它们的插入方式是一致的，输入后会提示需要插入的文献类型。</p>
+<ul>
+<li><code>BBB</code>仅插入该种文献所需的最少字段；</li>
+<li><code>BBL</code>插入该种文献常用的字段；</li>
+<li><code>BBH</code>插入一些更多的字段；</li>
+<li><code>BBX</code>则插入所有的字段。</li>
+</ul>
+<h3 id="2-定制方法-4"><a href="#2-定制方法-4" class="headerlink" title="2. 定制方法"></a>2. 定制方法</h3><p>如果需要定制不同插入模式下的字段，那么需要修改全局变量<code>g:Bib_{type}_options</code></p>
+<p>该变量在文件$VIM/ftplugin/bib.vim中定义，{type}是文献类型，比如’article’、’book’等。<br>变量取值如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>对应的字段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>w</td>
+<td>address</td>
+</tr>
+<tr>
+<td>a</td>
+<td>author</td>
+</tr>
+<tr>
+<td>b</td>
+<td>booktitle</td>
+</tr>
+<tr>
+<td>c</td>
+<td>chapter</td>
+</tr>
+<tr>
+<td>d</td>
+<td>edition</td>
+</tr>
+<tr>
+<td>e</td>
+<td>editor</td>
+</tr>
+<tr>
+<td>h</td>
+<td>howpublished</td>
+</tr>
+<tr>
+<td>i</td>
+<td>institution</td>
+</tr>
+<tr>
+<td>k</td>
+<td>isbn</td>
+</tr>
+<tr>
+<td>j</td>
+<td>journal</td>
+</tr>
+<tr>
+<td>m</td>
+<td>month</td>
+</tr>
+<tr>
+<td>z</td>
+<td>note</td>
+</tr>
+<tr>
+<td>n</td>
+<td>number</td>
+</tr>
+<tr>
+<td>o</td>
+<td>organization</td>
+</tr>
+<tr>
+<td>p</td>
+<td>pages</td>
+</tr>
+<tr>
+<td>q</td>
+<td>publisher</td>
+</tr>
+<tr>
+<td>r</td>
+<td>school</td>
+</tr>
+<tr>
+<td>s</td>
+<td>series</td>
+</tr>
+<tr>
+<td>t</td>
+<td>title</td>
+</tr>
+<tr>
+<td>u</td>
+<td>type</td>
+</tr>
+<tr>
+<td>v</td>
+<td>volume</td>
+</tr>
+<tr>
+<td>y</td>
+<td>year</td>
+</tr>
+</tbody>
+</table>
+<p>比如，默认条件下使用<code>BBB</code>插入’article’</p>
+<pre><code>@ARTICLE{&lt;+key+&gt;,
+    author = {&lt;++&gt;},
+    title = {&lt;++&gt;},
+    journal = {&lt;++&gt;},
+    year = {&lt;++&gt;},
+    otherinfo = {&lt;++&gt;}
+}&lt;++&gt;
+</code></pre><p>当定义<code>g:Bib_article_options</code>为’mnp’，则使用<code>BBB</code>插入’article’为</p>
+<pre><code>@ARTICLE{&lt;+key+&gt;,
+    author = {&lt;++&gt;},
+    title = {&lt;++&gt;},
+    journal = {&lt;++&gt;},
+    year = {&lt;++&gt;},
+    month = {&lt;++&gt;},
+    number = {&lt;++&gt;},
+    pages = {&lt;++&gt;},
+    otherinfo = {&lt;++&gt;}
+}&lt;++&gt;
+</code></pre><p>如果还有一些上面没有列出来的字段需要插入，则需要定义全局变量<br><code>g:Bib_article_extrafields</code></p>
+<p>比如定义</p>
+<pre><code>let g:Bib_article_extrafields = &quot;crossref\nabstract&quot;
+</code></pre><p>则’article’的模板会多出两个字段</p>
+<pre><code>crossref = {&lt;++&gt;},
+abstract = {&lt;++&gt;},
+</code></pre><h2 id="六、编译及查看"><a href="#六、编译及查看" class="headerlink" title="六、编译及查看"></a>六、编译及查看</h2><p>使用按键<code>\ll</code>开始编译。<br>变量<code>g:Tex_CompileRule_&lt;format&gt;</code>设置编译规则，<format>是”pdf”、”dvi”等。<br>设置编译依赖，比如</format></p>
+<pre><code>.tex -&gt; .dvi -&gt; .ps -&gt; .pdf
+</code></pre><p>可以设置为</p>
+<pre><code>let g:Tex_FormatDependency_pdf = &apos;dvi,ps,pdf&apos;
+</code></pre><p>同时需要设定编译规则</p>
+<pre><code>let g:Tex_CompileRule_dvi = &apos;latex --interaction=nonstopmode $*&apos;
+let g:Tex_CompileRule_ps = &apos;dvips -Ppdf -o $*.ps $*.dvi&apos;
+let g:Tex_CompileRule_pdf = &apos;ps2pdf $*.ps&apos;
+</code></pre><p>只编译部分文件，选择模式下选择一部分内容，然后使用\ll编译这一部分内容，用\lv来查看结果。对应的命令是<code>|:TPartComp|</code>和<code>|:TPartView|</code>。</p>
+<p>查看使用<code>\lv</code>。规则使用变量<code>g:Tex_ViewRule_&lt;format&gt;</code>来定义。</p>
+<p>前向搜索使用<code>\ls</code>。在Mac上，需要设置<code>g:Tex_TreatMacViewerAsUNIX</code>为1</p>
+<p>反向搜索需要设置查看器与vim的沟通方式，比如</p>
+<pre><code>&quot;C:\Program Files\vim\vim61\gvim&quot; -c &quot;:RemoteOpen +%l %f&quot;
+</code></pre><h2 id="七、折叠"><a href="#七、折叠" class="headerlink" title="七、折叠"></a>七、折叠</h2><p>Latex-Suite用插件SyntaxFolds.vim来进行语法折叠。<br>折叠是手动的，新写的内容需要按<code>&lt;F6&gt;</code>或<code>\rf</code>来开启折叠。</p>
+<p>有一系列变量用来控制折叠<br><code>g:Tex_FoldedSections</code>控制哪些节需要折叠，默认值为</p>
+<pre><code>part,chapter,section,subsection,subsubsection,paragraph
+</code></pre><p><code>g:Tex_FoldedEnvironments</code>控制哪些环境需要折叠，默认值为</p>
+<pre><code>verbatim,comment,eq,gather,
+align,figure,table,thebibliography,
+keywords,abstract,titlepage
+</code></pre><p><code>g:Tex_FoldedCommands</code>控制哪些命令需要折叠，默认值为空。<br><code>g:Tex_FoldedMisc</code>控制一些其他需要折叠的内容，默认值为</p>
+<pre><code>item,preamble,&lt;&lt;&lt;
+</code></pre><h2 id="八、多文件工程"><a href="#八、多文件工程" class="headerlink" title="八、多文件工程"></a>八、多文件工程</h2><p>假设有如下工程结构</p>
+<pre><code>thesis/
+    main.tex
+    abstract.tex
+    intro/
+        intro.tex
+        figures/
+            fig1.eps
+            fig2.eps
+    chapter1/
+        chap1.tex
+        figures/
+            fig1.eps
+    conclusion/
+        conclusion.tex
+        figures/
+</code></pre><p>main.tex文件如下</p>
+<pre><code>% file: main.tex
+\documentclass{report}
+\begin{document}
+
+\input{abstract.tex}
+\input{intro/intro.tex}
+\input{chapter1/chap1.tex}
+\input{conclusion/conclusion.tex}
+
+\end{document}
+</code></pre><p>只需要创建一个空文件main.tex.latexmain就可以表明main.tex是主文件。</p>
+<h2 id="九、常用快捷键"><a href="#九、常用快捷键" class="headerlink" title="九、常用快捷键"></a>九、常用快捷键</h2><h3 id="1-章节"><a href="#1-章节" class="headerlink" title="1. 章节"></a>1. 章节</h3><p>可使用3字母序列<code>Sxx</code>进行插入和修改。</p>
+<h3 id="2-字体"><a href="#2-字体" class="headerlink" title="2. 字体"></a>2. 字体</h3><p>可使用3字母序列<code>Fxx</code>进行插入和修改。</p>
+<h3 id="3-希腊字母"><a href="#3-希腊字母" class="headerlink" title="3. 希腊字母"></a>3. 希腊字母</h3><p>`a至`z分别代表\alpha到\zeta，大写情况也类似（但不支持所有大写希腊字母）。</p>
+<h3 id="4-智能按键"><a href="#4-智能按键" class="headerlink" title="4. 智能按键"></a>4. 智能按键</h3><p><code>...</code>在数学模式外是\ldots，在数学模式中是\cdots</p>
+<h3 id="5-补全"><a href="#5-补全" class="headerlink" title="5. 补全"></a>5. 补全</h3><p>用<code>&lt;F9&gt;</code>可以进行各种类型的补全，包括引用补全（\ref、\eqref、\cite）、文件名补全、命令参数补全。通常需要设置</p>
+<pre><code>set grepprg=grep\ -nH\ $*
+</code></pre><h3 id="6-Auc-Tex中的一些快捷键"><a href="#6-Auc-Tex中的一些快捷键" class="headerlink" title="6. Auc-Tex中的一些快捷键"></a>6. Auc-Tex中的一些快捷键</h3><p>数学环境中：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>对应的命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`^</td>
+<td>\Hat{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`_</td>
+<td>\bar{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`6</td>
+<td>\partial</td>
+</tr>
+<tr>
+<td>`8</td>
+<td>\infty</td>
+</tr>
+<tr>
+<td>`/</td>
+<td>\frac{&lt;++&gt;}{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`%</td>
+<td>\frac{&lt;++&gt;}{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`@</td>
+<td>\circ</td>
+</tr>
+<tr>
+<td>`0</td>
+<td>^\circ</td>
+</tr>
+<tr>
+<td>`=</td>
+<td>\equiv</td>
+</tr>
+<tr>
+<td>`\</td>
+<td>\setminus</td>
+</tr>
+<tr>
+<td>`.</td>
+<td>\cdot</td>
+</tr>
+<tr>
+<td>`*</td>
+<td>\times</td>
+</tr>
+<tr>
+<td>`&amp;</td>
+<td>\wedge</td>
+</tr>
+<tr>
+<td>`-</td>
+<td>\bigcap</td>
+</tr>
+<tr>
+<td>`+</td>
+<td>\bigcup</td>
+</tr>
+<tr>
+<td>`(</td>
+<td>\subset</td>
+</tr>
+<tr>
+<td>`)</td>
+<td>\supset</td>
+</tr>
+<tr>
+<td>`&lt;</td>
+<td>\le</td>
+</tr>
+<tr>
+<td>`&gt;</td>
+<td>\ge</td>
+</tr>
+<tr>
+<td>`,</td>
+<td>\nonumber</td>
+</tr>
+<tr>
+<td>`~</td>
+<td>\tilde{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`;</td>
+<td>\dot{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`:</td>
+<td>\ddot{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`2</td>
+<td>\sqrt{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+<tr>
+<td>`&#124;</td>
+<td>\Big&#124;</td>
+</tr>
+<tr>
+<td>`I</td>
+<td>\int_{&lt;++&gt;}^{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>visual模式下：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>对应的命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`(</td>
+<td>\left( \right)</td>
+</tr>
+<tr>
+<td>`[</td>
+<td>\left[ \right]</td>
+</tr>
+<tr>
+<td>`{</td>
+<td>\left\{ \right\}</td>
+</tr>
+<tr>
+<td>`$</td>
+<td>普通选择 $$，行选择 \[ \]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-Alt相关"><a href="#7-Alt相关" class="headerlink" title="7. Alt相关"></a>7. Alt相关</h3><p>默认条件下Alt键是菜单栏的热键，如果有冲突则需要设置</p>
+<pre><code>set winaltkeys=no
+</code></pre><ul>
+<li><code>&lt;Alt-L&gt;</code><br>在插入模式下，根据当前光标前的字符，插入不同的命令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>光标之前的字符</th>
+<th>对应的命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(</td>
+<td>\left( &lt;++&gt; \right)</td>
+</tr>
+<tr>
+<td>[</td>
+<td>\left[ &lt;++&gt; \right]</td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td>\left&#124; &lt;++&gt; \right&#124;</td>
+</tr>
+<tr>
+<td>{</td>
+<td>\left{ &lt;++&gt; \right}</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>\langle &lt;++&gt; \rangle</td>
+</tr>
+<tr>
+<td>q</td>
+<td>\lefteqn{&lt;++&gt;}&lt;++&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>如果当前光标前面没有任何字符，则插入\label{&lt;++&gt;}。</p>
+<ul>
+<li><p><code>&lt;Alt-B&gt;</code><br>插入模式中将前面的字符包含在命令\mathbf{}中。</p>
+</li>
+<li><p><code>&lt;Alt-C&gt;</code><br>在插入模式下，<br>如果前面的字符是字母或数字，则变成大写并包含在命令\mathcal{}中；<br>其它情况下插入\cite{}。<br>在选择模式下，将选择的字符包含在\mathcal{}中。</p>
+</li>
+<li><p><code>&lt;Alt-I&gt;</code><br>根据不同的环境插入\item</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>环境名</th>
+<th>样式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>itemize</td>
+<td>\item</td>
+</tr>
+<tr>
+<td>enumerate</td>
+<td>\item</td>
+</tr>
+<tr>
+<td>theindex</td>
+<td>\item</td>
+</tr>
+<tr>
+<td>thebibliography</td>
+<td>\item[&lt;+biblabel+&gt;]{&lt;+bibkey+&gt;} &lt;++&gt;</td>
+</tr>
+<tr>
+<td>description</td>
+<td>\item[&lt;+label+&gt;] &lt;++&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>可以通过变量<code>g:TeX_ItemStyle_environment</code>进行修改。</p>
+<h2 id="十、宏定制方法"><a href="#十、宏定制方法" class="headerlink" title="十、宏定制方法"></a>十、宏定制方法</h2><h3 id="1-宏文件"><a href="#1-宏文件" class="headerlink" title="1. 宏文件"></a>1. 宏文件</h3><p>在$VIM/ftplugin/latex-suite/macros/中，每一个文件就是一个宏。<br>用命令<code>|:TMacro|</code>或从菜单上可以选择使用哪个宏。<br>可以用<code>|:TMacroNew|</code>、<code>|:TMacroEdit|</code>、<code>|:TMacroDelete|</code>进行操作。</p>
+<h3 id="2-IMAP"><a href="#2-IMAP" class="headerlink" title="2. IMAP"></a>2. IMAP</h3><p>可以通过IMAP()定制宏，其语法为</p>
+<pre><code>call IMAP (lhs, rhs, ft [, phs, phe])
+lhs 缩写
+rhs 展开的代码
+ft 适用的文件类型
+phs,phe 用来表示插入点的起始和终止符号，默认为&lt;+和+&gt;
+</code></pre><p>例如</p>
+<pre><code>:call IMAP(&apos;EFE&apos;, &quot;\\begin{figure}\&lt;CR&gt;&lt;++&gt;\\end{figure}&lt;++&gt;&quot;, &apos;tex&apos;)
+</code></pre><p>复杂一点的情况</p>
+<pre><code>call IMAP(&apos;FOO&apos;, &quot;\&lt;C-r&gt;=AskVimFunc()\&lt;CR&gt;&quot;, &apos;vim&apos;)
+&quot; Askvimfunc: Asks For Function Name And Sets Up Template
+&quot; Description:
+function! AskVimFunc()
+    let name = input(&apos;Name of the function : &apos;)
+    if name == &apos;&apos;
+        let name = &quot;&lt;+Function Name+&gt;&quot;
+    end
+    let islocal = input(&apos;Is this function scriptlocal ? [y]/n : &apos;, &apos;y&apos;)
+    if islocal == &apos;y&apos;
+        let sidstr = &apos;&lt;SID&gt;&apos;
+    else
+        let sidstr = &apos;&apos;
+    endif
+    return IMAP_PutTextWithMovement(
+        \ &quot;\&quot; &quot;.name.&quot;: &lt;+short description+&gt; \&lt;cr&gt;&quot; .
+        \ &quot;Description: &lt;+long description+&gt;\&lt;cr&gt;&quot; .
+        \ &quot;\&lt;C-u&gt;function! &quot;.name.&quot;(&lt;+arguments+&gt;)&lt;++&gt;\&lt;cr&gt;&quot; .
+        \       &quot;&lt;+function body+&gt;\&lt;cr&gt;&quot; .
+        \ &quot;endfunction \&quot; &quot;
+        \ )
+endfunction
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[那些构建工具们]]></title>
+      <url>http://blog.guantau.com/2016/08/21/build-tools/</url>
+      <content type="html"><![CDATA[<p>构建工具指的是能够帮助程序员自动完成程序编译过程的工具，而并非编译器本身。其目标是更方便更快捷地完成整个编译过程。</p>
+<p>围绕这个目标，目前已有的构建工具可谓种类繁多。诸如Eclipse、Visual Studio等大型IDE本身含有构建工具，但不纳入下面讨论的范围。</p>
+<p>构建工具的总体思路都是利用配置文件描述编译规则，然后通过输入简单的命令完成目标。各个工具在灵活性、复杂度、移植性、执行效率等方面各有千秋。下面列出的工具并没有都尝试过，有些是通过资料所得，仅供参考。</p>
+<a id="more"></a>
+<h2 id="1-Make"><a href="#1-Make" class="headerlink" title="1. Make"></a>1. Make</h2><p>Make是最经典的构建工具，Make的实现版本有不少，最有名的是GNU Make。</p>
+<p>通过书写Makefile描述依赖关系和编译命令从而自动完成编译过程。GNU Make强大之处在于可以使用丰富的Shell命令，且它可以通过文件更改时间自动判断是否需要执行编译命令。</p>
+<p>Makefile的移植性比较差，并且当源代码结构比较复杂时，手工书写Makefile是一件挺繁琐的事情。</p>
+<h2 id="2-GNU-Autotools"><a href="#2-GNU-Autotools" class="headerlink" title="2. GNU Autotools"></a>2. GNU Autotools</h2><p>Autotools是Linux系统下大型软件的默认构建工具，通过生成Makefile来完成编译过程。</p>
+<p>Autotools造就了经典的源码安装软件三步法（./configure,make,make install）。相比于传统的Make，Autotools扩展了默认编译规则，并添加了依赖检查功能，在编译各种类型目标时都要更方便。</p>
+<h2 id="3-CMake"><a href="#3-CMake" class="headerlink" title="3. CMake"></a>3. CMake</h2><p>CMake可以根据不同的平台、不同的编译器，生成相应的Makefile或者项目文件（如VCproj）。</p>
+<p>通过编写CMakeLists.txt，从而控制编译过程。CMake本身就可以看做是一种脚本语言，它不依赖于其它语言。相比GNU Autotools，CMake实现架构要更简单，运行更快。</p>
+<h2 id="4-Ant"><a href="#4-Ant" class="headerlink" title="4. Ant"></a>4. Ant</h2><p>Ant是由Apache发布的，主要用于Java开发，其编译文件格式为xml。</p>
+<p>相比Makefile写起来要长一些，但能与IDE较好的兼容，且跨平台的移植性更好。目前也有Ant的变种用来编译C/C++、C#等等。</p>
+<h2 id="5-Maven"><a href="#5-Maven" class="headerlink" title="5. Maven"></a>5. Maven</h2><p>Maven也是Apache开发的用于Java的构建工具，还包含打包及发布功能。</p>
+<p>Maven的可定制性很强，这也意味着它比较复杂，学习曲线很陡。使用时，每个工程和模块都需要定义POM（Project Object Model，采用xml描述），声明元数据、插件和库的依赖关系。首次编译时，依赖的插件和库会自动通过网络下载，并形成本地源。Maven还提供了不错的版本控制功能。这些都使得Maven适合作为工业级或大型开源软件的使用。</p>
+<h2 id="6-SCons"><a href="#6-SCons" class="headerlink" title="6. SCons"></a>6. SCons</h2><p>SCons的目标是代替经典的make，它是基于python实现的，且不需要中间步骤来完成编译过程（如生成Makefile等）。SCons的可移植性好，但在大型工程中使用时构建速度比较慢。</p>
+<h2 id="7-AAP"><a href="#7-AAP" class="headerlink" title="7. AAP"></a>7. AAP</h2><p>AAP是由Vim作者开发的基于python的构建工具，可看做是更高级的Make。</p>
+<p>AAP同样使用包含依赖关系及编译命令的配置文件，但它提供更高级的功能比如网站维护、软件分发、版本控制等。同Make相比，AAP还做了一些变化，比如通过文件签名而不是修改时间来判断是否需要重新编译，使用python脚本而不是Shell命令避免移植性问题。</p>
+<h2 id="8-qmake"><a href="#8-qmake" class="headerlink" title="8. qmake"></a>8. qmake</h2><p>qmake是由Trolltech为QT套件做的构建工具，最后生成Makefile或相关工程文件。</p>
+<h2 id="9-KConfig"><a href="#9-KConfig" class="headerlink" title="9. KConfig"></a>9. KConfig</h2><p>KConfig是基于Make的构建工具，常用来构建Linux内核以及其它底层工具（如uclibc、busybox等），它的特点是具有可视化配置界面，且构建速度很快。</p>
+<p>其它的构建工具还非常多，比如Jam、Makeit、Waf等等，在做相关的项目时，大家可以根据自己的需求进行选择。</p>
+<hr>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ol>
+<li><a href="http://www.chinaunix.net/old_jh/23/408225.html" target="_blank" rel="external">跟我一起写Makefile</a></li>
+<li><a href="http://blog.chinaunix.net/uid-20544507-id-3494422.html" target="_blank" rel="external">Makefile是如何自动生成的</a></li>
+<li><a href="http://www.cnblogs.com/sinojelly/archive/2010/05/22/1741337.html" target="_blank" rel="external">CMake入门指南</a> </li>
+<li><a href="http://tech.it168.com/j/2007-11-09/200711091344781.shtml" target="_blank" rel="external">用Ant实现Java项目的自动构建和部署</a></li>
+<li><a href="http://www.oracle.com/technetwork/cn/community/java/apache-maven-getting-started-1-406235-zhs.html" target="_blank" rel="external">Apache Maven入门</a></li>
+<li><a href="http://www.scons.org/wiki/SconsVsOtherBuildTools" target="_blank" rel="external">Scons VS Other Build Tools</a></li>
+<li><a href="http://www.a-a-p.org/" target="_blank" rel="external">AAP</a> </li>
+<li><a href="http://www.dmoz.org/Computers/Software/Build_Management/Build_Manager_Tools/" target="_blank" rel="external">Build Manager Tools</a> </li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[对于个人知识管理的认识和我常用的工具们]]></title>
+      <url>http://blog.guantau.com/2016/08/21/pkm-tools/</url>
+      <content type="html"><![CDATA[<p>个人知识管理（Personal Knowledge Management）一般是指个人通过工具建立知识体系并不断完善，进行知识的收集、消化吸收和创新的过程[1]。</p>
+<p>细究来说，与知识相关的有三个层次的概念：信息、知识、智慧。</p>
+<ol>
+<li><strong>信息</strong>：信息是客观存在的，数据是信息的载体。</li>
+<li><strong>知识</strong>：消化吸收后的信息，它们是用来解决问题的工具，除此之外，多余的信息将成为噪音。</li>
+<li><strong>智慧</strong>：创新应用后的知识。<br>但很多时候我们并不严格区分这些概念，都统称为知识。</li>
+</ol>
+<p>下面就个人知识管理的三个过程知识搜集、知识整理和知识运用中的一些工具和方法，把我的一些体会和经验与大家分享。工具和方法本身并没有好坏之分，重要的是找到适合自己的。</p>
+<a id="more"></a>
+<h1 id="一、知识搜集："><a href="#一、知识搜集：" class="headerlink" title="一、知识搜集："></a>一、知识搜集：</h1><p>按照是否有特定的搜集目标来区分，知识搜集可以分为针对性搜集和随机性收集。这两种搜集的原则是稍有区别的：</p>
+<ul>
+<li>针对性搜集的原则是：围绕着目标，花费较少的时间，得到价值较高的知识，同时能够便于知识整理和利用；</li>
+<li>随机性搜集的原则是：能够以最快的方式将得到的知识无失真地记录下来。</li>
+</ul>
+<p>我的思路是根据知识来源不同来使用工具，主力使用的工具包括evernote、wiz、zotero（其实还有很多类似的工具，这三个是我最常用的）。总的来说，我的知识收集来源主要包括以下几类：</p>
+<h2 id="1-生活点滴："><a href="#1-生活点滴：" class="headerlink" title="1. 生活点滴："></a>1. 生活点滴：</h2><p>现实世界中知识来源包括讲座会议、与人交流、个人感悟等。这是一种典型的随机性搜集，很多想法会在不经意间蹦出来。那么作为知识收集的神经末梢，要求其工具方便快捷，形式多样（文本、图像、音频、视频），能迅速同步到服务器上。</p>
+<p>早期我选用的是evernote，它方便简洁，有强大的手机客户端，可自动同步至服务器。后来主要切换到wiz，二者主体功能相差不大，主要是wiz类似资源管理器的设计更便于我后期整理。当然，对于一些敏感性的信息，随身带个笔记本是必不可少的。</p>
+<h2 id="2-书籍、期刊、文档："><a href="#2-书籍、期刊、文档：" class="headerlink" title="2. 书籍、期刊、文档："></a>2. 书籍、期刊、文档：</h2><p>知识收集中很重要的一块内容，尤其是对于专业研究，包括电子类和纸质类。这是一种典型的针对性搜集，通常是围绕某个领域或目标进行的。</p>
+<p>电子文档来源广泛、种类多样，搜集的时候最麻烦的莫过于存储文档的元数据，这里元数据指的是文档的标题、作者、日期等关键字段。zotero在这方面是比较强大的，它可以自动化地从多种源头（如IEEE、cnki等等）根据相关格式抓取并填充字段，使用鼠标拖动文件至该条目上就把文件附加于条目上，可以支持用元数据信息对文件自动重命名，还支持导出至word和bibtex中方便引用。与zotero类似的有EndNote、NoteExpress，但我感觉zotero要更加灵活一些（跨平台、小巧等）。</p>
+<p>在阅读纸质文档时经常需要做点读书笔记、画些思维导图。处理这类事情，M$ Office里面的OneNote还是不错的，后来因为它过于笨重而被我抛弃。从精简工具的角度出发，我还是使用wiz或evernote，并将产生的有关文件作为附件保存。</p>
+<h2 id="3-网络信息："><a href="#3-网络信息：" class="headerlink" title="3. 网络信息："></a>3. 网络信息：</h2><p>作为现在知识收集的一个重要来源，要求其工具能迅速从浏览器（或APP）中截取所需要的信息并保存，它的类型既有针对性的搜集也有随机性搜集。[2]中整理了一份较全的网络信息来源，稍作整理如下：</p>
+<ol>
+<li>搜索引擎类：谷歌、百度</li>
+<li>百科类：维基百科、百度百科</li>
+<li>问答社区类：知乎、百度知道、百度新知、新浪爱问</li>
+<li>文库类：百度文库、爱问共享资料、豆丁、其他专文库</li>
+<li>博客类：博客、微博、微信朋友圈</li>
+<li>信息评价类：豆瓣读书</li>
+</ol>
+<p>evernote和wiz在这方面都做得很不错，可以快速地从网页中截取所需要的信息。zotero则做得稍差，它仅简单地提供了保存网页的功能，并且无法选择需要保存的部分，所以，我觉得zotero还是更适合专业文献。至于这些信息来源的网址我通常都是用xmarks（Firefox的一个插件）进行分类保存，xmarks还会根据你收藏的网站给你推荐一些相近的优秀网站。</p>
+<h1 id="二、知识的整理"><a href="#二、知识的整理" class="headerlink" title="二、知识的整理"></a>二、知识的整理</h1><p>搜集之后必须要做整理，整理的目的是使给予知识一定的组织结构，以便于在使用时可以快速准确地找到所需要的东西。<br>如果不做整理，[3]中总结了常见问题：</p>
+<ol>
+<li>要用的时候找不到：这是由于搜索功能查找慢、平时到处乱放、只有模糊的印象等软件问题和个人习惯问题造成的。</li>
+<li>收集但未消化：好东西不想错过，收集多了反而不知要读哪些好了。</li>
+<li>随意复制和知识重复问题：复制很方便能解决当前问题，却为以后的归档、再次使用造成很大的麻烦。不知是哪个是最新的、哪个是有用的、哪个是没有用的？</li>
+<li>不知道该放哪个文件夹中：文件夹太多、文档有多个属性，常为放哪适合浪费时间，但又必须找地方放。</li>
+<li>相关的文档不知如何放好：相关的原文档、阅读心得、参考资料等，新建一个文件夹来放，又会造成文件夹过多</li>
+<li>资料越多越杂乱：第1年，建几个文件夹来管还好，2000多个，3000多个文档开始吃力，4000个多个文档时那是一个烦字</li>
+<li>没有及时归档的习惯：认为归档浪费时间，却不知因为没有很好的及时的归档，造成更多的时间的浪费</li>
+</ol>
+<p>那么，我的方法是首先区分消化过的和未消化的：</p>
+<ol>
+<li>对于没有消化过的知识则放在一个大的搜集箱（或者分不同领域的收集箱）中，作为待处理的对象；</li>
+<li>对于消化过的知识以有序的组织结构存放，目录树是一种最常用的方式。在此之上，对知识打上各种标签，这样就可以从多个维度过滤出所需要的知识。此外，还必须支持全文检索，这样可以进一步提高模糊知识定位能力。</li>
+</ol>
+<p>在知识整理上，原来使用过一段时间针式PKM，基本需求可以满足，但软件风格我不是很喜欢。目前觉得wiz还是能基本满足我的需求的。</p>
+<h1 id="三、知识的运用"><a href="#三、知识的运用" class="headerlink" title="三、知识的运用"></a>三、知识的运用</h1><p>知识只有运用才有意义，那么以一定的承载形式输出是一种最佳的方式。我的常见输出方式包括：博客、论文、报告、程序。</p>
+<ol>
+<li>博客：基本采用分享方式，wiz带有相关的发布插件，可以直接同步到博客上。</li>
+<li>论文：发表在正式的期刊或会议上，可以和同行进行交流。</li>
+<li>报告：作为项目的总结和记录，用于汇报和交接。</li>
+<li>程序：在github上建立相应地代码库，用于存储和管理自己的程序。由于可能存在多次修改的过程，版本控制是必不可少的。<br>​</li>
+</ol>
+<hr>
+<p>以上就是个人在知识管理方面的一些经验，仅供参考。同时这也算是一次知识输出地过程吧^_^。</p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p>[1]: 个人知识管理：为什么《你的知识需要管理》？ <a href="http://www.gtdstudy.com/?p=2275" target="_blank" rel="external">http://www.gtdstudy.com/?p=2275</a><br>[2]: 月光博客：我的知识管理工具列表 <a href="http://www.williamlong.info/archives/3388.html" target="_blank" rel="external">http://www.williamlong.info/archives/3388.html</a><br>[3]: 针式PKM如何帮助你解决个人知识管理中的常见问题？ <a href="http://www.cnblogs.com/pinpkm/archive/2009/03/23/1419995.html" target="_blank" rel="external">http://www.cnblogs.com/pinpkm/archive/2009/03/23/1419995.html</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[tau是什么]]></title>
+      <url>http://blog.guantau.com/2016/08/21/what-is-tau/</url>
+      <content type="html"><![CDATA[<p>τ是希腊的第十九个字母，美国英语是tau，国际音标/tau/。<br>作为理工科中常出现的符号，τ通常代表的有：</p>
+<ul>
+<li>一个时间区间；</li>
+<li>指数衰减量的平均寿命；</li>
+<li>力学中的力矩；</li>
+<li>τ子，一种粒子物理中的基本粒子；</li>
+<li>自发发射过程的寿命；</li>
+<li>RC电路的时间常数；</li>
+<li>相对论中的原时；</li>
+<li>黄金分割率0.618；</li>
+<li>数论中的拉马努金τ函数；</li>
+<li>天文学中，透明度的衡量，或者说，有多少阳光不能穿透大气；</li>
+<li>表示论中的缠结算子；</li>
+<li>Tau 蛋白，一种与微管结合的蛋白；</li>
+<li>连续介质力学中的剪应力；</li>
+<li>高欧拉商数的除数个数（OEIS中的数列A000005）；</li>
+<li>类型论中的类型变量，如简单类型λ演算；</li>
+<li>拓扑学中一个指定的拓扑；</li>
+<li>圆周率的2倍（2π），即圆的周长与半径之比。</li>
+</ul>
+<p>尤其是最后一条，数学界已有争论，其实真正的圆周率应该为τ，这样各种公式将变得更加优美、更加符合直观理解（具体可移步<a href="http://www.guokr.com/article/58678/" target="_blank" rel="external">http://www.guokr.com/article/58678/</a>）</p>
+<p>So, please call me tau.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello World]]></title>
+      <url>http://blog.guantau.com/2016/08/18/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    </entry>
+    
+  
+  
+</search>

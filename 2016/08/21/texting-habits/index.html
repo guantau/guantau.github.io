@@ -1,0 +1,1104 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vim," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这是Vim作者Bram Moolenaar受到《高效能人士的七个习惯》启发所写的一篇，阐述了他对高效文本编辑的一些看法，或者说他设计Vim的一些初衷。
+读后感受有四：
+
+绝大部分文本为有格式的，这是高效编辑的前提。
+一定有自动化的方法用来减少重复性的劳动。
+勤加练习，习惯成自然；否则，好记性不如烂笔头。
+过犹不及，只要适合自己就可以。
+
+其实这些道理是可以推广的，它们对于很多事情都是适用的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高效文本编辑的七个习惯">
+<meta property="og:url" content="http://blog.guantau.com/2016/08/21/texting-habits/index.html">
+<meta property="og:site_name" content="tautau不绝">
+<meta property="og:description" content="这是Vim作者Bram Moolenaar受到《高效能人士的七个习惯》启发所写的一篇，阐述了他对高效文本编辑的一些看法，或者说他设计Vim的一些初衷。
+读后感受有四：
+
+绝大部分文本为有格式的，这是高效编辑的前提。
+一定有自动化的方法用来减少重复性的劳动。
+勤加练习，习惯成自然；否则，好记性不如烂笔头。
+过犹不及，只要适合自己就可以。
+
+其实这些道理是可以推广的，它们对于很多事情都是适用的。">
+<meta property="og:updated_time" content="2016-08-27T09:14:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高效文本编辑的七个习惯">
+<meta name="twitter:description" content="这是Vim作者Bram Moolenaar受到《高效能人士的七个习惯》启发所写的一篇，阐述了他对高效文本编辑的一些看法，或者说他设计Vim的一些初衷。
+读后感受有四：
+
+绝大部分文本为有格式的，这是高效编辑的前提。
+一定有自动化的方法用来减少重复性的劳动。
+勤加练习，习惯成自然；否则，好记性不如烂笔头。
+过犹不及，只要适合自己就可以。
+
+其实这些道理是可以推广的，它们对于很多事情都是适用的。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://blog.guantau.com/2016/08/21/texting-habits/"/>
+
+  <title> 高效文本编辑的七个习惯 | tautau不绝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f5a1bfbe590ec34a0aac4a5c7965a30d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">tautau不绝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                高效文本编辑的七个习惯
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-21T23:16:15+08:00" content="2016-08-21">
+              2016-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/弄点工具/" itemprop="url" rel="index">
+                    <span itemprop="name">弄点工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/21/texting-habits/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/texting-habits/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/21/texting-habits/" class="leancloud_visitors" data-flag-title="高效文本编辑的七个习惯">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这是Vim作者Bram Moolenaar受到《高效能人士的七个习惯》启发所写的一篇，阐述了他对高效文本编辑的一些看法，或者说他设计Vim的一些初衷。</p>
+<p>读后感受有四：</p>
+<ol>
+<li>绝大部分文本为有格式的，这是高效编辑的前提。</li>
+<li>一定有自动化的方法用来减少重复性的劳动。</li>
+<li>勤加练习，习惯成自然；否则，好记性不如烂笔头。</li>
+<li>过犹不及，只要适合自己就可以。</li>
+</ol>
+<p>其实这些道理是可以推广的，它们对于很多事情都是适用的。</p>
+<a id="more"></a>
+<hr>
+<blockquote>
+<p>原文地址：<a href="http://www.moolenaar.net/habits.html" target="_blank" rel="external">http://www.moolenaar.net/habits.html</a><br>作者：Bram Moolenaar<br>日期：2000.11<br>翻译：guantau</p>
+</blockquote>
+<hr>
+<p>如果你需要花大量时间编辑文本，比如写程序、写HTML文件，那么你需要一个好的编辑器并高效地使用它，这样你才能节约大量的时间。本文将给出文本编辑的几条建议，以帮助你更快更好地完成你的工作。</p>
+<p>本文将采用开源编辑器Vim来展示如何进行文本高效编辑，当然这些建议也可以推广至其它编辑器。选择合适的编辑器是高效编辑的第一步，这里不讨论哪款编辑器是最好的，适合的就是最好的。如果你不知道使用哪款编辑器，或者对你现在用的编辑器不满意，不妨试一试Vim，它不会让你你失望的。</p>
+<h1 id="第一部分：编辑单个文件"><a href="#第一部分：编辑单个文件" class="headerlink" title="第一部分：编辑单个文件"></a>第一部分：编辑单个文件</h1><h2 id="1、快速移动："><a href="#1、快速移动：" class="headerlink" title="1、快速移动："></a>1、快速移动：</h2><p>花费在阅读和查找的时间其实要比插入或修改文本多得多。阅读和查找这些在文本中移动的操作是非常频繁的，因此你需要了解怎么才能移动得更快。比如需要查找某段文本并找到其出现的所有位置。在Vim中，你可以输入查找命令<code>/pattern</code>来做这件事情。但其实，你还可以做得更快更好：</p>
+<ul>
+<li>如果你看见某个词，希望找到这个词出现的其它位置，使用命令<code>*</code>。它会自动抓取当前光标所在的词语，并找到它出现的下一位置；</li>
+<li>如果你设置了<code>incsearch</code>选项，Vim会在你输入搜索词时动态显示它出现的第一个位置；</li>
+<li>如果你设置了<code>hlsearch</code>选项，Vim会高亮所有匹配的位置。比如在程序时，你可以看到某个变量到底在哪些地方使用了。</li>
+</ul>
+<p>在结构化文本里，还有更多可以快速移动的可能性。比如，对于C语言，Vim有一些特定的命令：</p>
+<ul>
+<li>使用命令<code>%</code>可以跳到成对符号的另一端，比如()、{}、甚至#if和#endif，这样你可以检查符号是否匹配；</li>
+<li>使用命令<code>[{</code>可以跳到当前代码块的起始位置；</li>
+<li>使用命令<code>gd</code>可以跳到局部变量的定义位置；</li>
+</ul>
+<p>当然，还有许多这样的命令。问题的关键是你是否知道这些命令。</p>
+<p>你可能会说你不可能记住所有这些命令，所有命令大概有数百个，有些简单、有些复杂。要全部学会这些命令，大概需要数周的时间。但这么做是没有必要地，你需要做的是认清自己的编辑习惯，并只记住那些让你更加高效编辑的命令。</p>
+<p>一般有三个基本步骤：</p>
+<ol>
+<li>当你在编辑时，留意你需要不断重复的动作；</li>
+<li>去寻找是否有某个编辑器命令可以使你更快地完成这个动作，可以查帮助文档或问下周围朋友；</li>
+<li>练习使用这些命令，直到你不需要思考就可以使用它。</li>
+</ol>
+<p>举例来说：在写C程序的时候，你发现你需要花费大量时间去寻找函数定义在哪里。你现在使用的是命令<code>*</code>来搜索该函数名出现的位置，结果你发现匹配出很多它被调用的位置，而不是它定义的位置。那你应该想，是不是能有更快的方法来做这件事情。</p>
+<p>通过阅读帮助文件，你发现有跳转到tags的命令。文档解释了如何使用命令来跳转到函数定义位置，这正是你需要的。因此，你需要用程序ctags生成tags文件，然后使用命令<code>CTRL-]</code>来跳转到函数定义位置。为了自动生成tags文件，你还可以把相关命令写到Makefile中。</p>
+<p>当你使用上述三个步骤时，还需要注意的是：</p>
+<ul>
+<li><strong>工欲善其事，必先利其器</strong>。“我只想把工作完成，我没有时间看帮助文件来找合适的新命令”。如果你这么想，你永远将停步不前。</li>
+<li><strong>过犹不及</strong>。如果对每件事情，你都想要找到完美的命令，那么你将没有时间来思考你本该完成的工作。仅仅选出那些会花费你更多时间的动作，然后学习完成这些动作的命令，这样你就可以专心在真正的工作上了。</li>
+</ul>
+<h2 id="2、相同的事情不做第二次："><a href="#2、相同的事情不做第二次：" class="headerlink" title="2、相同的事情不做第二次："></a>2、相同的事情不做第二次：</h2><p>我们需要编辑的词语是有限的，甚至是局限在某些短语或句子里，比如在计算机程序中关键词集合是固定的。很显然，你不想两次输入完全相同的内容。</p>
+<p>很多时候，你想把某个单词改变为另一个。如果需要在整个文件里完成这件事情，你可以使用替换命令<code>:s</code>来做。但如果只有某几个地方需要替换，一种方式是用命令<code>*</code>找到它出现的下个位置，并用命令<code>cw</code>来替换这个词。然后按下<code>n</code>跳到下一个位置，并按下<code>.</code>重复<code>cw</code>命令。</p>
+<p>按下<code>.</code>可以重复上一个编辑命令，比如插入、删除、替换等。如果你在重新组织你的文件，有很多地方需要作出变化。那么你可以将某一种编辑用命令<code>.</code>做完，然后再去做另一种编辑。而那些需要作出变化的位置可以用命令<code>m</code>做好标记。</p>
+<p>某些函数名或变量名输入起来非常费劲，且容易出错。Vim提供了补全机制使这件事情更容易完成。当你写下名字的一部分时，可以通过命令<code>CTRL-N</code>来进行补全。</p>
+<p>当你需要重复输入一个短语或一段话时，Vim提供了宏录制的功能。你可以按下<code>qa</code>开始录制，你的所有操作将记录到寄存器’a’里面，按下<code>q</code>停止录制。当你想重复这些命令时，你只需要按下<code>@a</code>就可以了。</p>
+<p>当那些你需要重复的命令变得复杂时，想要一次正确输入它们将变得很困难。这时，你应该写一个脚本或宏来完成。比如，你可以为你的代码写一些模板，像函数头等等。</p>
+<h2 id="3、错了就改："><a href="#3、错了就改：" class="headerlink" title="3、错了就改："></a>3、错了就改：</h2><p>没有人可以避免在输入的时候不出错，这时你需要做的就是快速定位并改正它。编辑器应该帮助你完成这件事情，但你需要告诉编辑器哪些是对的、哪些是错的。</p>
+<p>你可能会重复写错某个单词，这可以用缩写来纠正，比如，<code>:abbr Lunix Linux</code>、<code>:abbr accross across</code>、<code>:abbr hte the</code>。当你输入错误的单词时，编辑器会自动纠正它们。</p>
+<p>同样的原理可以用于简化输入，尤其是那些你觉得打起来比较麻烦的词语。比如，<code>:abbr pn penguin</code>、<code>:abbr MS Mandrake Software</code>。</p>
+<p>识别错误还可以用语法高亮的方式来解决。也就是对程序进行语法高亮，并标记错误出现的位置，比如，书写错误、注释错了、括号不匹配之类的。</p>
+<h1 id="第二部分：编辑多个文件"><a href="#第二部分：编辑多个文件" class="headerlink" title="第二部分：编辑多个文件"></a>第二部分：编辑多个文件</h1><h2 id="4、文件总是相关联的"><a href="#4、文件总是相关联的" class="headerlink" title="4、文件总是相关联的"></a>4、文件总是相关联的</h2><p>通常我们不会只编辑一个文件，而是在许多相互关联的文件之间来回切换，甚至有时同时编辑多个文件。因此，我们需要编辑器帮助我们更加高效地编辑多个文件。</p>
+<p>前面提到的标签功能可以在多个文件之间跳转。通常的做法是为整个工程生成一个标签文件。这样，我们可以在当前工程中多个文件之间快速跳转，从而找到函数、结构体、宏等。与手动查找相比，跳转能节约的时间是非常可观的。因此，在浏览程序的第一件事就是为其生成标签文件。</p>
+<p>另一个很重要的功能是在多个文件中找到某个词语出现的所有地方，这可以使用<code>:grep</code>命令。Vim会列出匹配的结果，并跳转到第一个匹配处。命令<code>:cn</code>会跳转到下一个匹配处。当你需要改变某个函数的调用参数时，这将非常有用。</p>
+<p>头文件包含许多有用的信息。但是在include文件中找到所需的定义需要花费大量时间。Vim会自动解析头文件，并搜索它们从而找到你需要的词。最常用的操作就是查找函数原型。在光标处使用命令<code>[I:</code>，Vim会列出当前光标所在词语在所有头文件中的匹配列表。如果你需要查看更多的上下文，你可以直接跳转到其定义的位置。类似的命令也可以用来检查你是否包含了正确的头文件。</p>
+<p>在Vim中，编辑区域可以分割为多个窗口，从而对多个不同的文件进行编辑。这样你可以同时对两个或多个文件的内容进行对比，并在它们之间进行拷贝粘贴。关于打开和关闭窗口、窗口间跳转、临时隐藏某个文件等等，有许多有用的命令。同样地，你可以采用前面列出的三个基本步骤来判断你需要学习哪些命令。</p>
+<p>多窗口还有更多的用处。预览标签就是个很好的例子。保持光标在当前编辑位置不变，通过打开一个特殊的预览窗口显示当前光标下函数的定义。如果你把光标移动到另一个函数名上，那么预览窗口会显示这个函数的定义。这种方式同样适用于使用头文件的情况。</p>
+<h2 id="5、协同工作"><a href="#5、协同工作" class="headerlink" title="5、协同工作"></a>5、协同工作</h2><p>编辑器用来编辑文本，email程序用来发送接收消息，操作系统用来运行程序。每个程序有自己擅长的事情。因此，将多个程序联合起来将可以完成更多地工作。</p>
+<p>一个简单的例子：你需要写一个不超过500个词的总结。你可以选择当前段落并把它写到wc程序中来统计字数，命令为<code>:w !wc -w</code>。其中，<code>wc -w</code>是用来统计单词数的。</p>
+<p>编辑器是不可能包罗所有的功能的。使用其他程序进行过滤文本意味着你可以额外地增加其他功能。Unix哲学之一就是每个程序只专注地完成一种功能，联合起来完成更复杂的功能。很不幸，大多数编辑器不能和其他程序联合工作。例如，你不能把Netscape中的email编辑器替换成其他的编辑器。这使得很多时候你只能使用半残的编辑器。另一个极端是在编辑器中包含各种各样的功能。Emacs是一个很好的例子（有时它被称为一个可以用来编辑文本的操作系统）。</p>
+<p>Vim尝试与其他程序进行联合，但这也并不那么容易。目前还无法在MS开发工具、Sniff中把Vim当做编辑器。一些email程序支持外部编辑器，比如Mutt。总之，在多个程序间协同工作还需要改进，这样我们才可能获得一个比各部分之和更好的系统。</p>
+<h2 id="6、格式化文本"><a href="#6、格式化文本" class="headerlink" title="6、格式化文本"></a>6、格式化文本</h2><p>我们经常需要编辑具有某种结构的文本，只是文本的语法有所不同。因此，你可能需要根据文本的语法重新书写相应的插件。这是一件比较复杂的事情。</p>
+<p>一种相对简单的事情是借鉴“编辑-编译-修改”循环流程。Vim可以使用<code>:make</code>命令进行编译，并显示错误信息从而跳转到相应位置进行修改。你不需要针对该编译器写新的插件，你只需要调整<code>errorformat</code>选项即可。它会告诉Vim错误是什么形式的，应该如何跳转到相应位置。对于复杂的gcc编译错误都能搞定，因而其它大多数的编译器也是没有问题的。</p>
+<p>有些时候，对于一种类型的文件仅仅是设置一些选项或写一些宏就可以搞定的。比如，跳转到帮助文件，你可以写一个宏提取当前光标的词语，清除缓存并将帮助内容读取到缓存中。这是进行交叉查询的一种简单且高效地方法。</p>
+<p>通过前面提到的三个基本步骤，你可以很高效地对任何一种结构化文件进行编辑。记住你需要对这种文件经常要做的操作，找到可以完成这些操作的命令并记住它们。听起来很简单，你只需要开始做。</p>
+<h1 id="第三部分：勤加练习"><a href="#第三部分：勤加练习" class="headerlink" title="第三部分：勤加练习"></a>第三部分：勤加练习</h1><h2 id="7、养成习惯"><a href="#7、养成习惯" class="headerlink" title="7、养成习惯"></a>7、养成习惯</h2><p>学习驾驶汽车需要付出很多努力，难道这是你继续骑自行车的理由？你需要花费时间去学习新技能。文本编辑也不例外。你需要学习新的命令，并使之成为习惯。</p>
+<p>但是，你也不应该尝试去学习编辑器提供的所有命令。那完全是浪费时间。绝大部分人只需要学习10%到20%的命令。只是每个人的命令集合是不一样的。这需要你好好想想哪些重复的工作是可以自动化完成的。如果你只需要做一次，且不希望再次做它，那么不要尝试去优化它。但如果你意识到在过去的一个小时里你多次重复了某件事情。那么，试着查看文档需找可以加快它的速度，或者写一个宏来完成它。如果它是一个较大的任务，比如去除某种特殊排列的文本，那么你可能需要在网上找找是不是有人已经解决了类似的问题。</p>
+<p>最基本的步骤是最后一个。对于一个重复性任务，你可能找到了一个很好的解决方案，但周末之后你可能就忘掉了。你需要不断重复这种解决方案直到你可以不加思考地使用它。只有这样你才可能达到你所需要的效率。不要尝试一次学习过多的东西，每次只做一些事情效果会更好。对于那些你不是特别经常要用的命令，你可能要把它写下来，以后再用到的时候可以查询。不管怎样，如果你始终保持目标，你将找到使你编辑更加高效的方法。</p>
+<hr>
+<p>最后一点要说的，十个手指不只比两个手指高效，也没有那么累。</p>
+<blockquote>
+<p>作者简介：<br>Bram Moolenaar是Vim的主要开发者。他写了Vim的核心功能，并决定哪些开发者写的代码可以进入Vim。他毕业于Delft大学计算机专业。目前，他主要做软件开发，但他还知道怎么做焊工。他是荷兰ICCF的创建者和资助者，主要是帮助乌干达的孤儿。他是系统架构方面的自由作家，但事实上在Vim上花费了他主要的精力。他的邮件是Bram@moolenaar.net。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="guantau WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="guantau Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vim/" rel="tag">#vim</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/21/vim-plugins/" rel="next" title="武装你的vim">
+                <i class="fa fa-chevron-left"></i> 武装你的vim
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/21/zotero-tips/" rel="prev" title="zotero的一些使用经验">
+                zotero的一些使用经验 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/21/texting-habits/"
+     data-title="高效文本编辑的七个习惯"
+     data-content=""
+     data-url="http://blog.guantau.com/2016/08/21/texting-habits/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/21/texting-habits/"
+           data-title="高效文本编辑的七个习惯" data-url="http://blog.guantau.com/2016/08/21/texting-habits/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="guantau" />
+          <p class="site-author-name" itemprop="name">guantau</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/guantau" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1811951543" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一部分：编辑单个文件"><span class="nav-text">第一部分：编辑单个文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、快速移动："><span class="nav-text">1、快速移动：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、相同的事情不做第二次："><span class="nav-text">2、相同的事情不做第二次：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、错了就改："><span class="nav-text">3、错了就改：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二部分：编辑多个文件"><span class="nav-text">第二部分：编辑多个文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4、文件总是相关联的"><span class="nav-text">4、文件总是相关联的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、协同工作"><span class="nav-text">5、协同工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、格式化文本"><span class="nav-text">6、格式化文本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三部分：勤加练习"><span class="nav-text">第三部分：勤加练习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7、养成习惯"><span class="nav-text">7、养成习惯</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">guantau</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"guantau"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_SVG"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("FJnjyRtFhXhHRSFrytdeIeeV-gzGzoHsz", "fzauUFb059QQVrhlExPYprHH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

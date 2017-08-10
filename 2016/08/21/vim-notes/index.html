@@ -1,0 +1,1511 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vim," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、vim插件管理作为编辑器之神，vim强大之处在于可以通过下载或编写各种插件来增强其功能，但对各种插件管理确实是个麻烦事。幸亏有相关的插件管理工具可以使用，vim常用的插件管理工具有两种：pathogen和vundle。vundle可以看作是pathogen的升级版，完全兼容pathogen，除了能够方便组织插件，还能够方便的安装、卸载、升级插件。
+安装vundle非常简单，输入命令
+# git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim使用笔记">
+<meta property="og:url" content="http://blog.guantau.com/2016/08/21/vim-notes/index.html">
+<meta property="og:site_name" content="tautau不绝">
+<meta property="og:description" content="一、vim插件管理作为编辑器之神，vim强大之处在于可以通过下载或编写各种插件来增强其功能，但对各种插件管理确实是个麻烦事。幸亏有相关的插件管理工具可以使用，vim常用的插件管理工具有两种：pathogen和vundle。vundle可以看作是pathogen的升级版，完全兼容pathogen，除了能够方便组织插件，还能够方便的安装、卸载、升级插件。
+安装vundle非常简单，输入命令
+# git">
+<meta property="og:updated_time" content="2016-08-27T09:38:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim使用笔记">
+<meta name="twitter:description" content="一、vim插件管理作为编辑器之神，vim强大之处在于可以通过下载或编写各种插件来增强其功能，但对各种插件管理确实是个麻烦事。幸亏有相关的插件管理工具可以使用，vim常用的插件管理工具有两种：pathogen和vundle。vundle可以看作是pathogen的升级版，完全兼容pathogen，除了能够方便组织插件，还能够方便的安装、卸载、升级插件。
+安装vundle非常简单，输入命令
+# git">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://blog.guantau.com/2016/08/21/vim-notes/"/>
+
+  <title> vim使用笔记 | tautau不绝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f5a1bfbe590ec34a0aac4a5c7965a30d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">tautau不绝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vim使用笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-21T23:12:10+08:00" content="2016-08-21">
+              2016-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/弄点工具/" itemprop="url" rel="index">
+                    <span itemprop="name">弄点工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/21/vim-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/vim-notes/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/21/vim-notes/" class="leancloud_visitors" data-flag-title="vim使用笔记">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、vim插件管理"><a href="#一、vim插件管理" class="headerlink" title="一、vim插件管理"></a>一、vim插件管理</h1><p>作为编辑器之神，vim强大之处在于可以通过下载或编写各种插件来增强其功能，但对各种插件管理确实是个麻烦事。幸亏有相关的插件管理工具可以使用，vim常用的插件管理工具有两种：pathogen和vundle。vundle可以看作是pathogen的升级版，完全兼容pathogen，除了能够方便组织插件，还能够方便的安装、卸载、升级插件。</p>
+<p>安装vundle非常简单，输入命令</p>
+<pre><code># git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</code></pre><p>然后就可以把想要安装的插件名字写入.vimrc中即可。</p>
+<a id="more"></a>
+<p>示例文件：</p>
+<pre><code>set nocompatible          &quot; be iMproved 
+filetype off              &quot; required! 
+set rtp+=~/.vim/bundle/vundle/ 
+call vundle#rc() 
+&quot; let Vundle manage Vundle 
+&quot; required! 
+Bundle &apos;gmarik/vundle&apos; 
+&quot; My bundles here: 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+&quot; original repos on GitHub 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+Bundle &apos;tpope/vim-fugitive&apos; 
+Bundle &apos;Lokaltog/vim-easymotion&apos; 
+Bundle &apos;rstacruz/sparkup&apos;, {&apos;rtp&apos;: &apos;vim/&apos;} 
+Bundle &apos;tpope/vim-rails.git&apos; 
+Bundle &apos;Lokaltog/vim-powerline&apos; 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot; 
+&quot; vim-scripts repos http://www.vim-scripts.org/vim/scripts.html 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot; 
+&quot; Vim-script library 
+Bundle &apos;L9&apos; 
+&quot; General utility functions 
+Bundle &apos;genutils&apos; 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot; 
+&quot; non-GitHub repos 
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+Bundle &apos;git://git.wincent.com/command-t.git&apos; 
+&quot; Git repos on your local machine (i.e. when working on your own plugin) 
+&quot; Bundle &apos;file:///Users/gmarik/path/to/plugin&apos; 
+&quot; ... 
+filetype plugin indent on     &quot; required! 
+&quot; 
+&quot; Brief help 
+&quot; :BundleList          - list configured bundles 
+&quot; :BundleInstall(!)    - install (update) bundles 
+&quot; :BundleSearch(!) foo - search (or refresh cache first) for foo 
+&quot; :BundleClean(!)      - confirm (or auto-approve) removal of unused bundles 
+&quot; 
+&quot; see :h vundle for more details or wiki for FAQ &quot; NOTE: comments after Bundle commands are not allowed.
+</code></pre><h1 id="二、查找类插件"><a href="#二、查找类插件" class="headerlink" title="二、查找类插件"></a>二、查找类插件</h1><h2 id="1-command-t"><a href="#1-command-t" class="headerlink" title="1. command-t"></a>1. command-t</h2><h3 id="（1）简介"><a href="#（1）简介" class="headerlink" title="（1）简介"></a>（1）简介</h3><p>command-t用于快速查找和跳转文件及缓冲区，其名称来源于TextMate中“Go to File”的快捷键Command-T。command-t的思想是文件路径名与文件名同样具有重要的标识作用，它在查找时利用了文件完整路径中的所有字符。其强大之处在于可以模糊匹配，输入的任意字符之间可以看作包含通配符。</p>
+<p>command-t采用了ruby来实现，若在安装和使用时出现错误，可以参考：<br><a href="http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu" target="_blank" rel="external">http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu</a></p>
+<h3 id="（2）使用"><a href="#（2）使用" class="headerlink" title="（2）使用"></a>（2）使用</h3><p>可以使用<code>:CommandT</code>命令打开文件跳转界面，用<code>:CommandTBuffer</code>命令打开缓冲区跳转界面。<br>如果需要对某个特定路径进行搜索时，使用<code>:CommandT path</code>。可以设置相应快捷键</p>
+<pre><code>nnoremap &lt;silent&gt; &lt;Leader&gt;ff :CommandT&lt;CR&gt;
+nnoremap &lt;silent&gt; &lt;Leader&gt;fb :CommandTBuffer&lt;CR&gt;
+</code></pre><p>在字符输入条件下有效的快捷键：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;BS&gt;</td>
+<td style="text-align:left">delete the character to the left of the cursor    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Del&gt;</td>
+<td style="text-align:left">delete the character at the cursor    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Left&gt;</td>
+<td style="text-align:left">move the cursor one character to the left   </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-h&gt;</td>
+<td style="text-align:left">move the cursor one character to the left    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Right&gt;</td>
+<td style="text-align:left">move the cursor one character to the right    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-l&gt;</td>
+<td style="text-align:left">move the cursor one character to the right    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-a&gt;</td>
+<td style="text-align:left">move the cursor to the start (left)    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-e&gt;</td>
+<td style="text-align:left">move the cursor to the end (right)    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-u&gt;</td>
+<td style="text-align:left">clear the contents of the prompt    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Tab&gt;</td>
+<td style="text-align:left">change focus to the file listing</td>
+</tr>
+</tbody>
+</table>
+<p>在文件列表条件下有效的快捷键：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;Tab&gt;</td>
+<td style="text-align:left">change focus to the prompt </td>
+</tr>
+</tbody>
+</table>
+<p>在上述两种情况下都有效的快捷键：    </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;CR&gt;</td>
+<td style="text-align:left">open the selected file    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-CR&gt;</td>
+<td style="text-align:left">open the selected file in a new split window    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-s&gt;</td>
+<td style="text-align:left">open the selected file in a new split window    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-v&gt;</td>
+<td style="text-align:left">open the selected file in a new vertical split window    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-t&gt;</td>
+<td style="text-align:left">open the selected file in a new tab    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-j&gt;</td>
+<td style="text-align:left">select next file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-n&gt;</td>
+<td style="text-align:left">select next file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Down&gt;</td>
+<td style="text-align:left">select next file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-k&gt;</td>
+<td style="text-align:left">select previous file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-p&gt;</td>
+<td style="text-align:left">select previous file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;Up&gt;</td>
+<td style="text-align:left">select previous file in the file listing    </td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;C-c&gt;</td>
+<td style="text-align:left">cancel (dismisses file listing)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（3）其它"><a href="#（3）其它" class="headerlink" title="（3）其它"></a>（3）其它</h3><p>在查找文件、缓冲区等还有些其它的插件，比如：</p>
+<ul>
+<li>lookupfile，和Command-T相比，它支持通配符和正则表达式，但其对文件的定位能力不及Command-T。</li>
+<li>FuzzyFinder，Command-T基本涵盖FuzzyFinder所有功能。</li>
+</ul>
+<h2 id="2-FSwitch"><a href="#2-FSwitch" class="headerlink" title="2. FSwitch"></a>2. FSwitch</h2><p>在互补文件之间进行切换，互补规则以及文件位置可以由用户指定，主要用于C/C++中的头文件和源文件之间的快速切换。</p>
+<p>常用设置为：</p>
+<pre><code>au! BufEnter *.cc,*.cpp let b:fswitchdst = &apos;h&apos; | let b:fswitchlocs = &apos;reg:/src/include/,reg:|src|include/**|,../inc,../include,.&apos; 
+au! BufEnter *.h let b:fswitchdst = &apos;cc,cpp&apos; | let b:fswitchlocs = &apos;reg:/include/src/,reg:/include.*/src/,../src,../source,.&apos; 
+let g:fsnonewfiles = &quot;on&quot; 
+nmap &lt;silent&gt; &lt;Leader&gt;fo :FSHere&lt;cr&gt;
+</code></pre><h1 id="三、浏览类插件"><a href="#三、浏览类插件" class="headerlink" title="三、浏览类插件"></a>三、浏览类插件</h1><h2 id="1-minibufexpl"><a href="#1-minibufexpl" class="headerlink" title="1. minibufexpl"></a>1. minibufexpl</h2><p>可以在编辑区上方显示缓冲区名，可方便的查看并切换缓冲区。可以对其进行一定的配置：</p>
+<h3 id="（1）使用C-HJKL在窗口之间进行移动，注意这里是大写"><a href="#（1）使用C-HJKL在窗口之间进行移动，注意这里是大写" class="headerlink" title="（1）使用C-HJKL在窗口之间进行移动，注意这里是大写"></a>（1）使用C-HJKL在窗口之间进行移动，注意这里是大写</h3><pre><code>let g:miniBufExplMapWindowNavVim = 1
+</code></pre><p>为使用方便，我们可以进行额外的设置</p>
+<pre><code>nmap &lt;C-j&gt; &lt;C-W&gt;j
+nmap &lt;C-k&gt; &lt;C-W&gt;k
+nmap &lt;C-h&gt; &lt;C-W&gt;h
+nmap &lt;C-l&gt; &lt;C-W&gt;l
+</code></pre><h3 id="（2）使用-在缓冲区中进行切换"><a href="#（2）使用-在缓冲区中进行切换" class="headerlink" title="（2）使用 在缓冲区中进行切换"></a>（2）使用<c-tab> <c-s-tab>在缓冲区中进行切换</c-s-tab></c-tab></h3><pre><code>let g:miniBufExplMapCTabSwitchBufs = 1
+</code></pre><p>由于bash已有这两个键映射，我们可以使用其它的映射</p>
+<pre><code>map &lt;leader&gt;bn :bn&lt;cr&gt;
+map &lt;leader&gt;bp :bp&lt;cr&gt;
+</code></pre><h3 id="（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口"><a href="#（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口" class="headerlink" title="（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口"></a>（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口</h3><pre><code>&quot; Count buffer numbers
+function! NrBufs()
+    let i = bufnr(&apos;$&apos;)    
+    let j = 0    
+    while i &gt;= 1        
+        if buflisted(i)            
+            let j+=1        
+        endif        
+        let i-=1    
+    endwhile    
+    return j 
+endfunction 
+&quot; Close window when there is only one buffer 
+function! BufClose()    
+    let buffer_count = NrBufs()    
+    if buffer_count == 1        
+        execute(&quot;quit&quot;)    
+    else        
+        execute(&quot;bdelete&quot;)    
+    endif 
+endfunction
+nmap &lt;silent&gt; &lt;leader&gt;qq :call BufClose()&lt;cr&gt;
+</code></pre><h2 id="2-The-NERD-Tree"><a href="#2-The-NERD-Tree" class="headerlink" title="2. The-NERD-Tree"></a>2. The-NERD-Tree</h2><p>以树形的方式显示文件列表，可以映射显示的快捷键：</p>
+<pre><code>nmap &lt;silent&gt; &lt;leader&gt;tt :NERDTreeToggle&lt;cr&gt;
+</code></pre><p>当然，它还提供了很多书签之类的功能，可以参考其文档。</p>
+<h2 id="3-taglist"><a href="#3-taglist" class="headerlink" title="3. taglist"></a>3. taglist</h2><p>支持多种语言的源码浏览，包括C/C++、java、perl、python、tcl、sql、php等。常用设置：</p>
+<pre><code>let Tlist_Ctags_Cmd = &apos;ctags&apos; 
+let Tlist_Show_One_File = 1 
+let Tlist_Exit_OnlyWindow = 1 
+let Tlist_Use_Right_Window = 1
+nmap &lt;silent&gt; &lt;leader&gt;tl :Tlist&lt;cr&gt;
+</code></pre><h2 id="4-tagbar"><a href="#4-tagbar" class="headerlink" title="4. tagbar"></a>4. tagbar</h2><p>与taglist类似，但它对其对tag的组织是按照所在范围进行组织，与taglist按照通用类别如‘function’或‘variable’组织方式不同。常用设置：</p>
+<pre><code>let g:tagbar_width = 40 
+let g:tagbar_expand = 1 
+nmap &lt;silent&gt; &lt;Leader&gt;tb :TagbarToggle&lt;cr&gt;
+</code></pre><h1 id="四、补全类插件"><a href="#四、补全类插件" class="headerlink" title="四、补全类插件"></a>四、补全类插件</h1><p>vim内置有很多补全方式：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">补全方式</th>
+<th style="text-align:left">快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">整行补全</td>
+<td style="text-align:left">CTRL-X CTRL-L</td>
+</tr>
+<tr>
+<td style="text-align:left">根据当前文件里关键字补全</td>
+<td style="text-align:left">CTRL-X CTRL-N 或 CTRL-X CTRL-P</td>
+</tr>
+<tr>
+<td style="text-align:left">根据头文件内关键字补全</td>
+<td style="text-align:left">CTRL-X CTRL-I</td>
+</tr>
+<tr>
+<td style="text-align:left">根据标签补全</td>
+<td style="text-align:left">CTRL-X CTRL-]</td>
+</tr>
+<tr>
+<td style="text-align:left">补全宏定义</td>
+<td style="text-align:left">CTRL-X CTRL-D</td>
+</tr>
+<tr>
+<td style="text-align:left">补全文件名</td>
+<td style="text-align:left">CTRL-X CTRL-F</td>
+</tr>
+<tr>
+<td style="text-align:left">补全vim命令</td>
+<td style="text-align:left">CTRL-X CTRL-V</td>
+</tr>
+<tr>
+<td style="text-align:left">全能补全</td>
+<td style="text-align:left">CTRL-X CTRL-O，即omni补全</td>
+</tr>
+<tr>
+<td style="text-align:left">用户自定义补全方式</td>
+<td style="text-align:left">CTRL-X CTRL-U</td>
+</tr>
+<tr>
+<td style="text-align:left">根据字典补全</td>
+<td style="text-align:left">CTRL-X CTRL-K</td>
+</tr>
+<tr>
+<td style="text-align:left">拼写建议</td>
+<td style="text-align:left">CTRL-X CTRL-S</td>
+</tr>
+<tr>
+<td style="text-align:left">根据同义词字典补全</td>
+<td style="text-align:left">CTRL-X CTRL-T</td>
+</tr>
+</tbody>
+</table>
+<p>除此之外，还有很多插件也提供了更为便捷的补全方法</p>
+<h2 id="1-neocomplcache"><a href="#1-neocomplcache" class="headerlink" title="1. neocomplcache"></a>1. neocomplcache</h2><p>非常强大的自动补全插件，可以智能识别需要用哪种模式来补全代码，配置后可以实现使用tab在补全代码之间跳转，并使用Enter来输入选中的代码。</p>
+<p>典型配置：</p>
+<pre><code>&quot; Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+&quot; Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+&quot; Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+&quot; Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+&quot; Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+&quot; Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = &apos;\*ku\*&apos;
+&quot; Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {    \ 
+&apos;default&apos; : &apos;&apos;,    \ 
+&apos;vimshell&apos; : $HOME.&apos;/.vimshell_hist&apos;,    \ 
+&apos;scheme&apos; : $HOME.&apos;/.gosh_completions&apos;    \ 
+} 
+&quot; Define keyword. 
+if !exists(&apos;g:neocomplcache_keyword_patterns&apos;)    
+let g:neocomplcache_keyword_patterns = {} 
+endif 
+let g:neocomplcache_keyword_patterns[&apos;default&apos;] = &apos;\h\w*&apos; 
+&quot; Plugin key-mappings. 
+inoremap &lt;expr&gt;&lt;C-g&gt;     neocomplcache#undo_completion() 
+inoremap &lt;expr&gt;&lt;C-l&gt;     neocomplcache#complete_common_string() 
+&quot; Recommended key-mappings. 
+&quot; &lt;CR&gt;: close popup and save indent. 
+inoremap &lt;expr&gt;&lt;CR&gt;  neocomplcache#smart_close_popup() . &quot;\&lt;CR&gt;&quot; 
+&quot; &lt;TAB&gt;: completion. 
+inoremap &lt;expr&gt;&lt;TAB&gt;  pumvisible() ? &quot;\&lt;C-n&gt;&quot; : &quot;\&lt;TAB&gt;&quot; 
+&quot; &lt;C-h&gt;, &lt;BS&gt;: close popup and delete backword char. 
+inoremap &lt;expr&gt;&lt;C-h&gt; neocomplcache#smart_close_popup().&quot;\&lt;C-h&gt;&quot; 
+inoremap &lt;expr&gt;&lt;BS&gt; neocomplcache#smart_close_popup().&quot;\&lt;C-h&gt;&quot; 
+inoremap &lt;expr&gt;&lt;C-y&gt;  neocomplcache#close_popup() 
+inoremap &lt;expr&gt;&lt;C-e&gt;  neocomplcache#cancel_popup() 
+inoremap &lt;expr&gt;&lt;Enter&gt;  pumvisible() ? &quot;\&lt;C-Y&gt;&quot; : &quot;\&lt;Enter&gt;&quot; 
+&quot; AutoComplPop like behavior. 
+let g:neocomplcache_enable_auto_select = 1
+</code></pre><h2 id="2-snipMate"><a href="#2-snipMate" class="headerlink" title="2. snipMate"></a>2. snipMate</h2><p>snipMate可以对各种语言进行补全，从而快速插入代码块。其默认使用的补全键为Tab，这与其它一些补全插件可能有冲突，按照其文档说明可以对其进行重定义：</p>
+<pre><code>ino &lt;c-j&gt; &lt;c-r&gt;=TriggerSnippet()&lt;cr&gt; 
+snor &lt;c-j&gt; &lt;esc&gt;i&lt;right&gt;&lt;c-r&gt;=TriggerSnippet()&lt;cr&gt;
+</code></pre><h2 id="3-Auto-Pairs"><a href="#3-Auto-Pairs" class="headerlink" title="3. Auto-Pairs"></a>3. Auto-Pairs</h2><p>可以成对地自动插入和删除括号、引号等等，并可以自动定位到括号或引号的尾部。</p>
+<h1 id="五、注释类插件"><a href="#五、注释类插件" class="headerlink" title="五、注释类插件"></a>五、注释类插件</h1><h2 id="1-The-NERD-Commenter"><a href="#1-The-NERD-Commenter" class="headerlink" title="1. The NERD Commenter"></a>1. The NERD Commenter</h2><p>可对多种类型的文件进行快速注释与取消，常用的快捷键有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;leader&gt;cc</td>
+<td style="text-align:left">注释当前行或选中的块</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;cu</td>
+<td style="text-align:left">取消注释当前行或选中的块</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;ci</td>
+<td style="text-align:left">取反注释状态</td>
+</tr>
+</tbody>
+</table>
+<h1 id="六、标签类插件"><a href="#六、标签类插件" class="headerlink" title="六、标签类插件"></a>六、标签类插件</h1><h2 id="1-ShowMarks"><a href="#1-ShowMarks" class="headerlink" title="1. ShowMarks"></a>1. ShowMarks</h2><p>智能插入标签以及可视化展示标签，常用的快捷键有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lt;leader&gt;mt</td>
+<td style="text-align:left">可视化开关</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;mh</td>
+<td style="text-align:left">隐藏当前标签</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;ma</td>
+<td style="text-align:left">隐藏缓冲区中所有标签</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;leader&gt;mm</td>
+<td style="text-align:left">自动添加标签</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-Marks-Browser"><a href="#2-Marks-Browser" class="headerlink" title="2. Marks-Browser"></a>2. Marks-Browser</h2><p>显示当前文件的标签列表，可设置快捷键：</p>
+<pre><code>nmap &lt;silent&gt; &lt;leader&gt;mk :MarksBrowser&lt;cr&gt;
+</code></pre><p>由于插件默认在窗口上方打开列表，在退出时与minibufexpl有一些冲突，使得minibufexpl显示不正常。<br>可以在插件源码中将显示位置改为下方：<br>在marksbrowser的第60行，将</p>
+<pre><code>exec &quot;to sp&quot; . escape(s:win_title, &apos; &apos;)
+</code></pre><p>改为</p>
+<pre><code>exec &quot;bo sp&quot; . escape(s:win_title, &apos; &apos;)
+</code></pre><h2 id="3-Tasklist"><a href="#3-Tasklist" class="headerlink" title="3. Tasklist"></a>3. Tasklist</h2><p>类似eclipse的任务列表，自动抽取文件中的FIXME、TODO、XXX或自定义关键词，并形成列表展示。</p>
+<h2 id="4-YankRing"><a href="#4-YankRing" class="headerlink" title="4. YankRing"></a>4. YankRing</h2><p>vim本身提供了最近9次删除记录，用<code>registers</code>命令可以查看，用<code>&quot;1p</code>可以粘贴最近删除内容，<code>&quot;2p</code>可以粘贴上次的删除内容。但是vim没有提供记录复制的内容，yankring则将vim中所有的改动记录下来，并提供一个列表用来粘贴想要的内容。可设置快捷键：</p>
+<pre><code>let g:yankring_enabled=1
+let g:yankring_history_file=&apos;.yankring_history_file&apos;
+map &lt;leader&gt;yr :YRShow&lt;cr&gt;
+</code></pre><h1 id="七、python相关插件"><a href="#七、python相关插件" class="headerlink" title="七、python相关插件"></a>七、python相关插件</h1><h2 id="1-Python-mode-klen"><a href="#1-Python-mode-klen" class="headerlink" title="1. Python-mode-klen"></a>1. Python-mode-klen</h2><p>集成了包括pylint、ropevim、pydoc、pyflakes、pep8和mccabe等插件，可以方便的进行静态检查、代码重构、折叠、补全、查看文档等等。</p>
+<h3 id="（1）快速浏览"><a href="#（1）快速浏览" class="headerlink" title="（1）快速浏览"></a>（1）快速浏览</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">快捷键</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">[[</td>
+<td style="text-align:left">Jump to previous class or function (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">]]</td>
+<td style="text-align:left">Jump to next class or function  (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">[M</td>
+<td style="text-align:left">Jump to previous class or method (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">]M</td>
+<td style="text-align:left">Jump to next class or method (normal, visual, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">aC</td>
+<td style="text-align:left">Select a class. Ex: vaC, daC, yaC, caC (normal, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">iC</td>
+<td style="text-align:left">Select inner class. Ex: viC, diC, yiC, ciC (normal, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">aM</td>
+<td style="text-align:left">Select a function or method. Ex: vaM, daM, yaM, caM (normal, operator modes) </td>
+</tr>
+<tr>
+<td style="text-align:left">iM</td>
+<td style="text-align:left">Select inner function or method. Ex: viM, diM, yiM, ciM (normal, operator modes)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（2）查看文档"><a href="#（2）查看文档" class="headerlink" title="（2）查看文档"></a>（2）查看文档</h3><p>利用pydoc查看文档，快捷键K会将当前光标所在词作为关键词进行查找。</p>
+<h3 id="（3）运行调试"><a href="#（3）运行调试" class="headerlink" title="（3）运行调试"></a>（3）运行调试</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">运行代码</td>
+<td style="text-align:left">&lt;leader&gt;r</td>
+</tr>
+<tr>
+<td style="text-align:left">插入断点</td>
+<td style="text-align:left">&lt;leader&gt;b</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（4）代码检查"><a href="#（4）代码检查" class="headerlink" title="（4）代码检查"></a>（4）代码检查</h3><p>支持pylint、pep257、pep8、pyflakes、mccabe等检查器，在代码保存时自动检查，自动去除多余的空格。</p>
+<p>可以使用命令<code>:PymodeLint</code>和<code>:PymodeLintToggle</code>开启检查，用<code>:PymodeLintAuto</code>自动校正pep8格式错误。</p>
+<h3 id="（5）转到定义"><a href="#（5）转到定义" class="headerlink" title="（5）转到定义"></a>（5）转到定义</h3><p>可以查看和跳转到函数和类的定义：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">转到定义</td>
+<td style="text-align:left">&lt;C-c&gt;g</td>
+</tr>
+<tr>
+<td style="text-align:left">查看定义</td>
+<td style="text-align:left">&lt;C-c&gt;d</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（6）代码重构"><a href="#（6）代码重构" class="headerlink" title="（6）代码重构"></a>（6）代码重构</h3><p>重命名光标所在的method/function/class/variables </p>
+<pre><code>let g:pymode_rope_rename_bind = &apos;&lt;C-c&gt;rr&apos;
+</code></pre><p>重命名当前模块</p>
+<pre><code>let g:pymode_rope_rename_bind = &apos;&lt;C-c&gt;rr&apos;
+</code></pre><p>根据pep8规定重排import模块</p>
+<pre><code>let g:pymode_rope_organize_imports_bind = &apos;&lt;C-c&gt;ro&apos;
+</code></pre><p>插入当前光标所在词的模块</p>
+<pre><code>let g:pymode_rope_autoimport_bind = &apos;&lt;C-c&gt;ra&apos;
+</code></pre><p>Python-mode和neocomplcache有些重叠，且neocomplcache占用了Tab键，可以在python文件中将neocomplcache禁止，并映射python-mode的补全键为tab：</p>
+<pre><code>au filetype python let g:neocomplcache_disable_auto_complete = 1
+let g:pymode_rope_completion_bind = &apos;&lt;tab&gt;&apos;
+</code></pre><p>Python-mode与minibufexpl配合时，当查看定义、运行测试时，缓冲区跳转得并不正确。可以将autoload/pymode目录下的相关文件中的wincmd p命令注释掉：</p>
+<ul>
+<li>rope.vim文件show_doc函数中，注释掉wincmd p，加上normal gg</li>
+<li>run.vim文件code_run函数中，注释掉wincmd p</li>
+<li>doc.vim文件show函数中，注释掉wincmd p</li>
+</ul>
+<h2 id="2-调试"><a href="#2-调试" class="headerlink" title="2. 调试"></a>2. 调试</h2><p>调试并没有找到比较好的插件，Python-mode与pdb、ipdb、pudb配合都有问题，vim-debug的界面并不十分友好，vimpdb插件也有问题。我比较喜欢pudb的调试界面，目前解决办法是映射快捷键调用pudb进行调试：</p>
+<pre><code>map &lt;F6&gt; :!pudb %&lt;CR&gt;
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="guantau WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="guantau Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vim/" rel="tag">#vim</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/21/vim-latex-suite/" rel="next" title="vim-latex-suite使用手册">
+                <i class="fa fa-chevron-left"></i> vim-latex-suite使用手册
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/21/vim-plugins/" rel="prev" title="武装你的vim">
+                武装你的vim <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/21/vim-notes/"
+     data-title="vim使用笔记"
+     data-content=""
+     data-url="http://blog.guantau.com/2016/08/21/vim-notes/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/21/vim-notes/"
+           data-title="vim使用笔记" data-url="http://blog.guantau.com/2016/08/21/vim-notes/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="guantau" />
+          <p class="site-author-name" itemprop="name">guantau</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/guantau" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1811951543" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、vim插件管理"><span class="nav-text">一、vim插件管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、查找类插件"><span class="nav-text">二、查找类插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-command-t"><span class="nav-text">1. command-t</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）简介"><span class="nav-text">（1）简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）使用"><span class="nav-text">（2）使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）其它"><span class="nav-text">（3）其它</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-FSwitch"><span class="nav-text">2. FSwitch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、浏览类插件"><span class="nav-text">三、浏览类插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-minibufexpl"><span class="nav-text">1. minibufexpl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）使用C-HJKL在窗口之间进行移动，注意这里是大写"><span class="nav-text">（1）使用C-HJKL在窗口之间进行移动，注意这里是大写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）使用-在缓冲区中进行切换"><span class="nav-text">（2）使用 在缓冲区中进行切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口"><span class="nav-text">（3）映射快捷键关闭缓冲区，在只有一个缓冲区时关闭窗口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-The-NERD-Tree"><span class="nav-text">2. The-NERD-Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-taglist"><span class="nav-text">3. taglist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-tagbar"><span class="nav-text">4. tagbar</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、补全类插件"><span class="nav-text">四、补全类插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-neocomplcache"><span class="nav-text">1. neocomplcache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-snipMate"><span class="nav-text">2. snipMate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Auto-Pairs"><span class="nav-text">3. Auto-Pairs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、注释类插件"><span class="nav-text">五、注释类插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-The-NERD-Commenter"><span class="nav-text">1. The NERD Commenter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、标签类插件"><span class="nav-text">六、标签类插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ShowMarks"><span class="nav-text">1. ShowMarks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Marks-Browser"><span class="nav-text">2. Marks-Browser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Tasklist"><span class="nav-text">3. Tasklist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-YankRing"><span class="nav-text">4. YankRing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、python相关插件"><span class="nav-text">七、python相关插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Python-mode-klen"><span class="nav-text">1. Python-mode-klen</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）快速浏览"><span class="nav-text">（1）快速浏览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）查看文档"><span class="nav-text">（2）查看文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）运行调试"><span class="nav-text">（3）运行调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（4）代码检查"><span class="nav-text">（4）代码检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（5）转到定义"><span class="nav-text">（5）转到定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（6）代码重构"><span class="nav-text">（6）代码重构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-调试"><span class="nav-text">2. 调试</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">guantau</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"guantau"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_SVG"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("FJnjyRtFhXhHRSFrytdeIeeV-gzGzoHsz", "fzauUFb059QQVrhlExPYprHH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

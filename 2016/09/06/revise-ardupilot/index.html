@@ -1,0 +1,1047 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ArduPilot," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="下载原版ArduPilot，并进行初始化：
+1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update
+原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArduPilot修改记录">
+<meta property="og:url" content="http://blog.guantau.com/2016/09/06/revise-ardupilot/index.html">
+<meta property="og:site_name" content="tautau不绝">
+<meta property="og:description" content="下载原版ArduPilot，并进行初始化：
+1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update
+原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+<meta property="og:updated_time" content="2016-09-25T11:57:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ArduPilot修改记录">
+<meta name="twitter:description" content="下载原版ArduPilot，并进行初始化：
+1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update
+原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://blog.guantau.com/2016/09/06/revise-ardupilot/"/>
+
+  <title> ArduPilot修改记录 | tautau不绝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f5a1bfbe590ec34a0aac4a5c7965a30d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">tautau不绝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ArduPilot修改记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-06T21:21:40+08:00" content="2016-09-06">
+              2016-09-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/弄点工具/" itemprop="url" rel="index">
+                    <span itemprop="name">弄点工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/06/revise-ardupilot/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/06/revise-ardupilot/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/06/revise-ardupilot/" class="leancloud_visitors" data-flag-title="ArduPilot修改记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>下载原版ArduPilot，并进行初始化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> https://github.com/ArduPilot/ardupilot.git</div><div class="line">$ <span class="built_in">cd</span> ardupilot</div><div class="line">$ git submodule init</div><div class="line">$ git submodule update</div></pre></td></tr></table></figure>
+<h2 id="原版ArduPilot修改为DM1"><a href="#原版ArduPilot修改为DM1" class="headerlink" title="原版ArduPilot修改为DM1"></a>原版ArduPilot修改为DM1</h2><p>在<code>libraries/AP_HAL_Linux/</code>目录下增加文件<code>RCInput_DM1.h</code>，<code>RCInput_DM1.cpp</code>，<code>RCOutput_DM1.h</code>，<code>RCOutput_DM1.cpp</code>，<code>pak_stm32.h</code></p>
+<p>在<code>libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</code>文件中修改</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="keyword">static</span> RCInput_DM1 rcinDriver;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="keyword">static</span> RCOutput_DM1 rcoutDriver;</div></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL_Linux/Scheduler.cpp</code>文件中修改</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">if</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_NAVIO ||    \</span></div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_ERLEBRAIN2 || \</div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_BH || \</div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_PXFMINI || \</div><div class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> APM_LINUX_RCIN_RATE             2000</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> APM_LINUX_TONEALARM_RATE        100</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> APM_LINUX_IO_RATE               50</span></div></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL_Linux/SPIDevice.cpp</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line">SPIDesc SPIDeviceManager::<span class="number">_</span>device[] = &#123;</div><div class="line">    SPIDesc(<span class="string">"mpu9250"</span>, <span class="number">0</span>, <span class="number">0</span>, SPI_MODE_0, <span class="number">8</span>, SPI_CS_KERNEL, <span class="number">1</span>*MHZ, <span class="number">10</span>*MHZ),</div><div class="line">    SPIDesc(<span class="string">"stm32"</span>, <span class="number">0</span>, <span class="number">1</span>, SPI_MODE_0, <span class="number">8</span>, SPI_CS_KERNEL,  <span class="number">1</span>*MHZ, <span class="number">10</span>*MHZ),</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL/AP_HAL_Boards.h</code>文件中增加DM1定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_SUBTYPE_LINUX_DM1        1016</span></div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_LOG_DIRECTORY <span class="meta-string">"/var/APM/logs"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_TERRAIN_DIRECTORY <span class="meta-string">"/var/APM/terrain"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_INS_DEFAULT HAL_INS_MPU9250_SPI</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_INS_MPU9250_NAME <span class="meta-string">"mpu9250"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_DEFAULT HAL_BARO_MS5611_I2C</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_I2C_BUS 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_I2C_ADDR 0x77</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_USE_TIMER false</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_COMPASS_DEFAULT HAL_COMPASS_AK8963_MPU9250</span></div></pre></td></tr></table></figure>
+<p>在<code>mk/environ.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ifneq ($(findstring dm1, $(MAKECMDGOALS)),)</div><div class="line">HAL_BOARD = HAL_BOARD_LINUX</div><div class="line">HAL_BOARD_SUBTYPE = HAL_BOARD_SUBTYPE_LINUX_DM1</div><div class="line">endif</div></pre></td></tr></table></figure>
+<p>在<code>mk/help.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@echo <span class="string">"  dm1 - the BPi + NavIO2 cape combination"</span></div></pre></td></tr></table></figure>
+<p>在<code>mk/targets.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dm1: HAL_BOARD = HAL_BOARD_LINUX</div><div class="line">dm1: TOOLCHAIN = RPI</div><div class="line">dm1: BUILDSYS_DEPRECATED = <span class="number">1</span></div><div class="line">dm1: all</div></pre></td></tr></table></figure>
+<p>在<code>Tools/ardupilotwaf/boards.py</code>文件中添加对dm1的支持，关于waf的使用方法可以参考<a href="http://blog.guantau.com/2016/09/06/waf-tool/">waf编译工具使用方法</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">dm1</span><span class="params">(linux)</span>:</span></div><div class="line">    toolchain = <span class="string">'arm-linux-gnueabihf'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">configure_env</span><span class="params">(self, cfg, env)</span>:</span></div><div class="line">        super(dm1, self).configure_env(cfg, env)</div><div class="line"></div><div class="line">        env.DEFINES.update(</div><div class="line">            CONFIG_HAL_BOARD_SUBTYPE = <span class="string">'HAL_BOARD_SUBTYPE_LINUX_DM1'</span>,</div><div class="line">        )</div></pre></td></tr></table></figure>
+<p>下面是在早期ArduPilot上面所做的修改</p>
+<h2 id="libraries-AP-HAL-Linux-HAL-Linux-Class-cpp"><a href="#libraries-AP-HAL-Linux-HAL-Linux-Class-cpp" class="headerlink" title="libraries/AP_HAL_Linux/HAL_Linux_Class.cpp"></a>libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</h2><p>目前RCInput_DM1还有问题，将其注释掉<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="comment">// #elif CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></div><div class="line"><span class="comment">// static RCInput_DM1 rcinDriver;</span></div></pre></td></tr></table></figure></p>
+<h2 id="libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h</h2><p>添加函数<code>accumulate()</code>，该函数在AP_InertialSensor_Backend.h中申明为纯虚函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">accumulate</span><span class="params">()</span> override</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp</h2><p>实现函数<code>accumulate()</code>，用于非定时读取情况下手动读取数据<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="keyword">void</span> AP_InertialSensor_MPU9250::accumulate()</div><div class="line">&#123;</div><div class="line">    <span class="number">_</span>poll_data();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在函数<code>_hardware_init()</code>中，修改初始化代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> AP_InertialSensor_MPU9250::<span class="number">_</span>hardware_init(<span class="keyword">void</span>)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="number">_</span>dev-&gt;get_semaphore()-&gt;take(<span class="number">100</span>)) &#123;</div><div class="line">        AP_HAL::panic(<span class="string">"MPU6000: Unable to get semaphore"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// initially run the bus at low speed</span></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_LOW);</div><div class="line"></div><div class="line">    <span class="keyword">uint8_t</span> value = <span class="number">_</span>register_read(MPUREG_WHOAMI);</div><div class="line">    <span class="keyword">if</span> (value != MPUREG_WHOAMI_MPU9250 &amp;&amp; value != MPUREG_WHOAMI_MPU9255) &#123;</div><div class="line">        hal.console-&gt;<span class="built_in">printf</span>(<span class="string">"MPU9250: unexpected WHOAMI 0x%x\n"</span>, (<span class="keyword">unsigned</span>)value);</div><div class="line">        <span class="number">_</span>dev-&gt;get_semaphore()-&gt;give();</div><div class="line">        <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Clock Source</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_CLK_XGYRO);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Enable Acc &amp; Gyro</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_PWR_MGMT_2, <span class="number">0x00</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Use DLPF set Gyroscope bandwidth 184Hz, temperature bandwidth 188Hz</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_CONFIG, BITS_DLPF_CFG_188HZ);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Gyro scale 2000º/s</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_GYRO_CONFIG, BITS_GYRO_FS_2000DPS);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// RM-MPU-9250A-00.pdf, pg. 15, select accel full scale 16g</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_ACCEL_CONFIG, <span class="number">0x18</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Set Acc Data Rates, Enable Acc LPF , Bandwidth 184Hz</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_ACCEL_CONFIG_2, <span class="number">0x09</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// clear interrupt on any read, and hold the data ready pin high</span></div><div class="line">    <span class="comment">// until we clear the interrupt</span></div><div class="line">    <span class="number">_</span>register_write(MPUREG_INT_PIN_CFG, <span class="number">0x30</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Chip reset</span></div><div class="line">    <span class="comment">// uint8_t tries;</span></div><div class="line">    <span class="comment">// for (tries = 0; tries &lt; 5; tries++) &#123;</span></div><div class="line">        <span class="comment">//uint8_t user_ctrl = _register_read(MPUREG_USER_CTRL);</span></div><div class="line"></div><div class="line">        <span class="comment">/* First disable the master I2C to avoid hanging the slaves on the</span></div><div class="line">         * aulixiliar I2C bus - it will be enabled again if the AuxiliaryBus</div><div class="line">         * is used */</div><div class="line">        <span class="comment">//if (user_ctrl &amp; BIT_USER_CTRL_I2C_MST_EN) &#123;</span></div><div class="line">        <span class="comment">//    _register_write(MPUREG_USER_CTRL, user_ctrl &amp; ~BIT_USER_CTRL_I2C_MST_EN);</span></div><div class="line">        <span class="comment">//    hal.scheduler-&gt;delay(10);</span></div><div class="line">        <span class="comment">//&#125;</span></div><div class="line"></div><div class="line">        <span class="comment">// reset device</span></div><div class="line">        <span class="comment">//_register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_DEVICE_RESET);</span></div><div class="line">        <span class="comment">//hal.scheduler-&gt;delay(100);</span></div><div class="line"></div><div class="line">        <span class="comment">/* bus-dependent initialization */</span></div><div class="line">        <span class="comment">//if (_dev-&gt;bus_type == AP_HAL::Device::BUS_TYPE_SPI) &#123;</span></div><div class="line">            <span class="comment">/* Disable I2C bus if SPI selected (Recommended in Datasheet to be</span></div><div class="line">             * done just after the device is reset) */</div><div class="line">            <span class="comment">//_register_write(MPUREG_USER_CTRL, BIT_USER_CTRL_I2C_IF_DIS);</span></div><div class="line">        <span class="comment">//&#125;</span></div><div class="line"></div><div class="line">        <span class="comment">// Wake up device and select GyroZ clock. Note that the</span></div><div class="line">        <span class="comment">// MPU9250 starts up in sleep mode, and it can take some time</span></div><div class="line">        <span class="comment">// for it to come out of sleep</span></div><div class="line"></div><div class="line">        <span class="comment">// _register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_CLK_ZGYRO);</span></div><div class="line">        <span class="comment">// hal.scheduler-&gt;delay(5);</span></div><div class="line"></div><div class="line">        <span class="comment">// // check it has woken up</span></div><div class="line">        <span class="comment">// if (_register_read(MPUREG_PWR_MGMT_1) == BIT_PWR_MGMT_1_CLK_ZGYRO) &#123;</span></div><div class="line">            <span class="comment">// break;</span></div><div class="line">        <span class="comment">// &#125;</span></div><div class="line"></div><div class="line">        <span class="comment">// hal.scheduler-&gt;delay(10);</span></div><div class="line">        <span class="comment">// if (_data_ready()) &#123;</span></div><div class="line">            <span class="comment">// break;</span></div><div class="line">        <span class="comment">// &#125;</span></div><div class="line"></div><div class="line"><span class="comment">// #if MPU9250_DEBUG</span></div><div class="line">        <span class="comment">// _dump_registers();</span></div><div class="line"><span class="comment">// #endif</span></div><div class="line">    <span class="comment">// &#125;</span></div><div class="line">    <span class="comment">// if (tries == 5) &#123;</span></div><div class="line">        <span class="comment">// hal.console-&gt;println("Failed to boot MPU9250 5 times");</span></div><div class="line">        <span class="comment">// goto fail_tries;</span></div><div class="line">    <span class="comment">// &#125;</span></div><div class="line"></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</div><div class="line">    <span class="number">_</span>dev-&gt;get_semaphore()-&gt;give();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line"><span class="comment">// fail_tries:</span></div><div class="line"><span class="comment">// fail_whoami:</span></div><div class="line">    <span class="comment">// _dev-&gt;get_semaphore()-&gt;give();</span></div><div class="line">    <span class="comment">// _dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</span></div><div class="line">    <span class="comment">// return false;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在函数<code>start()</code>中，去掉初始化代码，去掉定时读取的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> AP_InertialSensor_MPU9250::start()</div><div class="line">&#123;</div><div class="line">    hal.scheduler-&gt;suspend_timer_procs();</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!<span class="number">_</span>dev-&gt;get_semaphore()-&gt;take(<span class="number">100</span>)) &#123;</div><div class="line">        AP_HAL::panic(<span class="string">"MPU92500: Unable to get semaphore"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// initially run the bus at low speed</span></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_LOW);</div><div class="line"></div><div class="line">    <span class="comment">// // only used for wake-up in accelerometer only low power mode</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_PWR_MGMT_2, 0x00);</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></div><div class="line"></div><div class="line">    <span class="comment">// // disable sensor filtering</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_CONFIG, BITS_DLPF_CFG_256HZ_NOLPF2);</span></div><div class="line"></div><div class="line">    <span class="comment">// // set sample rate to 1kHz, and use the 2 pole filter to give the</span></div><div class="line">    <span class="comment">// // desired rate</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_SMPLRT_DIV, DEFAULT_SMPLRT_DIV); // guantau</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></div><div class="line"></div><div class="line">    <span class="comment">// // Gyro scale 2000º/s</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_GYRO_CONFIG, BITS_GYRO_FS_2000DPS);</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></div><div class="line"></div><div class="line">    <span class="number">_</span>product_id = AP_PRODUCT_ID_MPU9250;</div><div class="line"></div><div class="line">    <span class="comment">// // RM-MPU-9250A-00.pdf, pg. 15, select accel full scale 16g</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_ACCEL_CONFIG,3&lt;&lt;3);</span></div><div class="line"></div><div class="line">    <span class="comment">// // configure interrupt to fire when new data arrives</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_INT_ENABLE, BIT_RAW_RDY_EN);</span></div><div class="line"></div><div class="line">    <span class="comment">// // clear interrupt on any read, and hold the data ready pin high</span></div><div class="line">    <span class="comment">// // until we clear the interrupt</span></div><div class="line">    <span class="comment">// uint8_t value = _register_read(MPUREG_INT_PIN_CFG);</span></div><div class="line">    <span class="comment">// value |= BIT_INT_RD_CLEAR | BIT_LATCH_INT_EN;</span></div><div class="line">    <span class="comment">// _register_write(MPUREG_INT_PIN_CFG, value);</span></div><div class="line"></div><div class="line">    <span class="comment">// now that we have initialised, we set the bus speed to high</span></div><div class="line">    <span class="number">_</span>dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</div><div class="line"></div><div class="line">    <span class="number">_</span>dev-&gt;get_semaphore()-&gt;give();</div><div class="line"></div><div class="line">    <span class="comment">// grab the used instances</span></div><div class="line">    <span class="number">_</span>gyro_instance = <span class="number">_</span>imu.register_gyro(DEFAULT_SAMPLE_RATE);</div><div class="line">    <span class="number">_</span>accel_instance = <span class="number">_</span>imu.register_accel(DEFAULT_SAMPLE_RATE);</div><div class="line"></div><div class="line">    hal.scheduler-&gt;resume_timer_procs();</div><div class="line"></div><div class="line">    <span class="comment">// start the timer process to read samples</span></div><div class="line">    <span class="comment">// hal.scheduler-&gt;register_timer_process(</span></div><div class="line">        <span class="comment">// FUNCTOR_BIND_MEMBER(&amp;AP_InertialSensor_MPU9250::_poll_data, void));</span></div><div class="line"></div><div class="line">    <span class="comment">//guantau</span></div><div class="line">    <span class="number">_</span>poll_data();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在函数<code>_configure_slaves()</code>中修改初始化代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> AP_MPU9250_AuxiliaryBus::<span class="number">_</span>configure_slaves()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">auto</span> &amp;backend = AP_InertialSensor_MPU9250::from(<span class="number">_</span>ins_backend);</div><div class="line"></div><div class="line">    <span class="comment">// guantau</span></div><div class="line">    <span class="comment">// I2C Master mode</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_USER_CTRL, BIT_USER_CTRL_I2C_MST_EN);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// I2C configuration multi-master  IIC 400KHz</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_MST_CTRL, I2C_MST_CLOCK_400KHZ);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Set the I2C slave addres of AK8963 and set for write.</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_ADDR, <span class="number">0x0C</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// I2C slave 0 register address from where to begin data transfer</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_REG, <span class="number">0x0B</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Reset AK8963</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_DO, <span class="number">0x01</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Enable I2C and set 1 byte</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_CTRL, <span class="number">0x81</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// I2C slave 0 register address from where to begin data transfer</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_REG, <span class="number">0x0A</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Register value to continuous measurement in 16bit</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_DO, <span class="number">0x12</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line">    <span class="comment">// Enable I2C and set 1 byte</span></div><div class="line">    backend<span class="number">._</span>register_write(MPUREG_I2C_SLV0_CTRL, <span class="number">0x81</span>);</div><div class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</div><div class="line"></div><div class="line"><span class="comment">//    /* Enable the I2C master to slaves on the auxiliary I2C bus*/</span></div><div class="line"><span class="comment">//    uint8_t user_ctrl = backend._register_read(MPUREG_USER_CTRL);</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_USER_CTRL, user_ctrl | BIT_USER_CTRL_I2C_MST_EN);</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    /* stop condition between reads; clock at 400kHz */</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_MST_CTRL,</span></div><div class="line"><span class="comment">//                            I2C_MST_CLOCK_400KHZ | I2C_MST_P_NSR);</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    /* Hard-code divider for internal sample rate, 1 kHz, resulting in a</span></div><div class="line"><span class="comment">//     * sample rate of 100Hz */</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_SLV4_CTRL, 9);</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    /* All slaves are subject to the sample rate */</span></div><div class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_MST_DELAY_CTRL,</span></div><div class="line"><span class="comment">//                            I2C_SLV0_DLY_EN | I2C_SLV1_DLY_EN |</span></div><div class="line"><span class="comment">//                            I2C_SLV2_DLY_EN | I2C_SLV3_DLY_EN);</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="libraries-AP-Compass-AP-Compass-AK8963-h"><a href="#libraries-AP-Compass-AP-Compass-AK8963-h" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.h"></a>libraries/AP_Compass/AP_Compass_AK8963.h</h2><p>添加函数<code>accumulate()</code>，该函数在AP_Compass_Backend.h中申明为纯虚函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">accumulate</span><span class="params">()</span> override</span>;</div></pre></td></tr></table></figure>
+<h2 id="libraries-AP-Compass-AP-Compass-AK8963-cpp"><a href="#libraries-AP-Compass-AP-Compass-AK8963-cpp" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.cpp"></a>libraries/AP_Compass/AP_Compass_AK8963.cpp</h2><p>实现函数<code>accumulate()</code>，用于非定时读取情况下手动读取数据</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//guantau</span></div><div class="line"><span class="keyword">void</span> AP_Compass_AK8963::accumulate()</div><div class="line">&#123;</div><div class="line">    <span class="number">_u</span>pdate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改初始化代码<code>init()</code>，去除定时读取的任务</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> AP_Compass_AK8963::init()</div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    <span class="comment">/* timer needs to be called every 10ms so set the freq_div to 10 */</span></div><div class="line">    <span class="comment">// _timesliced = hal.scheduler-&gt;register_timer_process(FUNCTOR_BIND_MEMBER(&amp;AP_Compass_AK8963::_update, void), 10);</span></div><div class="line">    <span class="comment">//guantau</span></div><div class="line">    <span class="number">_u</span>pdate();</div><div class="line">	...</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp"><a href="#libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp" class="headerlink" title="libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp"></a>libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp</h2><p>在函数<code>loop()</code>中，若循环读取SPI总线的时延过小，则会出现死机的情况。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="guantau WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="guantau Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ArduPilot/" rel="tag">#ArduPilot</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/06/waf-tool/" rel="next" title="waf编译工具使用方法">
+                <i class="fa fa-chevron-left"></i> waf编译工具使用方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/16/spark-csv/" rel="prev" title="Spark读取csv文件方法">
+                Spark读取csv文件方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/06/revise-ardupilot/"
+     data-title="ArduPilot修改记录"
+     data-content=""
+     data-url="http://blog.guantau.com/2016/09/06/revise-ardupilot/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/06/revise-ardupilot/"
+           data-title="ArduPilot修改记录" data-url="http://blog.guantau.com/2016/09/06/revise-ardupilot/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="guantau" />
+          <p class="site-author-name" itemprop="name">guantau</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/guantau" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1811951543" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原版ArduPilot修改为DM1"><span class="nav-text">原版ArduPilot修改为DM1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-HAL-Linux-HAL-Linux-Class-cpp"><span class="nav-text">libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h"><span class="nav-text">libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp"><span class="nav-text">libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-Compass-AP-Compass-AK8963-h"><span class="nav-text">libraries/AP_Compass/AP_Compass_AK8963.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-Compass-AP-Compass-AK8963-cpp"><span class="nav-text">libraries/AP_Compass/AP_Compass_AK8963.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp"><span class="nav-text">libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">guantau</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"guantau"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_SVG"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("FJnjyRtFhXhHRSFrytdeIeeV-gzGzoHsz", "fzauUFb059QQVrhlExPYprHH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
