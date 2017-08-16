@@ -4,6 +4,14 @@
   
     
     <entry>
+      <title><![CDATA[测试MWeb]]></title>
+      <url>http://blog.guantau.com/2017/08/16/test/</url>
+      <content type="html"><![CDATA[<h1 id="标题1"><a href="#标题1" class="headerlink" title="标题1"></a>标题1</h1><p>我要插入图片<br><img src="/media/sunset_at_big_island-wallpaper-2560x1600.jpg" alt="sunset_at_big_island-wallpaper-2560x1600"></p>
+<p>这张图片怎么样</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[我从linux上学习到了什么]]></title>
       <url>http://blog.guantau.com/2017/08/10/learn-from-linux/</url>
       <content type="html"><![CDATA[<blockquote>
