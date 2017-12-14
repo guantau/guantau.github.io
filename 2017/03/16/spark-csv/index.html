@@ -84,28 +84,18 @@
 
 
 
-<meta name="description" content="直接采用split的方法是不太好的，比如
-123sc.textFile(&apos;file.csv&apos;)    .map(lambda line: (line.split(&apos;,&apos;)[0], line.split(&apos;,&apos;)[1]))    .collect()
-这种方法容易出错，且读取的值无法自动识别类型。
-可以稍微改进一下，比如
-123import csvrdd = sc.textFile(&quot;file.cs">
+<meta name="description" content="直接采用split的方法是不太好的，比如 123sc.textFile(&apos;file.csv&apos;)    .map(lambda line: (line.split(&apos;,&apos;)[0], line.split(&apos;,&apos;)[1]))    .collect() 这种方法容易出错，且读取的值无法自动识别类型。 可以稍微改进一下，比如 123import csvrdd = sc.textFile(&quot;file.cs">
+<meta name="keywords" content="Spark,csv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spark读取csv文件方法">
 <meta property="og:url" content="http://blog.guantau.com/2017/03/16/spark-csv/index.html">
 <meta property="og:site_name" content="tautau不绝">
-<meta property="og:description" content="直接采用split的方法是不太好的，比如
-123sc.textFile(&apos;file.csv&apos;)    .map(lambda line: (line.split(&apos;,&apos;)[0], line.split(&apos;,&apos;)[1]))    .collect()
-这种方法容易出错，且读取的值无法自动识别类型。
-可以稍微改进一下，比如
-123import csvrdd = sc.textFile(&quot;file.cs">
+<meta property="og:description" content="直接采用split的方法是不太好的，比如 123sc.textFile(&apos;file.csv&apos;)    .map(lambda line: (line.split(&apos;,&apos;)[0], line.split(&apos;,&apos;)[1]))    .collect() 这种方法容易出错，且读取的值无法自动识别类型。 可以稍微改进一下，比如 123import csvrdd = sc.textFile(&quot;file.cs">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-03-16T13:36:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark读取csv文件方法">
-<meta name="twitter:description" content="直接采用split的方法是不太好的，比如
-123sc.textFile(&apos;file.csv&apos;)    .map(lambda line: (line.split(&apos;,&apos;)[0], line.split(&apos;,&apos;)[1]))    .collect()
-这种方法容易出错，且读取的值无法自动识别类型。
-可以稍微改进一下，比如
-123import csvrdd = sc.textFile(&quot;file.cs">
+<meta name="twitter:description" content="直接采用split的方法是不太好的，比如 123sc.textFile(&apos;file.csv&apos;)    .map(lambda line: (line.split(&apos;,&apos;)[0], line.split(&apos;,&apos;)[1]))    .collect() 这种方法容易出错，且读取的值无法自动识别类型。 可以稍微改进一下，比如 123import csvrdd = sc.textFile(&quot;file.cs">
 
 
 

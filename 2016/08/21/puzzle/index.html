@@ -85,11 +85,13 @@
 
 
 <meta name="description" content="智力拼图（n-puzzle），是一种滑块类游戏，常见的类型有15数字滑块和8数字滑块，也有用图画代替数字的。这种游戏最早可能由Noyes Palmer Chapman在19世纪70年代发明的，也有说起源于中国的重排九宫，来自洛书，是华容道的祖先。">
+<meta name="keywords" content="智力拼图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="智力游戏自动求解2——智力拼图">
 <meta property="og:url" content="http://blog.guantau.com/2016/08/21/puzzle/index.html">
 <meta property="og:site_name" content="tautau不绝">
 <meta property="og:description" content="智力拼图（n-puzzle），是一种滑块类游戏，常见的类型有15数字滑块和8数字滑块，也有用图画代替数字的。这种游戏最早可能由Noyes Palmer Chapman在19世纪70年代发明的，也有说起源于中国的重排九宫，来自洛书，是华容道的祖先。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-08-27T09:13:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="智力游戏自动求解2——智力拼图">
@@ -644,7 +646,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、n-puzzle问题的可解性"><span class="nav-text">一、n-puzzle问题的可解性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、n-puzzle问题的自动解法"><span class="nav-text">二、n-puzzle问题的自动解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、无信息搜索"><span class="nav-text">1、无信息搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、启发式搜索"><span class="nav-text">2、启发式搜索</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、n-puzzle问题的可解性"><span class="nav-text"><a href="#&#x4E00;&#x3001;n-puzzle&#x95EE;&#x9898;&#x7684;&#x53EF;&#x89E3;&#x6027;" class="headerlink" title="&#x4E00;&#x3001;n-puzzle&#x95EE;&#x9898;&#x7684;&#x53EF;&#x89E3;&#x6027;"></a>&#x4E00;&#x3001;n-puzzle&#x95EE;&#x9898;&#x7684;&#x53EF;&#x89E3;&#x6027;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、n-puzzle问题的自动解法"><span class="nav-text"><a href="#&#x4E8C;&#x3001;n-puzzle&#x95EE;&#x9898;&#x7684;&#x81EA;&#x52A8;&#x89E3;&#x6CD5;" class="headerlink" title="&#x4E8C;&#x3001;n-puzzle&#x95EE;&#x9898;&#x7684;&#x81EA;&#x52A8;&#x89E3;&#x6CD5;"></a>&#x4E8C;&#x3001;n-puzzle&#x95EE;&#x9898;&#x7684;&#x81EA;&#x52A8;&#x89E3;&#x6CD5;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、无信息搜索"><span class="nav-text"><a href="#1&#x3001;&#x65E0;&#x4FE1;&#x606F;&#x641C;&#x7D22;" class="headerlink" title="1&#x3001;&#x65E0;&#x4FE1;&#x606F;&#x641C;&#x7D22;"></a>1&#x3001;&#x65E0;&#x4FE1;&#x606F;&#x641C;&#x7D22;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、启发式搜索"><span class="nav-text"><a href="#2&#x3001;&#x542F;&#x53D1;&#x5F0F;&#x641C;&#x7D22;" class="headerlink" title="2&#x3001;&#x542F;&#x53D1;&#x5F0F;&#x641C;&#x7D22;"></a>2&#x3001;&#x542F;&#x53D1;&#x5F0F;&#x641C;&#x7D22;</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

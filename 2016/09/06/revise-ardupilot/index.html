@@ -84,22 +84,18 @@
 
 
 
-<meta name="description" content="下载原版ArduPilot，并进行初始化：
-1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update
-原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+<meta name="description" content="下载原版ArduPilot，并进行初始化： 1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update 原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+<meta name="keywords" content="ArduPilot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ArduPilot修改记录">
 <meta property="og:url" content="http://blog.guantau.com/2016/09/06/revise-ardupilot/index.html">
 <meta property="og:site_name" content="tautau不绝">
-<meta property="og:description" content="下载原版ArduPilot，并进行初始化：
-1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update
-原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+<meta property="og:description" content="下载原版ArduPilot，并进行初始化： 1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update 原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-09-25T11:57:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArduPilot修改记录">
-<meta name="twitter:description" content="下载原版ArduPilot，并进行初始化：
-1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update
-原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
+<meta name="twitter:description" content="下载原版ArduPilot，并进行初始化： 1234$ git clone https://github.com/ArduPilot/ardupilot.git$ cd ardupilot$ git submodule init$ git submodule update 原版ArduPilot修改为DM1在libraries/AP_HAL_Linux/目录下增加文件RCInput_DM1.h，R">
 
 
 
@@ -629,7 +625,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原版ArduPilot修改为DM1"><span class="nav-text">原版ArduPilot修改为DM1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-HAL-Linux-HAL-Linux-Class-cpp"><span class="nav-text">libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h"><span class="nav-text">libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp"><span class="nav-text">libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-Compass-AP-Compass-AK8963-h"><span class="nav-text">libraries/AP_Compass/AP_Compass_AK8963.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-Compass-AP-Compass-AK8963-cpp"><span class="nav-text">libraries/AP_Compass/AP_Compass_AK8963.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp"><span class="nav-text">libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原版ArduPilot修改为DM1"><span class="nav-text"><a href="#&#x539F;&#x7248;ArduPilot&#x4FEE;&#x6539;&#x4E3A;DM1" class="headerlink" title="&#x539F;&#x7248;ArduPilot&#x4FEE;&#x6539;&#x4E3A;DM1"></a>&#x539F;&#x7248;ArduPilot&#x4FEE;&#x6539;&#x4E3A;DM1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-HAL-Linux-HAL-Linux-Class-cpp"><span class="nav-text"><a href="#libraries-AP-HAL-Linux-HAL-Linux-Class-cpp" class="headerlink" title="libraries/AP_HAL_Linux/HAL_Linux_Class.cpp"></a>libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h"><span class="nav-text"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp"><span class="nav-text"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-Compass-AP-Compass-AK8963-h"><span class="nav-text"><a href="#libraries-AP-Compass-AP-Compass-AK8963-h" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.h"></a>libraries/AP_Compass/AP_Compass_AK8963.h</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-Compass-AP-Compass-AK8963-cpp"><span class="nav-text"><a href="#libraries-AP-Compass-AP-Compass-AK8963-cpp" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.cpp"></a>libraries/AP_Compass/AP_Compass_AK8963.cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp"><span class="nav-text"><a href="#libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp" class="headerlink" title="libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp"></a>libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp</span></a></li></ol></div>
             
           </div>
         </section>
