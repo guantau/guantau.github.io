@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title><![CDATA[DAG Blockchain之Byteball原理解析（一）]]></title>
+      <url>http://blog.guantau.com/2017/12/14/byteball1/</url>
+      <content type="html"><![CDATA[<h2 id="DAG数学基础"><a href="#DAG数学基础" class="headerlink" title="DAG数学基础"></a>DAG数学基础</h2><p><strong>定义：</strong>在有向图$G=(V, E)$中，对于任意一个顶点$v \in V$，都不存在一条路径$p=(e_1,e_2,\dots), e_i\in E$，使得从$v$开始出发到$v$终止，则$G$称为有向无环图（DAG, Directed Acyclic Graph）</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-08-dag.png" width="300px"></p>
+<p>在图论中，相比于一般图，DAG的很多问题可以在多项式级甚至线性复杂度条件下得到求解。DAG具有以下几条数学性质：</p>
+<ul>
+<li>DAG具有拓扑顺序，即DAG的所有节点可以转换为节点序列（线性化），使得每条边的起始节点位于终止节点之前，且该过程可以在线性复杂度条件下完成；</li>
+<li>DAG中相互连通的节点可以进行排序，如果从节点$u$出发可到达节点$v$，则可称为$u\le v$；</li>
+<li>DAG具有唯一的传递闭包；</li>
+<li>DAG具有唯一的传递规约，传递规约的边数最大不超过$V-1$条，$V$是DAG的节点数；</li>
+<li>DAG中给定两个节点，其最短路径和最长路径可以在线性时间内求解。</li>
+</ul>
+<p>DAG常用来做任务的调度规划，比如Spark在做并行处理时使用DAG来任务规划，Git采用DAG来做版本管理。DAG在区块链上的应用可以参考 <a href="http://mp.weixin.qq.com/s/nSTNI9LXWh7QTPX7NTuupw" target="_blank" rel="external">《DAG也许是真正的区块链3.0》</a>，下面将对使用DAG作为区块链的Byteball原理进行详细的解析。</p>
+<h2 id="Byteball的区块链结构"><a href="#Byteball的区块链结构" class="headerlink" title="Byteball的区块链结构"></a>Byteball的区块链结构</h2><p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-12-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-12-12%2020.07.48.png" alt="Byteball区块链结构"></p>
+<p>Byteball区块链如上图所示，其基本组成为单元(unit)，所有单元共同构成DAG。其中，单元G为创世交易，它与所有单元连通，且是从所有单元出发到达的终点。</p>
+<blockquote>
+<p><strong>父单元与子单元：</strong>从单元A出发可直接到达单元B，即单元A到单元B的路径长度为1，则单元B称为单元A的父单元，单元A称为单元B的子单元。</p>
+<p><strong>直接包含：</strong>如果单元A为单位B的子单元，则单元A直接包含或者验证了单元B。</p>
+<p><strong>间接包含：</strong>如果从单元A出发到达单元B的路径长度大于1，则单元A间接包含或者验证了单元B。</p>
+<p><strong>顶端单元：</strong>不具有任何子单元的单元，也可称为无子单元或未经验证的单元。</p>
+<p><strong>创世单元：</strong>由创世交易构成的单元，不具有任何父单元。</p>
+</blockquote>
+<p>相比于Bitcoin中一对一的链式区块结构，Byteball中单元在发出时，可以同时包含多个父单元，因此可以容纳更多的交易并获得更快的确认。由于进入DAG的单元将被所有与其连通的单元直接或间接地验证，如果要修改该单元的内容，则需要相应地修改验证了它的所有单元。直观上来讲，将要修改的单元数量（归属于不同的用户）像滚雪球一样急速增加，从而使得修改无法实现，这也是DAG可以作为区块链的重要基础。</p>
+<p>单元的结构如下所示，其主要由三部分组成：</p>
+<ol>
+<li>单元数据：数据以<code>message</code>的形式构成；</li>
+<li>地址签名：输入所需的相应地址签名；</li>
+<li>父单元：当前单元的父单元列表。</li>
+</ol>
+<p>从中可以看出Byteball采用的交易模型是UTXO，即当前交易输出作为后续交易的输入。所有bytes是在创世交易中发出，因此Byteball本质上就是一种完全预挖的币。bytes可用于支付手续费，或在地址之间相互传输。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  version: '1.0',</div><div class="line">  alt: '1',</div><div class="line">  messages: [ &#123;</div><div class="line">    app: 'payment',</div><div class="line">    payload_location: 'inline',</div><div class="line">    payload_hash: 'AegecfpDzh8xvdyIABdynrcP6CTd4Pt42gvRiv0Ftjg=', </div><div class="line">    payload: &#123;</div><div class="line">      inputs: [&#123;</div><div class="line">        unit: '7yctnKyuAk5P+mFgFQDdDLza88nkceXYjsTs4e3doQA=', </div><div class="line">        message_index: 0,</div><div class="line">        output_index: 1</div><div class="line">      &#125; ],</div><div class="line">      outputs: [</div><div class="line">        &#123; address: 'DJ6LV5GPCLMGRW7ZB55IVGJRPDJPOQU6', amount: 208 &#125;,</div><div class="line">        &#123; address: 'Z36JFFX2AH7X5JQ2V2C6AQUUOWFESKZ2', amount: 3505 &#125;</div><div class="line">      ] &#125;</div><div class="line">  &#125; ],</div><div class="line">  authors: [ &#123;</div><div class="line">    address: 'DJ6LV5GPCLMGRW7ZB55IVGJRPDJPOQU6', </div><div class="line">    authentifiers: &#123;</div><div class="line">      r: '3eQPIFiPVLRwBwEzxUR5thqn+zlFfLXUrzAmgemAqOk35UvDpa4h79Fd6TbPbGfb8VMiJzqdNGHCKyAjl786mw=='</div><div class="line">    &#125; </div><div class="line">  &#125; ],</div><div class="line">  parent_units: [ </div><div class="line">    'B63mnJ4yNNAE+6J+L6AhQ3EY7EO1Lj7QmAM9PS8X0pg=',</div><div class="line">    'D6O1/D9L8vCMhv+8f70JecF93UoLKDp3e2+b92Yh2mI=',</div><div class="line">    'ZxqzWP6q6hDNF50Wax8HUK212lH/KSIRdW5a6T9h3DM='</div><div class="line">  ],</div><div class="line">  last_ball: '8S2ya9lULt5abF1Z4lIJ4x5zYY9MtEALCl+jPDLsnsw=', </div><div class="line">  last_ball_unit: 'bhdxFqVUut6V3N2D6Tyt+/YD6X0W+QnC95dMcJJWdtw=', </div><div class="line">  witness_list_unit: 'f252ZI2MN3xu8wFJ+LktVDGsay2Udzi/AUauE9ZaifY='</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当某个单元达到稳定之后，就可以生成球(ball)，此时它的状态（是否有效）将确定性的固定下来，球的结构如下所示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  unit: "hash of unit",</div><div class="line">  parent_balls: [array of hashes of balls based on parent units], </div><div class="line">  is_nonserial: true, // this field included only if the unit is nonserial</div><div class="line">  skiplist_balls: [array of earlier balls used to build skiplist]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>单元的结构中还包括见证人列表单元，这是为了节省存储空间，表示当前单元的见证人列表与其相同。关于球、见证人我们再后续解析共识算法时会详细讨论到。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[我从linux上学习到了什么]]></title>
       <url>http://blog.guantau.com/2017/08/10/learn-from-linux/</url>
       <content type="html"><![CDATA[<blockquote>
