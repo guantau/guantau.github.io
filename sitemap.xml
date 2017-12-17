@@ -2,37 +2,107 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.guantau.com/about/index.html</loc>
+    <loc>http://blog.guantau.com/2016/08/25/house-money/</loc>
     
-    <lastmod>2017-12-17T03:17:21.584Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2017/12/14/byteball1/</loc>
-    
-    <lastmod>2017-12-14T13:28:00.579Z</lastmod>
+    <lastmod>2017-12-17T03:34:11.166Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.guantau.com/2017/08/10/learn-from-linux/</loc>
+    <loc>http://blog.guantau.com/2016/08/21/what-is-tau/</loc>
     
-    <lastmod>2017-08-10T04:17:44.000Z</lastmod>
+    <lastmod>2017-12-17T03:34:02.932Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/build-tools/</loc>
+    
+    <lastmod>2017-12-17T03:33:38.314Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/pkm-tools/</loc>
+    
+    <lastmod>2017-12-17T03:33:15.522Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/zotero-tips/</loc>
+    
+    <lastmod>2017-12-17T03:32:09.869Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/mobile-data/</loc>
+    
+    <lastmod>2017-12-17T03:31:50.649Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/texting-habits/</loc>
+    
+    <lastmod>2017-12-17T03:30:29.417Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/wifi-crack/</loc>
+    
+    <lastmod>2017-12-17T03:30:08.323Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/vim-notes/</loc>
+    
+    <lastmod>2017-12-17T03:29:56.660Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guantau.com/2017/04/30/vscode-keys/</loc>
     
-    <lastmod>2017-04-30T04:00:49.000Z</lastmod>
+    <lastmod>2017-12-17T03:29:45.293Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2017/08/10/learn-from-linux/</loc>
+    
+    <lastmod>2017-12-17T03:29:41.903Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/vim-plugins/</loc>
+    
+    <lastmod>2017-12-17T03:29:27.364Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guantau.com/2017/03/16/spark-csv/</loc>
     
-    <lastmod>2017-03-16T13:36:56.000Z</lastmod>
+    <lastmod>2017-12-17T03:28:02.180Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2017/12/14/byteball1/</loc>
+    
+    <lastmod>2017-12-17T03:27:38.980Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/about/index.html</loc>
+    
+    <lastmod>2017-12-17T03:18:49.660Z</lastmod>
     
   </url>
   
@@ -44,23 +114,9 @@
   </url>
   
   <url>
-    <loc>http://blog.guantau.com/2016/08/25/house-money/</loc>
-    
-    <lastmod>2016-09-19T10:57:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.guantau.com/2016/09/06/waf-tool/</loc>
     
     <lastmod>2016-09-06T12:54:49.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/vim-notes/</loc>
-    
-    <lastmod>2016-08-27T09:38:43.000Z</lastmod>
     
   </url>
   
@@ -79,37 +135,9 @@
   </url>
   
   <url>
-    <loc>http://blog.guantau.com/2016/08/21/zotero-tips/</loc>
-    
-    <lastmod>2016-08-27T09:16:20.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/wifi-crack/</loc>
-    
-    <lastmod>2016-08-27T09:15:41.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/vim-plugins/</loc>
-    
-    <lastmod>2016-08-27T09:15:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.guantau.com/2016/08/21/vim-latex-suite/</loc>
     
     <lastmod>2016-08-27T09:14:33.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/texting-habits/</loc>
-    
-    <lastmod>2016-08-27T09:14:14.000Z</lastmod>
     
   </url>
   
@@ -128,37 +156,9 @@
   </url>
   
   <url>
-    <loc>http://blog.guantau.com/2016/08/21/pkm-tools/</loc>
-    
-    <lastmod>2016-08-27T09:13:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/mobile-data/</loc>
-    
-    <lastmod>2016-08-27T09:12:39.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/build-tools/</loc>
-    
-    <lastmod>2016-08-27T09:12:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.guantau.com/tags/index.html</loc>
     
     <lastmod>2016-08-21T12:57:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/what-is-tau/</loc>
-    
-    <lastmod>2016-08-21T12:51:20.000Z</lastmod>
     
   </url>
   
