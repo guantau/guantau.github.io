@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.guantau.com/about/index.html</loc>
+    
+    <lastmod>2017-12-17T03:02:21.073Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.guantau.com/2017/12/14/byteball1/</loc>
     
     <lastmod>2017-12-14T13:28:00.579Z</lastmod>
@@ -138,13 +145,6 @@
     <loc>http://blog.guantau.com/2016/08/21/build-tools/</loc>
     
     <lastmod>2016-08-27T09:12:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/about/index.html</loc>
-    
-    <lastmod>2016-08-21T13:15:23.000Z</lastmod>
     
   </url>
   

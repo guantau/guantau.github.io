@@ -412,7 +412,7 @@ filetype plugin indent on     &quot; required!
 &quot; 
 &quot; see :h vundle for more details or wiki for FAQ &quot; NOTE: comments after Bundle commands are not allowed.
 </code></pre><h1 id="二、查找类插件"><a href="#二、查找类插件" class="headerlink" title="二、查找类插件"></a>二、查找类插件</h1><h2 id="1-command-t"><a href="#1-command-t" class="headerlink" title="1. command-t"></a>1. command-t</h2><h3 id="（1）简介"><a href="#（1）简介" class="headerlink" title="（1）简介"></a>（1）简介</h3><p>command-t用于快速查找和跳转文件及缓冲区，其名称来源于TextMate中“Go to File”的快捷键Command-T。command-t的思想是文件路径名与文件名同样具有重要的标识作用，它在查找时利用了文件完整路径中的所有字符。其强大之处在于可以模糊匹配，输入的任意字符之间可以看作包含通配符。</p>
-<p>command-t采用了ruby来实现，若在安装和使用时出现错误，可以参考：<br><a href="http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu" target="_blank" rel="external">http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu</a></p>
+<p>command-t采用了ruby来实现，若在安装和使用时出现错误，可以参考：<br><a href="http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu" target="_blank" rel="noopener">http://www.justinbar.net/post/install-vim-with-ruby-support-and-command-t-plugin-on-ubuntu</a></p>
 <h3 id="（2）使用"><a href="#（2）使用" class="headerlink" title="（2）使用"></a>（2）使用</h3><p>可以使用<code>:CommandT</code>命令打开文件跳转界面，用<code>:CommandTBuffer</code>命令打开缓冲区跳转界面。<br>如果需要对某个特定路径进行搜索时，使用<code>:CommandT path</code>。可以设置相应快捷键</p>
 <pre><code>nnoremap &lt;silent&gt; &lt;Leader&gt;ff :CommandT&lt;CR&gt;
 nnoremap &lt;silent&gt; &lt;Leader&gt;fb :CommandTBuffer&lt;CR&gt;

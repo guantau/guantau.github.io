@@ -371,21 +371,21 @@
 <p>WPA和WPA2则相对安全得多，目前破解的思路有两种：</p>
 <a id="more"></a>
 <h2 id="1-字典攻击："><a href="#1-字典攻击：" class="headerlink" title="1. 字典攻击："></a>1. 字典攻击：</h2><p>获取客户端和路由器之间得握手协议包，采用字典攻击的方式暴力破解密码。</p>
-<p>当采用一些简单的生日、单词、电话号码作为密码时，很容易实现破解，网上已有相关字典。若采用稍微复杂的密码，如密码采用8位大小写字母和数字混合，在运算速度为500K个/秒时，暴力破解需要时间14年（暴力破解时间可参考  <a href="http://lastbit.com/pswcalc.asp" target="_blank" rel="external">http://lastbit.com/pswcalc.asp</a> ）。</p>
+<p>当采用一些简单的生日、单词、电话号码作为密码时，很容易实现破解，网上已有相关字典。若采用稍微复杂的密码，如密码采用8位大小写字母和数字混合，在运算速度为500K个/秒时，暴力破解需要时间14年（暴力破解时间可参考  <a href="http://lastbit.com/pswcalc.asp" target="_blank" rel="noopener">http://lastbit.com/pswcalc.asp</a> ）。</p>
 <p>WPA/WPA2密码支持8-63位，如果设置较长较复杂的密码，字典攻击破解难度将很大。<br>字典攻击方法需要两步，一是抓取握手协议包，二是穷举字典破解。</p>
 <p>常用的工具：</p>
 <ul>
-<li>开源工具aircrack-ng（<a href="http://www.aircrack-ng.org/" target="_blank" rel="external">http://www.aircrack-ng.org/</a>），包括了无线抓包和密码破解程序</li>
-<li>抓包工具Omnipeek（<a href="http://www.wildpackets.com/products/omnipeek_network_analyzer" target="_blank" rel="external">http://www.wildpackets.com/products/omnipeek_network_analyzer</a>）</li>
-<li>国产软件无线网络分析软件科来（<a href="http://www.colasoft.com.cn/download/capsa.php" target="_blank" rel="external">http://www.colasoft.com.cn/download/capsa.php</a>）</li>
-<li>密码计算软件ewsa（<a href="http://cn.elcomsoft.com/ewsa.html" target="_blank" rel="external">http://cn.elcomsoft.com/ewsa.html</a>）优势是可以用GPU加速密码破解过程</li>
+<li>开源工具aircrack-ng（<a href="http://www.aircrack-ng.org/" target="_blank" rel="noopener">http://www.aircrack-ng.org/</a>），包括了无线抓包和密码破解程序</li>
+<li>抓包工具Omnipeek（<a href="http://www.wildpackets.com/products/omnipeek_network_analyzer" target="_blank" rel="noopener">http://www.wildpackets.com/products/omnipeek_network_analyzer</a>）</li>
+<li>国产软件无线网络分析软件科来（<a href="http://www.colasoft.com.cn/download/capsa.php" target="_blank" rel="noopener">http://www.colasoft.com.cn/download/capsa.php</a>）</li>
+<li>密码计算软件ewsa（<a href="http://cn.elcomsoft.com/ewsa.html" target="_blank" rel="noopener">http://cn.elcomsoft.com/ewsa.html</a>）优势是可以用GPU加速密码破解过程</li>
 </ul>
 <p>网上有很多公开的字典库，直接搜索即可下载。还有一些字典生成器，如黑刀、万能钥匙、木头字典生成器等等。</p>
 <h2 id="2-WPS攻击："><a href="#2-WPS攻击：" class="headerlink" title="2. WPS攻击："></a>2. WPS攻击：</h2><p>当路由器开启了WPS功能，可采用WPS攻击，破解路由器PIN码，从而获得其密码。</p>
 <p>采用字典攻击的方式无疑是一种效率很低的方法，如果没有估计到别人的密码模式，要破解是十分困难的。现在很多路由器开启了WPS，通过攻击路由器PIN码这种方式可以将破解效率大大提高。路由器PIN码只有8位，破解时可分为前后4位分别破解，只需要11000次的尝试即可实现破解（每次尝试可能需要数秒，视信号强度和路由器而定）。一旦已知PIN码，就可立即计算出WiFi密码。即使更换了WiFi密码，只要PIN码不变，也能立刻算出密码。</p>
 <p>主要工具为：</p>
 <ul>
-<li>Reaver（WPS Cracker，<a href="http://code.google.com/p/reaver-wps/" target="_blank" rel="external">http://code.google.com/p/reaver-wps/</a>）</li>
+<li>Reaver（WPS Cracker，<a href="http://code.google.com/p/reaver-wps/" target="_blank" rel="noopener">http://code.google.com/p/reaver-wps/</a>）</li>
 </ul>
 <hr>
 <p>WiFi密码破解的方法就是这些，总的来说，要保证WiFi的足够安全，原则就是：关闭WEP，关闭WPS，使用WPA2，提高密码强度。</p>
