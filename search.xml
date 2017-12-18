@@ -6,7 +6,7 @@
     <entry>
       <title><![CDATA[DAG Blockchain之Byteball原理解析（二）]]></title>
       <url>http://blog.guantau.com/2017/12/19/byteball2/</url>
-      <content type="html"><![CDATA[<h2 id="Byteball的共识算法"><a href="#Byteball的共识算法" class="headerlink" title="Byteball的共识算法"></a>Byteball的共识算法</h2><h3 id="主链"><a href="#主链" class="headerlink" title="主链"></a>主链</h3><p>在Byteball中，从任何一个顶端单元出发到达创世单元的最优路径称为<strong>候选主链（Candidate Mainchain）</strong>。最优路径通过选择最优父单元产生，选择策略用于保证整个网络的安全性。不同的候选主链会在某个单位位置交叉（最差的情况是在创世交易交叉），该交叉点称为<strong>稳定点（Stable Point）</strong>。对于所有候选主链，从稳定点到创世单元的路径完全相同，该路径称为<strong>稳定主链（Stable Mainchain）</strong>。稳定主链是一条确定的路径，从候选路径变为稳定主链是一个从不确定逐渐变成确定的过程。后续讨论中，如果没有明确区分，主链一般指的是候选主链。</p>
+      <content type="html"><![CDATA[<h2 id="Byteball的共识算法"><a href="#Byteball的共识算法" class="headerlink" title="Byteball的共识算法"></a>Byteball的共识算法</h2><h3 id="主链"><a href="#主链" class="headerlink" title="主链"></a>主链</h3><p>在Byteball中，从任何一个顶端单元出发到达创世单元的最优路径称为<strong>候选主链（Candidate Mainchain）</strong>。最优路径通过选择最优父单元产生，选择策略用于保证整个网络的安全性。不同的候选主链会在某个单元位置交叉（最差的情况是在创世单元交叉），该交叉点称为<strong>稳定点（Stable Point）</strong>。对于所有候选主链，从稳定点到创世单元的路径完全相同，该路径称为<strong>稳定主链（Stable Mainchain）</strong>。稳定主链是一条确定的路径，从候选路径变为稳定主链是一个从不确定逐渐变成确定的过程。后续讨论中，如果没有明确区分，主链一般指的是候选主链。</p>
 <p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-17-byteball-mainchain.png" alt="主链"></p>
 <p>DAG中的每个单元要么直接位于主链上，要么经过较短的路径就能到达主链，主链可以形象地看作是一条连接着许多侧面道路的高速公路。一个单元一旦进入DAG中，它所在的主链也相应确定，因为后续单元只能作为其子单元，而无法更改其父单元。</p>
 <p>给定一条主链，与之相关的所有单元均可以在此基础上进行排序，其序号称为<strong>主链序号（MCI, Main Chain Index）</strong>。创世单元的MCI为0，依次加1直到链尾。对于不在主链上的单元，其MCI等于主链上最先包含（直接或者间接）该单元的那个单元的MCI。MCI代表了从主链视角来看单元在DAG中的总序，对于发生冲突的双花交易，MCI较小的单元为有效单元。</p>
