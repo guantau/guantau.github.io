@@ -289,6 +289,205 @@
             
               
                 
+                <a class="post-title-link" href="/2018/01/19/byteball3/" itemprop="url">
+                  DAG Blockchain之Byteball原理解析（三）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-01-19T22:09:55+08:00" content="2018-01-19">
+              2018-01-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/谈点区块链/" itemprop="url" rel="index">
+                    <span itemprop="name">谈点区块链</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/01/19/byteball3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/19/byteball3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/01/19/byteball3/" class="leancloud_visitors" data-flag-title="DAG Blockchain之Byteball原理解析（三）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Byteball的地址、脚本及合约"><a href="#Byteball的地址、脚本及合约" class="headerlink" title="Byteball的地址、脚本及合约"></a>Byteball的地址、脚本及合约</h2><h3 id="地址的定义"><a href="#地址的定义" class="headerlink" title="地址的定义"></a>地址的定义</h3><p>Byteball中用户使用地址进行收发交易。地址本质上对应的是一段具有特定含义的脚本，该脚本称为地址的定义。任何能够使地址定义脚本输出为真（也称作解锁该脚本）的人具有使用该地址资产的权限。与Bitcoin类似，最常用的地址定义脚本是公钥（采用BASE64编码），即具有相应私钥的人可以使用该地址的资产，比如</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"sig"</span>,&#123;<span class="attr">"pubkey"</span>:<span class="string">"Ald9tkgiUZQQ1djpZgv2ez7xf1ZvYAsTLhudhvn0931w"</span>&#125;]</span><br></pre></td></tr></table></figure>
+<p>对于地址定义脚本进行哈希，再加上校验位就得到了地址，Byteball的地址采用BASE32编码。Byteball地址的校验位并不是全部放在尾部，而是穿插着放在哈希值中间，防止有攻击者在地址中间进行恶意修改。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-01-19-byteball-address.png" alt=""></p>
+<p>按照此流程，上面公钥脚本对应的地址为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A2WWHN7755YZVMXCBLMFWRSLKSZJN3FU</span><br></pre></td></tr></table></figure>
+<p>如果地址仅用于接收交易，其定义脚本可以不对外公布。但是当用户首次使用该地址进行发送交易时，他需要在发送的单元中声明该地址的定义脚本，比如</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">unit: &#123; </span><br><span class="line">  ...</span><br><span class="line">  authors: [ &#123;</span><br><span class="line">    address: 'DJ6LV5GPCLMGRW7ZB55IVGJRPDJPOQU6', </span><br><span class="line">    definition: [</span><br><span class="line">      "sig", &#123;"pubkey":"AsnvZ3w7N1lZGJ+P+bDZU0DgOwJcGJ51bjsWpEqfqBg6"&#125;</span><br><span class="line">    ], </span><br><span class="line">    authentifiers: &#123;</span><br><span class="line">      r: '3eQPIFiPVLRwBwEzxUR5thqn+zlFfLXUrzAmgemAqOk35UvDpa4h79Fd6TbPbGfb8VMiJzqdNGHCKyAjl786mw=='</span><br><span class="line">    &#125; </span><br><span class="line">  &#125; ],</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>authentifiers</code>是用户采用私钥对除<code>authentifiers</code>之外的数据进行的签名。在用户使用该地址首次发送单元之后，它不允许再发送地址的定义。当然，只有在该地址的第一个单元到达稳定后，用户才可以发送后续单元。</p>
+<p>用户可以在保持地址不变的条件下修改地址的定义脚本，用户需要发送消息</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">unit: &#123; </span><br><span class="line">  ...</span><br><span class="line">  messages: [ </span><br><span class="line">    ...</span><br><span class="line">    &#123;</span><br><span class="line">      app: "address_definition_change",</span><br><span class="line">      definition_chash: "I4Z7KFNIYTPHPJ5CA5OFC273JQFSZPOX"</span><br><span class="line">    &#125;,</span><br><span class="line">    ... </span><br><span class="line">  ],</span><br><span class="line">  ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>definition_chash</code>为新的地址定义脚本生成的地址。那么，下一个从原地址发出的单元有以下两条要求：</p>
+<ol>
+<li>必须把<code>address_definition_change</code>这个单元作为其<code>last_ball</code>；</li>
+<li>在修改地址定义脚本后发出第一个单元时，需要把新的定义脚本作为第一条<code>message</code>。</li>
+</ol>
+<p>显然，新的地址定义脚本生成的地址跟原地址是不相同的。当用户迁移到新的设备上，同时想保持地址不变时，可以使用这种方式来修改地址定义脚本。</p>
+<p>地址定义脚本中必须显式地（使用<code>sig</code>）或隐式地（使用<code>address</code>）包含至少一个<code>sig</code>。为了防止消耗过量的资源，脚本的操作总数限制在100以内，包括授权地址及脚本模板中的所有操作。</p>
+<p>相比于Ethereum，Byteball的脚本语言的解释能力有限，它定义的几乎都是逻辑判断语句。但是，Byteball本身是为了提供给那些并不太懂编程的人群使用的，其语言必须便于理解且不容易出错。</p>
+<h3 id="逻辑运算脚本"><a href="#逻辑运算脚本" class="headerlink" title="逻辑运算脚本"></a>逻辑运算脚本</h3><p><strong>与运算：</strong>当多个条件同时满足时，脚本输出为真。比如，同时需要两个私钥签名的脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"and"</span>, [</span><br><span class="line">  ["sig", &#123;pubkey: "one pubkey in base64"&#125;], </span><br><span class="line">  ["sig", &#123;pubkey: "another pubkey in base64"&#125;]</span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p><strong>或运算：</strong>多个条件中有一个满足时，脚本输出为真。比如，仅需要<code>laptop</code>、<code>smartphone</code>或者<code>talet</code>中某一个私钥就可以解锁的脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"or"</span>, [</span><br><span class="line">  ["sig", &#123;pubkey: "laptop pubkey"&#125;], </span><br><span class="line">  ["sig", &#123;pubkey: "smartphone pubkey"&#125;], </span><br><span class="line">  ["sig", &#123;pubkey: "tablet pubkey"&#125;]</span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p><strong>非运算</strong>：脚本中不含<code>sig</code>、<code>hash</code>、<code>address</code>、<code>cosigned by</code>或者<code>in merkle</code>的条件可以进行非运算，比如</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"not"</span>, [</span><br><span class="line">  <span class="string">"in data feed"</span>, </span><br><span class="line">  [[<span class="string">"NOAA ADDRESS"</span>], <span class="string">"wind_speed"</span>, <span class="string">"&gt;"</span>, <span class="string">"200"</span>]</span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p><strong>逻辑嵌套：</strong>逻辑运算可以嵌套使用。比如，必须同时拥有<code>smartphone</code>私钥以及<code>laptop</code>或者<code>tablet</code>中某一个私钥就可以解锁的脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"and"</span>, [</span><br><span class="line">  [<span class="string">"or"</span>, [</span><br><span class="line">    ["sig", &#123;pubkey: "laptop pubkey"&#125;],</span><br><span class="line">    ["sig", &#123;pubkey: "tablet pubkey"&#125;] </span><br><span class="line">  ]],</span><br><span class="line">  ["sig", &#123;pubkey: "smartphone pubkey"&#125;] </span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p><strong>最小数量运算：</strong>当满足条件的个数超过门限时，脚本输出为真。比如，具有2个以上私钥就可以解锁的脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"r of set"</span>, &#123; </span><br><span class="line">  required: 2,</span><br><span class="line">  set: [</span><br><span class="line">    ["sig", &#123;pubkey: "laptop pubkey"&#125;], </span><br><span class="line">    ["sig", &#123;pubkey: "smartphone pubkey"&#125;], </span><br><span class="line">    ["sig", &#123;pubkey: "tablet pubkey"&#125;]</span><br><span class="line">  ]</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p><strong>最低权重运算：</strong>当满足条件的权重值超过门限时，脚本输出为真。比如，当几个私钥签名的权重之和大于50时可以解锁的脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"weighted and"</span>, &#123; </span><br><span class="line">  required: 50,</span><br><span class="line">  set: [</span><br><span class="line">    &#123;weight: 40, value: ["sig", &#123;pubkey: "CEO pubkey"&#125;] &#125;, </span><br><span class="line">    &#123;weight: 20, value: ["sig", &#123;pubkey: "COO pubkey"&#125;] &#125;, </span><br><span class="line">    &#123;weight: 20, value: ["sig", &#123;pubkey: "CFO pubkey"&#125;] &#125;, </span><br><span class="line">    &#123;weight: 20, value: ["sig", &#123;pubkey: "CTO pubkey"&#125;] &#125;</span><br><span class="line">  ] </span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<h3 id="地址授权脚本"><a href="#地址授权脚本" class="headerlink" title="地址授权脚本"></a>地址授权脚本</h3><p>授权使用其它地址来解锁脚本，其定义的语法为</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"and"</span>, [</span><br><span class="line">  [<span class="string">"address"</span>, <span class="string">"ADDRESS 1 IN BASE32"</span>], </span><br><span class="line">  [<span class="string">"address"</span>, <span class="string">"ADDRESS 2 IN BASE32"</span>]</span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>这可以很方便地用来构造共享控制的地址。比如，上面给出的地址定义脚本生成的地址将由<code>ADDRESS1</code>和<code>ADDRESS2</code>共同控制。</p>
+<h3 id="共同签名脚本"><a href="#共同签名脚本" class="headerlink" title="共同签名脚本"></a>共同签名脚本</h3><p>要求与另一个地址共同签名才可以解锁脚本</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"cosigned by"</span>, <span class="string">"ANOTHER ADDRESS IN BASE32"</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="地址已用脚本"><a href="#地址已用脚本" class="headerlink" title="地址已用脚本"></a>地址已用脚本</h3><p>要求由某个地址发出的单元至少有一个成为<code>last_ball_unit</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"seen address"</span>, <span class="string">"ANOTHER ADDRESS IN BASE32"</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="数据订阅脚本"><a href="#数据订阅脚本" class="headerlink" title="数据订阅脚本"></a>数据订阅脚本</h3><p>通过订阅的数据是否符合条件来解锁脚本，其语法格式为</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"in data feed"</span>, [</span><br><span class="line">  [<span class="string">"ADDRESS1"</span>, <span class="string">"ADDRESS2"</span>, ...], </span><br><span class="line">   <span class="string">"data feed name"</span>,</span><br><span class="line">   <span class="string">"="</span>,</span><br><span class="line">   <span class="string">"expected value"</span></span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>上述脚本表示：当数据源地址<code>ADDRESS1</code>、<code>ADDRESS2</code>等中某个地址发出的消息中订阅数据<code>data feed name</code>等于<code>expected value</code>时，脚本输出为真。</p>
+<p>地址发出的数据订阅消息格式为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">unit: &#123;</span><br><span class="line">  ...</span><br><span class="line">  messages: [</span><br><span class="line">  	...</span><br><span class="line">    &#123;</span><br><span class="line">      app: "data_feed", </span><br><span class="line">  	  payload_location: "inline", </span><br><span class="line">      payload_hash: "hash of payload", </span><br><span class="line">      payload: &#123;</span><br><span class="line">        "data feed name": "value",</span><br><span class="line">        "another data feed name": "value2",</span><br><span class="line">        ...</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">  ],</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="对赌合约"><a href="#对赌合约" class="headerlink" title="对赌合约"></a>对赌合约</h4><p>当某个地址可以作为可靠的数据订阅源时，用户可以使用其作为外部数据条件来构造<strong>合约</strong>。比如，</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"or"</span>, [</span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"ADDRESS 1"</span>],</span><br><span class="line">    [<span class="string">"in data feed"</span>, [[<span class="string">"EXCHANGE ADDRESS"</span>], <span class="string">"EURUSD"</span>, <span class="string">"&gt;"</span>, <span class="string">"1.1500"</span>]]</span><br><span class="line">  ]], </span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"ADDRESS 2"</span>],</span><br><span class="line">    [<span class="string">"in data feed"</span>, [[<span class="string">"TIMESTAMPER ADDRESS"</span>], <span class="string">"datetime"</span>, <span class="string">"&gt;"</span>, <span class="string">"2016-10-01 00:00:00"</span>]]</span><br><span class="line">  ]] </span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>上述脚本给出了<code>ADDRESS 1</code>和<code>ADDRESS 2</code>之间的一个简单合约，假设其对应的地址为<code>ADDRESS X</code>。当<code>EXCHANGE ADDRESS</code>发布的汇率数据<code>EURUSD</code>大于<code>1.1500</code>时，仅使用<code>ADDRESS 1</code>的私钥就可以取走<code>ADDRESS X</code>中的资产。而当<code>TIMESTAMPER ADDRESS</code>发布的时间数据<code>datetime</code>大于<code>2016-10-01 00:00:00</code>时，仅使用<code>ADDRESS 2</code>的私钥就可以取走<code>ADDRESS X</code>中的资产。也就是说，上述脚本定义的是对赌合约：如果<code>2016-10-01 00:00:00</code>之前<code>EURUSD</code>汇率超过<code>1.1500</code>，地址<code>ADDRESS 1</code>获胜，否则地址<code>ADDRESS 2</code>获胜。</p>
+<h4 id="商品合约"><a href="#商品合约" class="headerlink" title="商品合约"></a>商品合约</h4><p>当顾客购买商品时，也可以使用上述方式来制定合约，比如</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"or"</span>, [</span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"MERCHANT ADDRESS"</span>],</span><br><span class="line">    [<span class="string">"in data feed"</span>, [[<span class="string">"FEDEX ADDRESS"</span>], <span class="string">"tracking"</span>, <span class="string">"="</span>, <span class="string">"123456"</span>]]</span><br><span class="line">  ]], </span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"BUYER ADDRESS"</span>],</span><br><span class="line">    [<span class="string">"in data feed"</span>, [[<span class="string">"TIMESTAMPER ADDRESS"</span>], <span class="string">"datetime"</span>, <span class="string">"&gt;"</span>, <span class="string">"2016-10-01 00:00:00"</span>]]</span><br><span class="line">  ]] </span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>上述脚本给出了顾客<code>BUYER ADDRESS</code>和商户<code>MERCHANT ADDRESS</code>之间的合约，假设其对应的地址为<code>ADDRESS Y</code>。顾客在购买商品时，将款项打入地址<code>ADDRESS Y</code>。如果快递公司<code>FEDEX ADDRESS</code>发布数据表明相应的快递已签收，则商户<code>MERCHANT ADDRESS</code>可以从<code>ADDRESS Y</code>中取走货款；如果<code>TIMERSTAMPER ADDRESS</code>发布的时间数据<code>datetime</code>大于<code>2016-10-01 00:00:00</code>时，则顾客<code>BUYER ADDRESS</code>可以从<code>ADDRESS Y</code>中取回货款。</p>
+<p>上述场景中，快递公司需要对每一个快递都发布其签收状态数据，这将需要发布大量的数据。Merkle数据订阅可以降低需要发布的数据量。只需要核实关心的<code>hash</code>值出现在数据源地址发布的Merkle树中时，即可证明该事件已发生。其定义语法如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"in merkle"</span>, [</span><br><span class="line">  [<span class="string">"ADDRESS1"</span>, <span class="string">"ADDRESS2"</span>, ...], </span><br><span class="line">   <span class="string">"data feed name"</span>,</span><br><span class="line">   <span class="string">"hash of expected value"</span></span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>此时，快递公司只需要定期将一大批快递状态构造Merkle树，并发布Merkle根即可。商户可以通过相应快递的Merkle路径来解锁Merkle数据订阅的脚本。</p>
+<h3 id="单元约束脚本"><a href="#单元约束脚本" class="headerlink" title="单元约束脚本"></a>单元约束脚本</h3><p>脚本可以对相应地址发出的单元数据进行约束，其定义格式为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">['has', &#123;</span><br><span class="line">  what: 'input'|'output',</span><br><span class="line">  asset: 'assetID in base64 or "base" for bytes', </span><br><span class="line">  type: 'transfer'|'issue',</span><br><span class="line">  own_funds: true,</span><br><span class="line">  amount_at_least: 123,</span><br><span class="line">  amount_at_most: 123,</span><br><span class="line">  amount: 123,</span><br><span class="line">  address: 'INPUT OR OUTPUT ADDRESS IN BASE32'</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>上述脚本要求单元至少有一个输入/输出满足后续定义所有的条件。特别地，可以使用<code>has one</code>来强制要求有且仅有一个输入/输出满足后续所有条件。</p>
+<p>其它类似的约束还有求和约束，要求输入/输出之和满足特定条件，其格式为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">['sum', &#123;</span><br><span class="line">  filter: &#123;</span><br><span class="line">    what: 'input'|'output',</span><br><span class="line">    asset: 'asset or base', </span><br><span class="line">    type: 'transfer'|'issue', </span><br><span class="line">    own_funds: true,</span><br><span class="line">    address: 'ADDRESS IN BASE32' </span><br><span class="line">  &#125;,</span><br><span class="line">  at_least: 120, </span><br><span class="line">  at_most: 130, </span><br><span class="line">  equals: 123</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<h4 id="交易合约"><a href="#交易合约" class="headerlink" title="交易合约"></a>交易合约</h4><p>单元约束脚本可以用来实现去中心化交易。假设用户<code>USER ADDRESS</code>希望使用不高于<code>1000bytes</code>的价格购买<code>1200units</code>的其它资产。用户可以发送<code>1000bytes</code>至如下脚本定义的地址上：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"or"</span>, [</span><br><span class="line">  [<span class="string">"address"</span>, <span class="string">"USER ADDRESS"</span>], </span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"EXCHANGE ADDRESS"</span>], </span><br><span class="line">    [<span class="string">"has"</span>, &#123;</span><br><span class="line">      what: "output",</span><br><span class="line">      asset: "ID of alternative asset", </span><br><span class="line">      amount_at_least: 1200,</span><br><span class="line">      address: "USER ADDRESS"</span><br><span class="line">    &#125;] </span><br><span class="line">  ]]</span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>或逻辑<code>or</code>的第一个条件表明，在未成交之前，用户可以随时取回他的<code>1000bytes</code>。或逻辑<code>or</code>的第二个条件表明，其他用户可以使用<code>EXCHANGE ADDRESS</code>地址私钥来取走着<code>1000bytes</code>，只要他同时在同一单元中将<code>1200units</code>其它资产输出到<code>USER ADDRESS</code>。通过这种方式，用户之间可以实现不同资产之间的交易。</p>
+<h4 id="借贷合约"><a href="#借贷合约" class="headerlink" title="借贷合约"></a>借贷合约</h4><p>单元约束脚本还可以用来实现抵押借贷。假设借款人抵押某种资产借贷<code>10000bytes</code>，那么借款人和借贷人可以共同签名一笔交易，其中借贷人将<code>bytes</code>发送给借款人，同时借款人将抵押资产转入以下脚本定义的地址上：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"or"</span>, [</span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"LENDER ADDRESS"</span>],</span><br><span class="line">    [<span class="string">"in data feed"</span>, [[<span class="string">"TIMESTAMPER ADDRESS"</span>], <span class="string">"datetime"</span>, <span class="string">"&gt;"</span>, <span class="string">"2017-06-01 00:00:00"</span>]]</span><br><span class="line">  ]], </span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"BORROWER ADDRESS"</span>], </span><br><span class="line">    [<span class="string">"has"</span>, &#123;</span><br><span class="line">      what: "output",</span><br><span class="line">      asset: "base",</span><br><span class="line">      amount: 10000,</span><br><span class="line">      address: "LENDER ADDRESS"</span><br><span class="line">    &#125;] </span><br><span class="line">  ]],</span><br><span class="line">  [<span class="string">"and"</span>, [</span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"LENDER ADDRESS"</span>], </span><br><span class="line">    [<span class="string">"address"</span>, <span class="string">"BORROWER ADDRESS"</span>]</span><br><span class="line">  ]] </span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>上述脚本包括了三层含义：</p>
+<ol>
+<li>当时间超过<code>2017-06-01 00:00:00</code>时，借贷人可以取走抵押资产；</li>
+<li>当借款人归还<code>10000bytes</code>至借贷人地址<code>LENDER ADDRESS</code>时，借款人可以取回抵押资产；</li>
+<li>借贷人和借款人可以协商解除合约。</li>
+</ol>
+<h3 id="脚本模板"><a href="#脚本模板" class="headerlink" title="脚本模板"></a>脚本模板</h3><p>通过预先设定的脚本模板可以很方便地定义脚本，只需要对模板中的参数进行修改即可</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"definition template"</span>, [</span><br><span class="line">  <span class="string">"hash of unit where the template was defined"</span>, </span><br><span class="line">  &#123;param1: "value1", param2: "value2"&#125;</span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<p>脚本模板需要在单元中发送<code>app=’definition_template’</code>的消息，并且需要单元到达稳定状态后，脚本模板才可以使用。消息内容与普通的地址定义脚本相同，参数使用<code>@param1</code>及<code>@param2</code>表示。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/12/19/byteball2/" itemprop="url">
                   DAG Blockchain之Byteball原理解析（二）
                 </a>
@@ -1665,141 +1864,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/21/mobile-data/" itemprop="url">
-                  手机数据分析的最新研究进展
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-21T23:38:07+08:00" content="2016-08-21">
-              2016-08-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/看点文章/" itemprop="url" rel="index">
-                    <span itemprop="name">看点文章</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/21/mobile-data/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/mobile-data/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/21/mobile-data/" class="leancloud_visitors" data-flag-title="手机数据分析的最新研究进展">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>Selected from <a href="http://oc7urqs4c.bkt.clouddn.com/mobile-data.pdf" target="_blank" rel="noopener"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
-<p>Translated by tau @ 2015.8.16</p>
-</blockquote>
-<h2 id="5-基于时空数据的人类移动行为分析"><a href="#5-基于时空数据的人类移动行为分析" class="headerlink" title="5. 基于时空数据的人类移动行为分析"></a>5. 基于时空数据的人类移动行为分析</h2><p>手机数据中记录了大量用户的移动行为，目前已有许多项目对此开展了研究。大量的手机APP提供了基于位置的服务（LBS, Location Based Service）表明了时空数据挖掘上面还有很多潜在应用。本节中，我们主要关注那些在人类移动行为建模和分析上给出了新结论或新方法的研究。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/21/mobile-data/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1845,7 +1909,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
