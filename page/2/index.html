@@ -289,6 +289,151 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/21/dronekit-tower/" itemprop="url">
+                  编译dronekit-tower的一点问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-21T23:47:52+08:00" content="2016-08-21">
+              2016-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/写点程序/" itemprop="url" rel="index">
+                    <span itemprop="name">写点程序</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/21/dronekit-tower/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/dronekit-tower/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/21/dronekit-tower/" class="leancloud_visitors" data-flag-title="编译dronekit-tower的一点问题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>从Github上直接clone下Tower（ <a href="https://github.com/DroidPlanner/Tower" target="_blank" rel="noopener">https://github.com/DroidPlanner/Tower</a> ）进行编译总是报错</p>
+<blockquote>
+<p>Gradle sync failed: Authentication scheme ‘all’(Authentication) is not support</p>
+</blockquote>
+<p>其实解决方法很简单，删除Tower/build.gradle中带认证的Maven库地址（第47-53行），变为以下内容即可：</p>
+<pre><code>allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+
+        maven { url &apos;https://maven.fabric.io/public&apos; }
+
+        flatDir {
+            dirs &apos;libs&apos;
+        }
+    }
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/21/mobile-data/" itemprop="url">
                   手机数据分析的最新研究进展
                 </a>
@@ -1490,144 +1635,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/21/vim-latex-suite/" itemprop="url">
-                  vim-latex-suite使用手册
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-21T22:33:47+08:00" content="2016-08-21">
-              2016-08-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/弄点工具/" itemprop="url" rel="index">
-                    <span itemprop="name">弄点工具</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/21/vim-latex-suite/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/vim-latex-suite/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/21/vim-latex-suite/" class="leancloud_visitors" data-flag-title="vim-latex-suite使用手册">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h2><blockquote>
-<p>快捷键是提高效率的不二法则，毕竟十个手指头比两个手指头要快得多。<br>使用vim-latex-suite的关键亦是如此。</p>
-</blockquote>
-<p>说明：</p>
-<ul>
-<li><code>||</code>中为在普通模式下输入的命令；</li>
-<li><code>&lt;&gt;</code>中为按键，C表示Ctrl，A表示Alt，S表示Shift；</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/21/vim-latex-suite/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1673,7 +1680,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

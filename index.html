@@ -289,6 +289,185 @@
             
               
                 
+                <a class="post-title-link" href="/2018/01/26/byteball4/" itemprop="url">
+                  DAG Blockchain之Byteball原理解析（四）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-01-26T23:09:55+08:00" content="2018-01-26">
+              2018-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/谈点区块链/" itemprop="url" rel="index">
+                    <span itemprop="name">谈点区块链</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/01/26/byteball4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/26/byteball4/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/01/26/byteball4/" class="leancloud_visitors" data-flag-title="DAG Blockchain之Byteball原理解析（四）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Byteball的网络结构"><a href="#Byteball的网络结构" class="headerlink" title="Byteball的网络结构"></a>Byteball的网络结构</h2><p>从节点功能角度来讲，Byteball网络节点可以分为中继节点（Relay）、中枢节点（Hub）、播报节点（Oracle）、见证人节点（Witness）、钱包节点（Wallet）：</p>
+<ul>
+<li>中继节点（Relay）：负责向与其连接的节点转发单元，存储整个Byteball区块链数据库，但它本身不保存任何私钥，也不发送任何单元；</li>
+<li>中枢节点（Hub）：负责为连接到它的设备提供端到端的加密消息传输通道，用于比如收发私密资产、多签名交易、聊天信息等，其它功能与中继节点相同，默认的Hub地址为<code>wss://byteball.org/bb</code>；</li>
+<li>播报节点（Oracle）：负责不间断地向Byteball网络播报数据，数据可以是时间、价格、甚至是Bitcoin交易；</li>
+<li>见证人节点（Witness）：负责不间断地以固定地址发送单元，任何满足该条件的节点都有可能成为见证人；</li>
+<li>钱包节点（Wallet）：负责与用户交互，收发交易、消息等。</li>
+</ul>
+<p>下图给出了Byteball网络结构的示意图：</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-01-25-byteball_network-1.png" alt="Byteball网络结构"></p>
+<h3 id="轻节点及其验证过程"><a href="#轻节点及其验证过程" class="headerlink" title="轻节点及其验证过程"></a>轻节点及其验证过程</h3><p>从是否存储了完整的区块链数据角度来讲，节点也可以分为全节点和轻节点，全节点保存了完整的区块链数据，而轻节点没有。用户在安装钱包时可以选择是使用全节点还是轻节点。轻节点仅存储与其地址相关的那些单元，它需要从全节点上下载所需要的数据，请求条件包括它信任的见证人列表以及它关注的地址。</p>
+<blockquote>
+<p><strong>跳跃列表：</strong>假设直接位于主链上的球的MCI为$i$，如果$i\bmod10=0$，则该球具有跳跃列表（<code>skiplist_balls</code>），跳跃列表中的值指向之前的球；对于$i$尾数具有的每一个$0$，跳跃列表中都有一个MCI值与之对应；跳跃列表中的MCI值等于在保持尾数$0$个数相同的情况下最接近$i$的MCI，比如$i=3000$时，对应的跳跃列表为$[2990, 2900, 2000]$。</p>
+<p><strong>跳跃距离：</strong>对于跳跃列表中的MCI值，它与当前球的MCI值的差值称为跳跃距离。</p>
+<p><strong>最近的球：</strong>当前节点已知的距离当前时刻最近的球（<code>last_ball</code>），每个单元在发送时必须包含其已知的最近的球。</p>
+</blockquote>
+<p>全节点接收到轻节点发送的见证人列表和关注地址，在其存储单元的数据库中搜索与轻节点关注地址相关的单元。同时，对于每一个相关的单元，全节点构造一条证据链，构造方法如下：</p>
+<ol>
+<li>沿着主链回溯，当已收集到轻节点给定见证人列表中的绝大部分见证人时停止（<strong>这是寻找见证人的过程</strong>），记录这些主链上的单元，记作单元集合$C$；</li>
+<li>选择单元集合$C$中时间最早的单元（也是MCI最小的单元），获取其<code>last_ball</code>；</li>
+<li>从<code>last_ball</code>这个单元开始沿着主链回溯，直至遇见包含<code>skiplist_balls</code>的球停止，记录这些主链上的球，记作球集合$B$；</li>
+<li>使用<code>skiplist_balls</code>继续沿主链回溯，跳转到<code>skiplist_balls</code>中跳跃距离最大的球（<strong>这是不断加速跳跃的过程</strong>）；</li>
+<li>重复步骤4，当下一次跳跃超过目标单元时，减小跳跃距离（<strong>这是降速跳跃的过程，极限情况下，不使用<code>skiplist_balls</code>回溯，只利用父单元进行回溯</strong>），直到目标单元停止。</li>
+</ol>
+<p>对于轻节点而言，全节点给出的证据链是可信的，主要有以下两个原因：</p>
+<ol>
+<li>证据链开始的那些单元包含了轻节点信任的见证人发出的单元；</li>
+<li>证据链中的连接使用的是<code>parent_units</code>（寻找见证人过程）、<code>last_ball</code>、<code>skiplist_balls</code>、<code>parent_balls</code>。</li>
+</ol>
+<p>因此，通过证据链的方式，轻节点可以判断某个单元是否有效。</p>
+<h3 id="端到端加密通道"><a href="#端到端加密通道" class="headerlink" title="端到端加密通道"></a>端到端加密通道</h3><p>中枢节点Hub用于为不同的用户设备之间提供可靠的端到端加密数据通道，有点类似邮件服务器。Hub为用户设备提供存储转发服务，用户设备可以选择连接到不同的Hub。用户设备使用websocket连接到到Hub，并采用TLS加密。Hub一旦收到发往某个设备地址的消息，它就会立即转发，转发成功后删除消息。</p>
+<p>设备地址是用于标识用户设备的，从而接收其它设备发送的消息，类似于邮件地址。设备地址与钱包地址不同，可以在不同的设备上使用相同的钱包地址。每个设备保存一把永久性的私钥，其对应的公钥做Hash后进行BASE32编码得到设备地址。为了和钱包地址区分开来，设备地址在其开始位置添加0作为标识（0本身并不是BASE32字符）。完整的设备地址还要包括Hub名称，比如<code>DEVICEADDRESS@hubname.com</code>。当切换到不同的Hub是，<code>@</code>之间的地址是保持不变的。</p>
+<p>假设发送消息的设备记作<code>sender</code>，接收消息的设备记作<code>receiver</code>，<code>receiver</code>所连接的Hub为<code>hub</code>。那么，当<code>sender</code>想要与<code>receiver</code>进行通信时，它需要进行以下操作：</p>
+<ol>
+<li><code>sender</code>修改其Hub地址为<code>hub</code>，默认情况下所有设备连接的都是<code>wss://byteball.org/bb</code>；</li>
+<li><code>sender</code>与<code>receiver</code>进行配对，可以使用扫描二维码、配对字符串、或者使用<code>byteball://</code>起始的链接。</li>
+</ol>
+<p>所有设备之间的通信均采用了端到端加密（ECDH+AES）和数字签名（ECDSA）。作为通信的唯一中间人，Hub也无法查看或者修改消息内容，为了提高转发的安全性，设备会生成一个临时私钥，并将对应的公钥上传至它连接的Hub上。同时，设备可以定时地更换临时私钥和公钥。</p>
+<p>因此，<code>sender</code>在向<code>receiver</code>发送消息时，它需要完成以下步骤：</p>
+<ol>
+<li>与<code>hub</code>连接；</li>
+<li>从<code>hub</code>获取<code>receiver</code>的临时公钥；</li>
+<li>生成一次性的密钥对；</li>
+<li>根据一次性私钥和<code>receiver</code>的临时公钥生成ECDH密钥；</li>
+<li>使用ECDH密钥对消息进行AES加密；</li>
+<li>添加一次性公钥；</li>
+<li>使用设备私钥对整个消息进行签名；</li>
+<li>将消息发送给<code>hub</code></li>
+</ol>
+<p>对于<code>receiver</code>，它首先需要验证消息的签名，然后使用<code>sender</code>的一次性公钥和本地的临时私钥解密消息，从而获得消息的内容。</p>
+<p>基于Hub的设备端到端加密消息通道可以用于设备之间通信，设备之间相互发送的消息不存入Byteball数据库中。用户可以利用该通道来发送加密文本消息、多签名交易、隐私资产（比如blackbytes）等。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/01/19/byteball3/" itemprop="url">
                   DAG Blockchain之Byteball原理解析（三）
                 </a>
@@ -1719,151 +1898,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/21/dronekit-tower/" itemprop="url">
-                  编译dronekit-tower的一点问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-21T23:47:52+08:00" content="2016-08-21">
-              2016-08-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/写点程序/" itemprop="url" rel="index">
-                    <span itemprop="name">写点程序</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/21/dronekit-tower/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/dronekit-tower/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/21/dronekit-tower/" class="leancloud_visitors" data-flag-title="编译dronekit-tower的一点问题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>从Github上直接clone下Tower（ <a href="https://github.com/DroidPlanner/Tower" target="_blank" rel="noopener">https://github.com/DroidPlanner/Tower</a> ）进行编译总是报错</p>
-<blockquote>
-<p>Gradle sync failed: Authentication scheme ‘all’(Authentication) is not support</p>
-</blockquote>
-<p>其实解决方法很简单，删除Tower/build.gradle中带认证的Maven库地址（第47-53行），变为以下内容即可：</p>
-<pre><code>allprojects {
-    repositories {
-        jcenter()
-        mavenCentral()
-
-        maven { url &apos;https://maven.fabric.io/public&apos; }
-
-        flatDir {
-            dirs &apos;libs&apos;
-        }
-    }
-}
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1909,7 +1943,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
