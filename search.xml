@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title><![CDATA[区块链系统观]]></title>
+      <url>http://blog.guantau.com/2018/04/15/blockchain-system-view/</url>
+      <content type="html"><![CDATA[<p>从计算机原理角度来看区块链：</p>
+<ol>
+<li>全网无中心分布的计算机是底层硬件，它们构成分布式计算机，负责运算与存储；</li>
+<li>区块链是分布式计算机的操作系统，它采用一定机制使得底层硬件协调工作起来，并达成共识，即得到一致的运算结果，比如第一代的Bitcoin、第二代的Ethereum等；</li>
+<li>在冯诺依曼计算机结构里，程序与数据是都放在存储器中，区块链中的“文件系统”可以用来存储程序与数据，但是十分昂贵；</li>
+<li>IPFS作为去中心化世界的http协议，可以用来大量存储文件与内容，从而区块链获得额外的廉价存储空间。</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[DAG Blockchain之Byteball原理解析（五）-完结]]></title>
       <url>http://blog.guantau.com/2018/01/30/byteball5/</url>
       <content type="html"><![CDATA[<h2 id="Byteball的应用"><a href="#Byteball的应用" class="headerlink" title="Byteball的应用"></a>Byteball的应用</h2><h3 id="数字资产"><a href="#数字资产" class="headerlink" title="数字资产"></a>数字资产</h3><p>Byteball本质上是基于DAG的分布式数据库，数据状态一旦确定则不可逆转。在各种类型的数据中，具有社会普遍意义的数据是比较有价值的，比如个人资产数据。在Byteball中，资产可以发布、转移以及交换，类似于Byteball的基本货币<code>bytes</code>。资产可以代表任何有价值的东西，比如债务、股票、会员积分、通话时间、商品、其它加密货币等。</p>
