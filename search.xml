@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[区块链系统观]]></title>
+      <title><![CDATA[Byteball目前存在的一些问题及改进方向]]></title>
       <url>http://blog.guantau.com/2018/05/13/byteball-flaws/</url>
       <content type="html"><![CDATA[<p>Byteball是一种基于DAG技术的新型数字资产平台，它不仅支持P2P支付，还支持智能合约、预言机、隐私资产、ICO等功能。Byteball的钱包设计得十分强大，并且人性化。但通过对Byteball的仔细研究会发现，其在设计和实现上还是存在一定的缺陷。如果能很好地解决这些问题，Byteball必将跻身主流的数字资产平台。</p>
 <h2 id="网络性能问题"><a href="#网络性能问题" class="headerlink" title="网络性能问题"></a>网络性能问题</h2><p>一份对byteball主网的最新测试给出了三点结论：</p>
