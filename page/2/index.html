@@ -289,6 +289,171 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/06/revise-ardupilot/" itemprop="url">
+                  ArduPilot修改记录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-06T21:21:40+08:00" content="2016-09-06">
+              2016-09-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/弄点工具/" itemprop="url" rel="index">
+                    <span itemprop="name">弄点工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/06/revise-ardupilot/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/06/revise-ardupilot/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/06/revise-ardupilot/" class="leancloud_visitors" data-flag-title="ArduPilot修改记录">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>下载原版ArduPilot，并进行初始化：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/ArduPilot/ardupilot.git</span><br><span class="line">$ <span class="built_in">cd</span> ardupilot</span><br><span class="line">$ git submodule init</span><br><span class="line">$ git submodule update</span><br></pre></td></tr></table></figure>
+<h2 id="原版ArduPilot修改为DM1"><a href="#原版ArduPilot修改为DM1" class="headerlink" title="原版ArduPilot修改为DM1"></a>原版ArduPilot修改为DM1</h2><p>在<code>libraries/AP_HAL_Linux/</code>目录下增加文件<code>RCInput_DM1.h</code>，<code>RCInput_DM1.cpp</code>，<code>RCOutput_DM1.h</code>，<code>RCOutput_DM1.cpp</code>，<code>pak_stm32.h</code></p>
+<p>在<code>libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</code>文件中修改</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></span><br><span class="line"><span class="keyword">static</span> RCInput_DM1 rcinDriver;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></span><br><span class="line"><span class="keyword">static</span> RCOutput_DM1 rcoutDriver;</span><br></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL_Linux/Scheduler.cpp</code>文件中修改</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_NAVIO ||    \</span></span><br><span class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_ERLEBRAIN2 || \</span><br><span class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_BH || \</span><br><span class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_PXFMINI || \</span><br><span class="line">    CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span><br><span class="line">#define APM_LINUX_RCIN_RATE             <span class="number">2000</span></span><br><span class="line">#define APM_LINUX_TONEALARM_RATE        <span class="number">100</span></span><br><span class="line">#define APM_LINUX_IO_RATE               <span class="number">50</span></span><br></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL_Linux/SPIDevice.cpp</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></span><br><span class="line">SPIDesc SPIDeviceManager::_device[] = &#123;</span><br><span class="line">    SPIDesc(<span class="string">"mpu9250"</span>, <span class="number">0</span>, <span class="number">0</span>, SPI_MODE_0, <span class="number">8</span>, SPI_CS_KERNEL, <span class="number">1</span>*MHZ, <span class="number">10</span>*MHZ),</span><br><span class="line">    SPIDesc(<span class="string">"stm32"</span>, <span class="number">0</span>, <span class="number">1</span>, SPI_MODE_0, <span class="number">8</span>, SPI_CS_KERNEL,  <span class="number">1</span>*MHZ, <span class="number">10</span>*MHZ),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在<code>libraries/AP_HAL/AP_HAL_Boards.h</code>文件中增加DM1定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_SUBTYPE_LINUX_DM1        1016</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_LOG_DIRECTORY <span class="meta-string">"/var/APM/logs"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BOARD_TERRAIN_DIRECTORY <span class="meta-string">"/var/APM/terrain"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_INS_DEFAULT HAL_INS_MPU9250_SPI</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_INS_MPU9250_NAME <span class="meta-string">"mpu9250"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_DEFAULT HAL_BARO_MS5611_I2C</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_I2C_BUS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_I2C_ADDR 0x77</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_BARO_MS5611_USE_TIMER false</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HAL_COMPASS_DEFAULT HAL_COMPASS_AK8963_MPU9250</span></span><br></pre></td></tr></table></figure>
+<p>在<code>mk/environ.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ifneq ($(findstring dm1, $(MAKECMDGOALS)),)</span><br><span class="line">HAL_BOARD = HAL_BOARD_LINUX</span><br><span class="line">HAL_BOARD_SUBTYPE = HAL_BOARD_SUBTYPE_LINUX_DM1</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+<p>在<code>mk/help.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@echo <span class="string">"  dm1 - the BPi + NavIO2 cape combination"</span></span><br></pre></td></tr></table></figure>
+<p>在<code>mk/targets.mk</code>文件中增加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dm1: HAL_BOARD = HAL_BOARD_LINUX</span><br><span class="line">dm1: TOOLCHAIN = RPI</span><br><span class="line">dm1: BUILDSYS_DEPRECATED = <span class="number">1</span></span><br><span class="line">dm1: all</span><br></pre></td></tr></table></figure>
+<p>在<code>Tools/ardupilotwaf/boards.py</code>文件中添加对dm1的支持，关于waf的使用方法可以参考<a href="http://blog.guantau.com/2016/09/06/waf-tool/">waf编译工具使用方法</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">dm1</span><span class="params">(linux)</span>:</span></span><br><span class="line">    toolchain = <span class="string">'arm-linux-gnueabihf'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">configure_env</span><span class="params">(self, cfg, env)</span>:</span></span><br><span class="line">        super(dm1, self).configure_env(cfg, env)</span><br><span class="line"></span><br><span class="line">        env.DEFINES.update(</span><br><span class="line">            CONFIG_HAL_BOARD_SUBTYPE = <span class="string">'HAL_BOARD_SUBTYPE_LINUX_DM1'</span>,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p>下面是在早期ArduPilot上面所做的修改</p>
+<h2 id="libraries-AP-HAL-Linux-HAL-Linux-Class-cpp"><a href="#libraries-AP-HAL-Linux-HAL-Linux-Class-cpp" class="headerlink" title="libraries/AP_HAL_Linux/HAL_Linux_Class.cpp"></a>libraries/AP_HAL_Linux/HAL_Linux_Class.cpp</h2><p>目前RCInput_DM1还有问题，将其注释掉<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//guantau</span></span><br><span class="line"><span class="comment">// #elif CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DM1</span></span><br><span class="line"><span class="comment">// static RCInput_DM1 rcinDriver;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-h" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.h</h2><p>添加函数<code>accumulate()</code>，该函数在AP_InertialSensor_Backend.h中申明为纯虚函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//guantau</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accumulate</span><span class="params">()</span> override</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp"><a href="#libraries-AP-InertialSensor-AP-InertialSensor-MPU9250-cpp" class="headerlink" title="libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp"></a>libraries/AP_InertialSensor/AP_InertialSensor_MPU9250.cpp</h2><p>实现函数<code>accumulate()</code>，用于非定时读取情况下手动读取数据<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//guantau</span></span><br><span class="line"><span class="keyword">void</span> AP_InertialSensor_MPU9250::accumulate()</span><br><span class="line">&#123;</span><br><span class="line">    _poll_data();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在函数<code>_hardware_init()</code>中，修改初始化代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> AP_InertialSensor_MPU9250::_hardware_init(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!_dev-&gt;get_semaphore()-&gt;take(<span class="number">100</span>)) &#123;</span><br><span class="line">        AP_HAL::panic(<span class="string">"MPU6000: Unable to get semaphore"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// initially run the bus at low speed</span></span><br><span class="line">    _dev-&gt;set_speed(AP_HAL::Device::SPEED_LOW);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint8_t</span> value = _register_read(MPUREG_WHOAMI);</span><br><span class="line">    <span class="keyword">if</span> (value != MPUREG_WHOAMI_MPU9250 &amp;&amp; value != MPUREG_WHOAMI_MPU9255) &#123;</span><br><span class="line">        hal.console-&gt;<span class="built_in">printf</span>(<span class="string">"MPU9250: unexpected WHOAMI 0x%x\n"</span>, (<span class="keyword">unsigned</span>)value);</span><br><span class="line">        _dev-&gt;get_semaphore()-&gt;give();</span><br><span class="line">        _dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Clock Source</span></span><br><span class="line">    _register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_CLK_XGYRO);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Enable Acc &amp; Gyro</span></span><br><span class="line">    _register_write(MPUREG_PWR_MGMT_2, <span class="number">0x00</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use DLPF set Gyroscope bandwidth 184Hz, temperature bandwidth 188Hz</span></span><br><span class="line">    _register_write(MPUREG_CONFIG, BITS_DLPF_CFG_188HZ);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Gyro scale 2000º/s</span></span><br><span class="line">    _register_write(MPUREG_GYRO_CONFIG, BITS_GYRO_FS_2000DPS);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// RM-MPU-9250A-00.pdf, pg. 15, select accel full scale 16g</span></span><br><span class="line">    _register_write(MPUREG_ACCEL_CONFIG, <span class="number">0x18</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set Acc Data Rates, Enable Acc LPF , Bandwidth 184Hz</span></span><br><span class="line">    _register_write(MPUREG_ACCEL_CONFIG_2, <span class="number">0x09</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// clear interrupt on any read, and hold the data ready pin high</span></span><br><span class="line">    <span class="comment">// until we clear the interrupt</span></span><br><span class="line">    _register_write(MPUREG_INT_PIN_CFG, <span class="number">0x30</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Chip reset</span></span><br><span class="line">    <span class="comment">// uint8_t tries;</span></span><br><span class="line">    <span class="comment">// for (tries = 0; tries &lt; 5; tries++) &#123;</span></span><br><span class="line">        <span class="comment">//uint8_t user_ctrl = _register_read(MPUREG_USER_CTRL);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/* First disable the master I2C to avoid hanging the slaves on the</span></span><br><span class="line"><span class="comment">         * aulixiliar I2C bus - it will be enabled again if the AuxiliaryBus</span></span><br><span class="line"><span class="comment">         * is used */</span></span><br><span class="line">        <span class="comment">//if (user_ctrl &amp; BIT_USER_CTRL_I2C_MST_EN) &#123;</span></span><br><span class="line">        <span class="comment">//    _register_write(MPUREG_USER_CTRL, user_ctrl &amp; ~BIT_USER_CTRL_I2C_MST_EN);</span></span><br><span class="line">        <span class="comment">//    hal.scheduler-&gt;delay(10);</span></span><br><span class="line">        <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// reset device</span></span><br><span class="line">        <span class="comment">//_register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_DEVICE_RESET);</span></span><br><span class="line">        <span class="comment">//hal.scheduler-&gt;delay(100);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/* bus-dependent initialization */</span></span><br><span class="line">        <span class="comment">//if (_dev-&gt;bus_type == AP_HAL::Device::BUS_TYPE_SPI) &#123;</span></span><br><span class="line">            <span class="comment">/* Disable I2C bus if SPI selected (Recommended in Datasheet to be</span></span><br><span class="line"><span class="comment">             * done just after the device is reset) */</span></span><br><span class="line">            <span class="comment">//_register_write(MPUREG_USER_CTRL, BIT_USER_CTRL_I2C_IF_DIS);</span></span><br><span class="line">        <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Wake up device and select GyroZ clock. Note that the</span></span><br><span class="line">        <span class="comment">// MPU9250 starts up in sleep mode, and it can take some time</span></span><br><span class="line">        <span class="comment">// for it to come out of sleep</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// _register_write(MPUREG_PWR_MGMT_1, BIT_PWR_MGMT_1_CLK_ZGYRO);</span></span><br><span class="line">        <span class="comment">// hal.scheduler-&gt;delay(5);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// // check it has woken up</span></span><br><span class="line">        <span class="comment">// if (_register_read(MPUREG_PWR_MGMT_1) == BIT_PWR_MGMT_1_CLK_ZGYRO) &#123;</span></span><br><span class="line">            <span class="comment">// break;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// hal.scheduler-&gt;delay(10);</span></span><br><span class="line">        <span class="comment">// if (_data_ready()) &#123;</span></span><br><span class="line">            <span class="comment">// break;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// #if MPU9250_DEBUG</span></span><br><span class="line">        <span class="comment">// _dump_registers();</span></span><br><span class="line"><span class="comment">// #endif</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// if (tries == 5) &#123;</span></span><br><span class="line">        <span class="comment">// hal.console-&gt;println("Failed to boot MPU9250 5 times");</span></span><br><span class="line">        <span class="comment">// goto fail_tries;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    _dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</span><br><span class="line">    _dev-&gt;get_semaphore()-&gt;give();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// fail_tries:</span></span><br><span class="line"><span class="comment">// fail_whoami:</span></span><br><span class="line">    <span class="comment">// _dev-&gt;get_semaphore()-&gt;give();</span></span><br><span class="line">    <span class="comment">// _dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</span></span><br><span class="line">    <span class="comment">// return false;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在函数<code>start()</code>中，去掉初始化代码，去掉定时读取的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> AP_InertialSensor_MPU9250::start()</span><br><span class="line">&#123;</span><br><span class="line">    hal.scheduler-&gt;suspend_timer_procs();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!_dev-&gt;get_semaphore()-&gt;take(<span class="number">100</span>)) &#123;</span><br><span class="line">        AP_HAL::panic(<span class="string">"MPU92500: Unable to get semaphore"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// initially run the bus at low speed</span></span><br><span class="line">    _dev-&gt;set_speed(AP_HAL::Device::SPEED_LOW);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// // only used for wake-up in accelerometer only low power mode</span></span><br><span class="line">    <span class="comment">// _register_write(MPUREG_PWR_MGMT_2, 0x00);</span></span><br><span class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// // disable sensor filtering</span></span><br><span class="line">    <span class="comment">// _register_write(MPUREG_CONFIG, BITS_DLPF_CFG_256HZ_NOLPF2);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// // set sample rate to 1kHz, and use the 2 pole filter to give the</span></span><br><span class="line">    <span class="comment">// // desired rate</span></span><br><span class="line">    <span class="comment">// _register_write(MPUREG_SMPLRT_DIV, DEFAULT_SMPLRT_DIV); // guantau</span></span><br><span class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// // Gyro scale 2000º/s</span></span><br><span class="line">    <span class="comment">// _register_write(MPUREG_GYRO_CONFIG, BITS_GYRO_FS_2000DPS);</span></span><br><span class="line">    <span class="comment">// hal.scheduler-&gt;delay(1);</span></span><br><span class="line"></span><br><span class="line">    _product_id = AP_PRODUCT_ID_MPU9250;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// // RM-MPU-9250A-00.pdf, pg. 15, select accel full scale 16g</span></span><br><span class="line">    <span class="comment">// _register_write(MPUREG_ACCEL_CONFIG,3&lt;&lt;3);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// // configure interrupt to fire when new data arrives</span></span><br><span class="line">    <span class="comment">// _register_write(MPUREG_INT_ENABLE, BIT_RAW_RDY_EN);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// // clear interrupt on any read, and hold the data ready pin high</span></span><br><span class="line">    <span class="comment">// // until we clear the interrupt</span></span><br><span class="line">    <span class="comment">// uint8_t value = _register_read(MPUREG_INT_PIN_CFG);</span></span><br><span class="line">    <span class="comment">// value |= BIT_INT_RD_CLEAR | BIT_LATCH_INT_EN;</span></span><br><span class="line">    <span class="comment">// _register_write(MPUREG_INT_PIN_CFG, value);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// now that we have initialised, we set the bus speed to high</span></span><br><span class="line">    _dev-&gt;set_speed(AP_HAL::Device::SPEED_HIGH);</span><br><span class="line"></span><br><span class="line">    _dev-&gt;get_semaphore()-&gt;give();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// grab the used instances</span></span><br><span class="line">    _gyro_instance = _imu.register_gyro(DEFAULT_SAMPLE_RATE);</span><br><span class="line">    _accel_instance = _imu.register_accel(DEFAULT_SAMPLE_RATE);</span><br><span class="line"></span><br><span class="line">    hal.scheduler-&gt;resume_timer_procs();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// start the timer process to read samples</span></span><br><span class="line">    <span class="comment">// hal.scheduler-&gt;register_timer_process(</span></span><br><span class="line">        <span class="comment">// FUNCTOR_BIND_MEMBER(&amp;AP_InertialSensor_MPU9250::_poll_data, void));</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//guantau</span></span><br><span class="line">    _poll_data();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在函数<code>_configure_slaves()</code>中修改初始化代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> AP_MPU9250_AuxiliaryBus::_configure_slaves()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> &amp;backend = AP_InertialSensor_MPU9250::from(_ins_backend);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// guantau</span></span><br><span class="line">    <span class="comment">// I2C Master mode</span></span><br><span class="line">    backend._register_write(MPUREG_USER_CTRL, BIT_USER_CTRL_I2C_MST_EN);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// I2C configuration multi-master  IIC 400KHz</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_MST_CTRL, I2C_MST_CLOCK_400KHZ);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set the I2C slave addres of AK8963 and set for write.</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_SLV0_ADDR, <span class="number">0x0C</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// I2C slave 0 register address from where to begin data transfer</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_SLV0_REG, <span class="number">0x0B</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Reset AK8963</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_SLV0_DO, <span class="number">0x01</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Enable I2C and set 1 byte</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_SLV0_CTRL, <span class="number">0x81</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// I2C slave 0 register address from where to begin data transfer</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_SLV0_REG, <span class="number">0x0A</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Register value to continuous measurement in 16bit</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_SLV0_DO, <span class="number">0x12</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Enable I2C and set 1 byte</span></span><br><span class="line">    backend._register_write(MPUREG_I2C_SLV0_CTRL, <span class="number">0x81</span>);</span><br><span class="line">    hal.scheduler-&gt;delay(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//    /* Enable the I2C master to slaves on the auxiliary I2C bus*/</span></span><br><span class="line"><span class="comment">//    uint8_t user_ctrl = backend._register_read(MPUREG_USER_CTRL);</span></span><br><span class="line"><span class="comment">//    backend._register_write(MPUREG_USER_CTRL, user_ctrl | BIT_USER_CTRL_I2C_MST_EN);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//    /* stop condition between reads; clock at 400kHz */</span></span><br><span class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_MST_CTRL,</span></span><br><span class="line"><span class="comment">//                            I2C_MST_CLOCK_400KHZ | I2C_MST_P_NSR);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//    /* Hard-code divider for internal sample rate, 1 kHz, resulting in a</span></span><br><span class="line"><span class="comment">//     * sample rate of 100Hz */</span></span><br><span class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_SLV4_CTRL, 9);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//    /* All slaves are subject to the sample rate */</span></span><br><span class="line"><span class="comment">//    backend._register_write(MPUREG_I2C_MST_DELAY_CTRL,</span></span><br><span class="line"><span class="comment">//                            I2C_SLV0_DLY_EN | I2C_SLV1_DLY_EN |</span></span><br><span class="line"><span class="comment">//                            I2C_SLV2_DLY_EN | I2C_SLV3_DLY_EN);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="libraries-AP-Compass-AP-Compass-AK8963-h"><a href="#libraries-AP-Compass-AP-Compass-AK8963-h" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.h"></a>libraries/AP_Compass/AP_Compass_AK8963.h</h2><p>添加函数<code>accumulate()</code>，该函数在AP_Compass_Backend.h中申明为纯虚函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//guantau</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accumulate</span><span class="params">()</span> override</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="libraries-AP-Compass-AP-Compass-AK8963-cpp"><a href="#libraries-AP-Compass-AP-Compass-AK8963-cpp" class="headerlink" title="libraries/AP_Compass/AP_Compass_AK8963.cpp"></a>libraries/AP_Compass/AP_Compass_AK8963.cpp</h2><p>实现函数<code>accumulate()</code>，用于非定时读取情况下手动读取数据</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//guantau</span></span><br><span class="line"><span class="keyword">void</span> AP_Compass_AK8963::accumulate()</span><br><span class="line">&#123;</span><br><span class="line">    _update();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改初始化代码<code>init()</code>，去除定时读取的任务</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> AP_Compass_AK8963::init()</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">/* timer needs to be called every 10ms so set the freq_div to 10 */</span></span><br><span class="line">    <span class="comment">// _timesliced = hal.scheduler-&gt;register_timer_process(FUNCTOR_BIND_MEMBER(&amp;AP_Compass_AK8963::_update, void), 10);</span></span><br><span class="line">    <span class="comment">//guantau</span></span><br><span class="line">    _update();</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp"><a href="#libraries-AP-HAL-Linux-examples-BusTest-BusTest-cpp" class="headerlink" title="libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp"></a>libraries/AP_HAL_Linux/examples/BusTest/BusTest.cpp</h2><p>在函数<code>loop()</code>中，若循环读取SPI总线的时延过小，则会出现死机的情况。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/06/waf-tool/" itemprop="url">
                   waf编译工具使用方法
                 </a>
@@ -1494,145 +1659,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/21/texting-habits/" itemprop="url">
-                  高效文本编辑的七个习惯
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-21T23:16:15+08:00" content="2016-08-21">
-              2016-08-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/看点文章/" itemprop="url" rel="index">
-                    <span itemprop="name">看点文章</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/21/texting-habits/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/texting-habits/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/21/texting-habits/" class="leancloud_visitors" data-flag-title="高效文本编辑的七个习惯">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这是Vim作者Bram Moolenaar受到《高效能人士的七个习惯》启发所写的一篇，阐述了他对高效文本编辑的一些看法，或者说他设计Vim的一些初衷。</p>
-<p>读后感受有四：</p>
-<ol>
-<li>绝大部分文本为有格式的，这是高效编辑的前提。</li>
-<li>一定有自动化的方法用来减少重复性的劳动。</li>
-<li>勤加练习，习惯成自然；否则，好记性不如烂笔头。</li>
-<li>过犹不及，只要适合自己就可以。</li>
-</ol>
-<p>其实这些道理是可以推广的，它们对于很多事情都是适用的。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/21/texting-habits/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1678,7 +1704,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

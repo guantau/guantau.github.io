@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="dag,blockchain,byteball,bitcoin," />
 
 
 
@@ -84,13 +84,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="imtau">
-<meta property="og:url" content="http://blog.guantau.com/tags/小米路由器/index.html">
+<meta name="description" content="Byteball是一种基于DAG技术的新型数字资产平台，它不仅支持P2P支付，还支持智能合约、预言机、隐私资产、ICO等功能。Byteball的钱包设计得十分强大，并且人性化。但通过对Byteball的仔细研究会发现，其在设计和实现上还是存在一定的缺陷。如果能很好地解决这些问题，Byteball必将跻身主流的数字资产平台。 网络性能问题一份对byteball主网的最新测试给出了三点结论：  交易处">
+<meta name="keywords" content="dag,blockchain,byteball,bitcoin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链系统观">
+<meta property="og:url" content="http://blog.guantau.com/2018/05/13/byteball-flaws/index.html">
 <meta property="og:site_name" content="imtau">
+<meta property="og:description" content="Byteball是一种基于DAG技术的新型数字资产平台，它不仅支持P2P支付，还支持智能合约、预言机、隐私资产、ICO等功能。Byteball的钱包设计得十分强大，并且人性化。但通过对Byteball的仔细研究会发现，其在设计和实现上还是存在一定的缺陷。如果能很好地解决这些问题，Byteball必将跻身主流的数字资产平台。 网络性能问题一份对byteball主网的最新测试给出了三点结论：  交易处">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-05-12-byteball-network.png">
+<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-05-13-byteball-hub-flaw.png">
+<meta property="og:updated_time" content="2018-05-13T14:36:32.922Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="imtau">
+<meta name="twitter:title" content="区块链系统观">
+<meta name="twitter:description" content="Byteball是一种基于DAG技术的新型数字资产平台，它不仅支持P2P支付，还支持智能合约、预言机、隐私资产、ICO等功能。Byteball的钱包设计得十分强大，并且人性化。但通过对Byteball的仔细研究会发现，其在设计和实现上还是存在一定的缺陷。如果能很好地解决这些问题，Byteball必将跻身主流的数字资产平台。 网络性能问题一份对byteball主网的最新测试给出了三点结论：  交易处">
+<meta name="twitter:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-05-12-byteball-network.png">
 
 
 
@@ -111,9 +119,9 @@
 
 
 
-  <link rel="canonical" href="http://blog.guantau.com/tags/小米路由器/"/>
+  <link rel="canonical" href="http://blog.guantau.com/2018/05/13/byteball-flaws/"/>
 
-  <title> 标签: 小米路由器 | imtau </title>
+  <title> 区块链系统观 | imtau </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -144,7 +152,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -265,53 +273,255 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        小米路由器
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                区块链系统观
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-05-13T22:09:55+08:00" content="2018-05-13">
+              2018-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/谈点区块链/" itemprop="url" rel="index">
+                    <span itemprop="name">谈点区块链</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/05/13/byteball-flaws/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/13/byteball-flaws/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/05/13/byteball-flaws/" class="leancloud_visitors" data-flag-title="区块链系统观">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>Byteball是一种基于DAG技术的新型数字资产平台，它不仅支持P2P支付，还支持智能合约、预言机、隐私资产、ICO等功能。Byteball的钱包设计得十分强大，并且人性化。但通过对Byteball的仔细研究会发现，其在设计和实现上还是存在一定的缺陷。如果能很好地解决这些问题，Byteball必将跻身主流的数字资产平台。</p>
+<h2 id="网络性能问题"><a href="#网络性能问题" class="headerlink" title="网络性能问题"></a>网络性能问题</h2><p>一份对byteball主网的最新测试给出了三点结论：</p>
+<ol>
+<li>交易处理速度仅能达到15TPS左右；</li>
+<li>网络容易遭受DOS攻击，大量突发式的恶意交易会阻塞网络，降低网络的交易处理速度；</li>
+<li>随着交易数量增加，交易确认时间可以保持平稳。</li>
+</ol>
+<p>作为DAG基础链，这个压力测试挺让人失望的，这显然没有充分发挥DAG技术的优势。不同于传统区块链交易处理速度受限于区块大小，Byteball网络的交易处理速度与代码执行速度、网络传输时延、硬件处理能力等都可能有关系。创始人Tony在Slack频道中承认byteball代码实现中大量的SQL操作增加了处理时延，这可能是影响byteball处理性能的重要原因。</p>
+<blockquote>
+<p><strong>那么，是否可以优化byteball的数据库设计及SQL操作？</strong></p>
+</blockquote>
+<p>DAG作为Byteball底层数据结构，其相应的数据很自然地应该使用图数据库进行存储。这需要重新设计Byteball的数据库，并重写大量Byteball底层的代码。同时，还需要一个高性能的serverless embedded graph database，比如基于leveldb的<a href="https://github.com/levelgraph/levelgraph" target="_blank" rel="noopener">levelgraph</a>。采用图数据库的一个最大好处是可以减少大量的SQL多表联合查询，并简化确认交易时的多级回溯操作，从而提高其处理性能。</p>
+<h2 id="Hub节点问题"><a href="#Hub节点问题" class="headerlink" title="Hub节点问题"></a>Hub节点问题</h2><p>在Byteball网络中，Hub节点是网络中的骨干节点，它们之间构成P2P网络，其它节点需要通过它们进行相互通信。全网中可以存在多个Hub，用户可以自由选择其想要接入的Hub。这里需要说明的是，Relay节点具有与Hub节点类似的功能，只是不提供端到端的信息加密服务。在下面的讨论中，不特殊说明的话，将Hub/Relay节点统一称为Hub节点。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-05-12-byteball-network.png" alt="byteball网络结构"></p>
+<p>从技术角度来讲，Hub节点是在全节点钱包的基础上，提供一些额外的数据转发功能。从数据存储的角度来看：轻钱包是不保存完整的账本数据的；全节点钱包和见证人保存完整的账本数据，但仅供它们自己使用；只有Hub节点保存完整的账本数据，并与其它的节点进行共享。</p>
+<p>试想如果Hub节点作恶，它可以拒绝为与其连接的钱包等其它节点提供Byteball网络接入服务，拒绝为它们广播、共享交易数据。还有一种极端情况，如果所有见证人节点都连接在同一个Hub节点上，那么它将成为整个网络中的霸主。其它Hub节点如果不能得到该Hub节点的服务，则其它Hub节点广播的所有交易都无法得到网络的确认。这也就是说，那些Hub节点都无法正常工作了。</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-05-13-byteball-hub-flaw.png" alt="Hub节点中心化"></p>
+<p>Hub节点在账本数据的有效性、可靠性及安全性方面起着十分重要的作用。然而，在Byteball目前的实现下，Hub节点是完全没有收益激励的，同时还要承担相应的服务器开支。实际上，目前全网主要使用的还是官方提供的Hub节点（wss://byteball.org/bb/)。</p>
+<blockquote>
+<p><strong>那么，对于扮演如此重要角色的Hub节点，是否应该给予经济激励，并限制其部分权力？</strong></p>
+</blockquote>
+<p>设计经济激励的目的是为了让更多的人愿意运行Hub节点，为整个网络更公平有效的服务。同时，为了相对性地限制Hub节点的权力，建议提升见证人节点、全节点钱包在网络结构中的地位，即它们之间可以组成P2P网络。</p>
+<h2 id="见证人的问题"><a href="#见证人的问题" class="headerlink" title="见证人的问题"></a>见证人的问题</h2><p>Witnesses是Byteball用来实现全网共识的，见证人通过不断地发送交易来确认其他用户的交易。Byteball对见证人提出的要求是：现实世界中的知名用户或机构，以保证其具有良好的信誉。一旦见证人发生作恶行为，那么他将名誉扫地。要求如此严格，但见证人只能获取少量的手续费。试问谁愿意将自己的名誉压在Byteball这样一个数字资产平台上呢？目前的实际情况是，大部分的见证人节点掌握在创始人Tony手中。</p>
+<p>Byteball的共识机制的一个基本思想是选取一条主链，所有单元都可以依据这条主链来定序，从而解决双花问题。形象的来说，这条主链类似一条高速公路，连接在主链上的其它分支为省道，通过这种方式可以大大地提高网络处理效率。Byteball是通过见证人的方式选择主链的，主链上的交易受到大多数见证人的认可。当然，选择主链也可以有其它方式，比如使用POW方式，最近热门的<a href="https://xdag.io/" target="_blank" rel="noopener">xdag</a>采用的就是这样的思想。</p>
+<blockquote>
+<p><strong>那么，Byteball的共识机制是否可以演进为基于POS的见证机制？</strong></p>
+</blockquote>
+<p>这意味着，见证人列表不是固定不变的，也不是由用户手工进行选择的。见证人列表通过POS的方式产生，以一定的时间间隔生成见证人列表，并基于此进行共识。在POS中，拥有资产越多的用户更倾向于维护网络的正常运转。</p>
+<h2 id="手续费问题"><a href="#手续费问题" class="headerlink" title="手续费问题"></a>手续费问题</h2><p>Byteball中的交易手续费分为两部分，一部分给见证人，另一部分给其子单元。</p>
+<p>分给见证人的交易手续费称为payload commission，它与交易存储内容所占字节数成正比。然而，实际上交易存储内容的大小对于见证人是没有区别，见证人需要做的只是持续产生交易单元就可以。</p>
+<p>分给子单元的交易手续费称为header commission，它基本上是个固定值。它设计的目的是为了让用户尽量选择新产生的交易单元，从而保持DAG的宽度不至于太大。其实，普通用户收到少量的手续费让人很疑惑。虽然，用户行为在确认交易单元上做出了贡献，但通常这属于偶发行为。而像Hub这类承担着网络运行重任的节点却得不到任何激励。至于限制DAG的宽度，完全可以在选择父节点时，给新产生节点赋予更高的权重。</p>
+<blockquote>
+<p><strong>那么，是否可以重新设计手续费结构，将其分配给那些维护网络正常运行的节点？</strong></p>
+</blockquote>
+<p>上面我们讨论到了对于Hub节点的激励，手续费中应该加入给Hub节点的部分；同时，去除分给子单元的部分，而代以更好的父节点选择算法。</p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/08/21/xiaomi-mini/" itemprop="url">
-              
-                <span itemprop="name">在小米路由器mini上实现去广告</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-reward-image.jpg" alt="guantau WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward-image.jpg" alt="guantau Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-21T23:31:01+08:00"
-              content="2016-08-21" >
-          08-21
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dag/" rel="tag">#dag</a>
+          
+            <a href="/tags/blockchain/" rel="tag">#blockchain</a>
+          
+            <a href="/tags/byteball/" rel="tag">#byteball</a>
+          
+            <a href="/tags/bitcoin/" rel="tag">#bitcoin</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/15/blockchain-system-view/" rel="next" title="区块链系统观">
+                <i class="fa fa-chevron-left"></i> 区块链系统观
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2018/05/13/byteball-flaws/"
+     data-title="区块链系统观"
+     data-content=""
+     data-url="http://blog.guantau.com/2018/05/13/byteball-flaws/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
 
           </div>
           
 
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/05/13/byteball-flaws/"
+           data-title="区块链系统观" data-url="http://blog.guantau.com/2018/05/13/byteball-flaws/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -331,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -393,6 +612,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络性能问题"><span class="nav-text"><a href="#&#x7F51;&#x7EDC;&#x6027;&#x80FD;&#x95EE;&#x9898;" class="headerlink" title="&#x7F51;&#x7EDC;&#x6027;&#x80FD;&#x95EE;&#x9898;"></a>&#x7F51;&#x7EDC;&#x6027;&#x80FD;&#x95EE;&#x9898;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hub节点问题"><span class="nav-text"><a href="#Hub&#x8282;&#x70B9;&#x95EE;&#x9898;" class="headerlink" title="Hub&#x8282;&#x70B9;&#x95EE;&#x9898;"></a>Hub&#x8282;&#x70B9;&#x95EE;&#x9898;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#见证人的问题"><span class="nav-text"><a href="#&#x89C1;&#x8BC1;&#x4EBA;&#x7684;&#x95EE;&#x9898;" class="headerlink" title="&#x89C1;&#x8BC1;&#x4EBA;&#x7684;&#x95EE;&#x9898;"></a>&#x89C1;&#x8BC1;&#x4EBA;&#x7684;&#x95EE;&#x9898;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手续费问题"><span class="nav-text"><a href="#&#x624B;&#x7EED;&#x8D39;&#x95EE;&#x9898;" class="headerlink" title="&#x624B;&#x7EED;&#x8D39;&#x95EE;&#x9898;"></a>&#x624B;&#x7EED;&#x8D39;&#x95EE;&#x9898;</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -496,6 +726,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
