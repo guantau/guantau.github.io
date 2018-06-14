@@ -289,6 +289,149 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/16/spark-csv/" itemprop="url">
+                  Spark读取csv文件方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-16T21:13:00+08:00" content="2017-03-16">
+              2017-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/写点程序/" itemprop="url" rel="index">
+                    <span itemprop="name">写点程序</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/16/spark-csv/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/spark-csv/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/16/spark-csv/" class="leancloud_visitors" data-flag-title="Spark读取csv文件方法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>直接采用split的方法是不太好的，比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sc.textFile(<span class="string">'file.csv'</span>)</span><br><span class="line">    .map(<span class="keyword">lambda</span> line: (line.split(<span class="string">','</span>)[<span class="number">0</span>], line.split(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">    .collect()</span><br></pre></td></tr></table></figure>
+<p>这种方法容易出错，且读取的值无法自动识别类型。</p>
+<p>可以稍微改进一下，比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line">rdd = sc.textFile(<span class="string">"file.csv"</span>)</span><br><span class="line">rdd = rdd.mapPartitions(<span class="keyword">lambda</span> x: csv.reader(x))</span><br></pre></td></tr></table></figure>
+<p>或者，先将数据用pandas读入，然后再转化为DataFrame</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkContext</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SQLContext</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">sc = SparkContext(<span class="string">'local'</span>,<span class="string">'example'</span>)  <span class="comment"># if using locally</span></span><br><span class="line">sql_sc = SQLContext(sc)</span><br><span class="line"></span><br><span class="line">Spark_Full = sc.emptyRDD()</span><br><span class="line">chunk_100k = pd.read_csv(<span class="string">"Your_Data_File.csv"</span>, chunksize=<span class="number">100000</span>)</span><br><span class="line"><span class="comment"># if you have headers in your csv file:</span></span><br><span class="line">headers = list(pd.read_csv(<span class="string">"Your_Data_File.csv"</span>, nrows=<span class="number">0</span>).columns)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunky <span class="keyword">in</span> chunk_100k:</span><br><span class="line">    Spark_Full +=  sc.parallelize(chunky.values.tolist())</span><br><span class="line"></span><br><span class="line">YourSparkDataFrame = Spark_Full.toDF(headers)</span><br><span class="line"><span class="comment"># if you do not have headers, leave empty instead:</span></span><br><span class="line"><span class="comment"># YourSparkDataFrame = Spark_Full.toDF()</span></span><br><span class="line">YourSparkDataFrame.show()</span><br></pre></td></tr></table></figure>
+<p>其实，Spark 2.0之后可以很方便使用SQLContext的读取csv文件，读取得到的格式为DataFrame：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkContext</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SQLContext</span><br><span class="line">sc = SparkContext()</span><br><span class="line">sqlctx = SQLContext(sc)</span><br><span class="line">sqlctx.read.csv(</span><br><span class="line">    <span class="string">"some_input_file.csv"</span>, header=<span class="keyword">True</span>, mode=<span class="string">"DROPMALFORMED"</span>, schema=schema</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(sqlctx.read</span><br><span class="line">    .schema(schema)</span><br><span class="line">    .option(<span class="string">"header"</span>, <span class="string">"true"</span>)</span><br><span class="line">    .option(<span class="string">"mode"</span>, <span class="string">"DROPMALFORMED"</span>)</span><br><span class="line">    .csv(<span class="string">"some_input_file.csv"</span>))</span><br></pre></td></tr></table></figure>
+<p>如果已知schema，则可以直接指定，防止自动推测发生错误</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> DoubleType, IntegerType, StringType</span><br><span class="line"></span><br><span class="line">schema = StructType([</span><br><span class="line">    StructField(<span class="string">"A"</span>, IntegerType()),</span><br><span class="line">    StructField(<span class="string">"B"</span>, DoubleType()),</span><br><span class="line">    StructField(<span class="string">"C"</span>, StringType())</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>如果是Spark1.x，那么可以采用Databricks推出的<a href="https://github.com/databricks/spark-csv" target="_blank" rel="noopener">spark-csv</a>，其实这就是2.0版本以后读取csv的代码。</p>
+<p>另外，github上还有另一个非官方版本的<a href="https://github.com/seahboonsiew/pyspark-csv" target="_blank" rel="noopener">spark-csv</a>。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/06/revise-ardupilot/" itemprop="url">
                   ArduPilot修改记录
                 </a>
@@ -1522,143 +1665,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/21/zotero-tips/" itemprop="url">
-                  zotero的一些使用经验
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-21T23:18:55+08:00" content="2016-08-21">
-              2016-08-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/聊点感想/" itemprop="url" rel="index">
-                    <span itemprop="name">聊点感想</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/21/zotero-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/zotero-tips/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/08/21/zotero-tips/" class="leancloud_visitors" data-flag-title="zotero的一些使用经验">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在科研活动中，我们需要参考大量的科技文献。科技文献管理一般要经历获取、存储、应用三个过程，不管怎么看，科技文献管理都是一件挺麻烦的事情：</p>
-<ol>
-<li>在查找文献时，我们通常会得到很多附加的信息，比如下载的网址、与文献相关的代码、期刊名称等等。这些信息对于我们应用文献有着比较重要的作用，但是它们记录起来可是相当麻烦。</li>
-<li>随着工作的开展，各种各样的文件堆积如山，而资源管理器一般只用目录名和文件名进行索引，丢失了大量的元数据信息，此时想要寻找特定内容时将会变得非常困难。</li>
-<li>撰写期刊论文、学位论文、项目申请报告的时候，标注参考文献出处是一项考验耐性、细心和记忆力的工作。如何高效地建立参考文献列表是所有研究者都会遇到的实际问题。</li>
-</ol>
-<p>好在是有一些工具是能够帮助处理这些麻烦的，比如Endnote、Mendeley、Zotero、NoteExpress、NoteFirst等，这其中我觉得最顺手的就是Zotero。如果你也有遇到上面提到的那些问题，不妨试试它。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/21/zotero-tips/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1704,7 +1710,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -289,6 +289,568 @@
             
               
                 
+                <a class="post-title-link" href="/2018/06/14/byteball-network-protocol/" itemprop="url">
+                  ByteBall网络节点通信协议详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-06-14T22:39:55+08:00" content="2018-06-14">
+              2018-06-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/谈点区块链/" itemprop="url" rel="index">
+                    <span itemprop="name">谈点区块链</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/06/14/byteball-network-protocol/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/14/byteball-network-protocol/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/06/14/byteball-network-protocol/" class="leancloud_visitors" data-flag-title="ByteBall网络节点通信协议详解">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="ByteBall网络节点通信协议详解"><a href="#ByteBall网络节点通信协议详解" class="headerlink" title="ByteBall网络节点通信协议详解"></a>ByteBall网络节点通信协议详解</h2><p>P2P网络是区块链网络的基础，网络中各个节点通过相互交换消息实现各种功能，包括收发交易、数据同步等操作。本文将对ByteBall网络节点的通信接口进行详细分析。</p>
+<p>ByteBall网络节点之间采用websocket连接，采用json格式消息进行通信，消息可表示为<code>{type: type, content: content}</code>。ByteBall中的消息类型主要包括三类，即消息的type包括三种<code>request</code>、<code>response</code>以及<code>justsaying</code>，当然也可以自定义其它类型的消息。下面对消息的具体格式和处理流程进行解析。</p>
+<h3 id="request：请求消息"><a href="#request：请求消息" class="headerlink" title="request：请求消息"></a>request：请求消息</h3><p>请求消息的格式为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: command,</span><br><span class="line">        params: params</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>tag</code>为request消息的BASE64哈希值。</p>
+<p>发送请求消息的函数原型为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendRequest</span>(<span class="params">ws, command, params, bReroutable, responseHandler</span>)</span></span><br><span class="line"><span class="function">// <span class="title">ws</span>: 发送请求的<span class="title">websocket</span>连接</span></span><br><span class="line"><span class="function">// <span class="title">command</span>: 请求命令</span></span><br><span class="line"><span class="function">// <span class="title">params</span>: 请求参数</span></span><br><span class="line"><span class="function">// <span class="title">bReroutable</span>: 是否重新路由</span></span><br><span class="line"><span class="function">// <span class="title">responseHandler</span>: 请求响应处理回调函数</span></span><br></pre></td></tr></table></figure>
+<p>通过<code>sendRequest()</code>发出的每个请求会生成一个<code>tag</code>作为该请求的标识，并在内存中保留该请求的相关处理信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ws.assocPendingRequests[tag] = &#123;</span><br><span class="line">    request: request,</span><br><span class="line">    responseHandlers: [responseHandler],</span><br><span class="line">    reroute: reroute,</span><br><span class="line">    reroute_timer: reroute_timer,</span><br><span class="line">    cancel_timer: cancel_timer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当请求发出后，若对方没有回应时有两种选择，一种是采用<code>reroute</code>，另一种是<code>cancel</code>。<code>reroute</code>的<code>timeout</code>为5s，<code>cancel</code>的<code>timeout</code>时间为300秒。</p>
+<p>当接收到响应后（位于函数<code>handleResponse()</code>），在调用相应回调函数<code>responseHandlers</code>后，请求信息<code>ws.assocPendingRequests[tag]</code>被删除。</p>
+<p>如果相关的连接被关闭，则清理该连接上的所有请求信息（位于函数<code>cancelRequestOnClosedConnection()</code>）。</p>
+<h3 id="response：响应消息"><a href="#response：响应消息" class="headerlink" title="response：响应消息"></a>response：响应消息</h3><p>响应消息的格式为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'response',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        response: response</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>tag</code>对应于请求消息中的<code>tag</code>。</p>
+<p>发送响应消息的函数原型为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendResponse</span>(<span class="params">ws, tag, response</span>)</span></span><br><span class="line"><span class="function">// <span class="title">ws</span>: 发送响应的<span class="title">websocket</span>连接</span></span><br><span class="line"><span class="function">// <span class="title">tag</span>: 发送响应对应的<span class="title">tag</span></span></span><br><span class="line"><span class="function">// <span class="title">response</span>: 响应消息内容</span></span><br></pre></td></tr></table></figure>
+<p>当收到对端节点请求后，设置<code>ws.assocInPreparingResponse[tag]=true</code>，并在回复响应后删除。</p>
+<h3 id="justsaying：其它消息"><a href="#justsaying：其它消息" class="headerlink" title="justsaying：其它消息"></a>justsaying：其它消息</h3><p>其它消息包括的内容比较多，比如版本、心跳、hub登录等，其格式为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'justsaying',</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: subject,</span><br><span class="line">        body: body</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发送其它消息的函数原型为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendJustsaying</span>(<span class="params">ws, subject, body</span>)</span></span><br><span class="line"><span class="function">// <span class="title">ws</span>: 发送消息的<span class="title">websocket</span>连接</span></span><br><span class="line"><span class="function">// <span class="title">subject</span>: 消息主题</span></span><br><span class="line"><span class="function">// <span class="title">body</span>: 消息内容</span></span><br></pre></td></tr></table></figure>
+<h3 id="常见通信接口"><a href="#常见通信接口" class="headerlink" title="常见通信接口"></a>常见通信接口</h3><h4 id="获取见证人列表（get-witnesses）"><a href="#获取见证人列表（get-witnesses）" class="headerlink" title="获取见证人列表（get_witnesses）"></a>获取见证人列表（get_witnesses）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'get_witnesses'</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>收到请求后，从数据库中读取当前的见证人列表并返回</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">myWitnesses.readMyWitnesses(<span class="function"><span class="keyword">function</span>(<span class="params">arrWitnesses</span>)</span>&#123;</span><br><span class="line">    sendResponse(ws, tag, arrWitnesses);</span><br><span class="line">&#125;, <span class="string">'wait'</span>);</span><br></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">'BVVJ2K7ENPZZ3VYZFWQWK7ISPCATFIW3'</span>,</span><br><span class="line">  <span class="string">'DJMMI5JYA5BWQYSXDPRZJVLW3UGL3GJS'</span>,</span><br><span class="line">  <span class="string">'FOPUBEUPBC6YLIQDLKL6EW775BMV7YOH'</span>,</span><br><span class="line">  <span class="string">'GFK3RDAPQLLNCMQEVGGD2KCPZTLSG3HN'</span>,</span><br><span class="line">  <span class="string">'H5EZTQE7ABFH27AUDTQFMZIALANK6RBG'</span>,</span><br><span class="line">  <span class="string">'I2ADHGP4HL6J37NQAD73J7E5SKFIXJOT'</span>,</span><br><span class="line">  <span class="string">'JEDZYC2HMGDBIDQKG3XSTXUSHMCBK725'</span>,</span><br><span class="line">  <span class="string">'JPQKPRI5FMTQRJF4ZZMYZYDQVRD55OTC'</span>,</span><br><span class="line">  <span class="string">'OYW2XTDKSNKGSEZ27LMGNOPJSYIXHBHC'</span>,</span><br><span class="line">  <span class="string">'S7N5FE42F6ONPNDQLCF64E2MGFYKQR2I'</span>,</span><br><span class="line">  <span class="string">'TKT4UESIKTTRALRRLWS4SENSTJX6ODCW'</span>,</span><br><span class="line">  <span class="string">'UENJPVZ7HVHM6QGVGT6MWOJGGRTUTJXQ'</span> ]</span><br></pre></td></tr></table></figure>
+<p><code>network.js</code>中在函数<code>initWitenessesIfNecessary()</code>中使用。</p>
+<h4 id="获取节点列表（get-peers）"><a href="#获取节点列表（get-peers）" class="headerlink" title="获取节点列表（get_peers）"></a>获取节点列表（get_peers）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'get_peers'</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回对端节点已连接的节点列表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sendResponse(ws, tag, arrPeerUrls)</span><br></pre></td></tr></table></figure>
+<p>比如:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="string">'wss://byteball.fr/bb'</span>,</span><br><span class="line">  <span class="string">'wss://byteball-hub.com/bb'</span>,</span><br><span class="line">  <span class="string">'wss://hub.byteball.ee'</span> ]</span><br></pre></td></tr></table></figure>
+<p><code>network.js</code>中可以使用<code>requestPeers()</code>函数发出请求。</p>
+<h4 id="获取交易数据（get-joint）"><a href="#获取交易数据（get-joint）" class="headerlink" title="获取交易数据（get_joint）"></a>获取交易数据（get_joint）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'get_joint',</span><br><span class="line">        params: unit</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若找到，则返回响应交易数据；否则，返回交易未找到。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">storage.readJoint(db, unit, &#123;</span><br><span class="line">    ifFound: <span class="function"><span class="keyword">function</span>(<span class="params">objJoint</span>)</span>&#123;</span><br><span class="line">        sendJoint(ws, objJoint, tag);</span><br><span class="line">    &#125;,</span><br><span class="line">    ifNotFound: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        sendResponse(ws, tag, &#123;<span class="attr">joint_not_found</span>: unit&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>比如:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">joint</span>:</span><br><span class="line">   &#123; <span class="attr">unit</span>:</span><br><span class="line">      &#123; <span class="attr">unit</span>: <span class="string">'OcrOftkwCwTYAaGq0zV8FecAK/CKED++Ddewh2c2M60='</span>,</span><br><span class="line">        version: <span class="string">'1.0'</span>,</span><br><span class="line">        alt: <span class="string">'1'</span>,</span><br><span class="line">        witness_list_unit: <span class="string">'oj8yEksX9Ubq7lLc+p6F2uyHUuynugeVq4+ikT67X6E='</span>,</span><br><span class="line">        last_ball_unit: <span class="string">'p7obFdGHM5pTWPytNeRIjmamBe7485aDTzuddWI9yWY='</span>,</span><br><span class="line">        last_ball: <span class="string">'wmiP2BvT7FFFtwy5qB+UsA4j8I5KbmBVA6mFCgwQUas='</span>,</span><br><span class="line">        headers_commission: <span class="number">344</span>,</span><br><span class="line">        payload_commission: <span class="number">157</span>,</span><br><span class="line">        main_chain_index: <span class="number">2791799</span>,</span><br><span class="line">        timestamp: <span class="number">1528796161</span>,</span><br><span class="line">        parent_units: [<span class="built_in">Array</span>],</span><br><span class="line">        authors: [<span class="built_in">Array</span>],</span><br><span class="line">        messages: [<span class="built_in">Array</span>] &#125; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<p><code>network.js</code>中可以使用<code>requestJoints()</code>函数发出请求。</p>
+<h4 id="发送交易数据（post-joint）"><a href="#发送交易数据（post-joint）" class="headerlink" title="发送交易数据（post_joint）"></a>发送交易数据（post_joint）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'post_joint',</span><br><span class="line">        params: joint</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接收到请求后，对<code>joint</code>数据进行检查，若通过，则返回<code>accepted</code>；否则，返回相应错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handlePostedJoint(ws, objJoint, <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</span><br><span class="line">    error ? sendErrorResponse(ws, tag, error) : sendResponse(ws, tag, <span class="string">'accepted'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>使用方法可参考<code>network.js</code>中的<code>postJointToLightVendor()</code>函数。</p>
+<h4 id="发送心跳数据（heartbeat）"><a href="#发送心跳数据（heartbeat）" class="headerlink" title="发送心跳数据（heartbeat）"></a>发送心跳数据（heartbeat）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'heartbeat'</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用方法可参考<code>network.js</code>中的<code>heartbeat()</code>函数。</p>
+<p>ByteBall网络中节点之间依靠心跳请求维持连接，当超过<code>HEARTBEAT_RESPONSE_TIMEOUT=60s</code>没有收到对端节点的消息时，将会关闭与该节点的连接。ByteBall中默认3-4s向对端节点发送心跳请求。</p>
+<h4 id="订阅交易数据（subscribe）"><a href="#订阅交易数据（subscribe）" class="headerlink" title="订阅交易数据（subscribe）"></a>订阅交易数据（subscribe）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'subscribe',</span><br><span class="line">        params: &#123;</span><br><span class="line">            subscription_id: subscription_id, // 订阅编号</span><br><span class="line">            last_mci: last_mci                // 订阅起始mci</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接收到请求后，若<code>last_mci&gt;0</code>，则返回从该mci起始的joints；否则，返回当前网络中的叶子交易。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ValidationUtils.isNonnegativeInteger(params.last_mci))</span><br><span class="line">    sendJointsSinceMci(ws, params.last_mci);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    sendFreeJoints(ws);</span><br></pre></td></tr></table></figure>
+<p>订阅后，当收到新交易时，会向已订阅的节点进行转发（<code>forwardJoint(ws, objJoint)</code>）。使用方法可参考<code>network.js</code>中的<code>subscribe()</code>函数。</p>
+<h4 id="同步交易数据（catchup）"><a href="#同步交易数据（catchup）" class="headerlink" title="同步交易数据（catchup）"></a>同步交易数据（catchup）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'catchup',</span><br><span class="line">        params: &#123;</span><br><span class="line">            witnesses: witnesses,                 // 见证人列表</span><br><span class="line">            last_stable_mci: last_stable_mci,     // 稳定mci</span><br><span class="line">            last_known_mci: last_known_mci        // 已知mci</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>必须在订阅状态下使用，接收到请求后，返回主链序号从<code>last_known_mci</code>至<code>last_stable_mci</code>之间的交易数据及其相关信息<code>objCatchupChain</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">catchup.prepareCatchupChain(catchupRequest, &#123;</span><br><span class="line">    ifError: <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</span><br><span class="line">        sendErrorResponse(ws, tag, error);</span><br><span class="line">        unlock();</span><br><span class="line">    &#125;,</span><br><span class="line">    ifOk: <span class="function"><span class="keyword">function</span>(<span class="params">objCatchupChain</span>)</span>&#123;</span><br><span class="line">        sendResponse(ws, tag, objCatchupChain);</span><br><span class="line">        unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>objCatchupChain</code>包括以下几部分信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objCatchupChain = &#123;</span><br><span class="line">    unstable_mc_joints: [], <span class="comment">// 候选主链上未稳定的单元列表</span></span><br><span class="line">    stable_last_ball_joints: [], <span class="comment">// 已稳定的单元列表</span></span><br><span class="line">    witness_change_and_definition_joints: [] <span class="comment">// 见证人或地址定义发生变化的单元列表</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>使用方法可参考<code>network.js</code>中的<code>requestCatchup()</code>函数。</p>
+<h4 id="获取哈希树（get-hash-tree）"><a href="#获取哈希树（get-hash-tree）" class="headerlink" title="获取哈希树（get_hash_tree）"></a>获取哈希树（get_hash_tree）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'get_hash_tree',</span><br><span class="line">        params: &#123;</span><br><span class="line">            from_ball: from_ball,</span><br><span class="line">            to_ball: to_bal</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>必须在订阅状态下使用，接收到请求后，返回从<code>from_ball</code>至<code>to_ball</code>主链序号之间的所有ball交易数据。使用方法可参考<code>network.js</code>中的<code>requestNextHashTree()</code>函数。</p>
+<h4 id="获取主链序号（get-last-mci）"><a href="#获取主链序号（get-last-mci）" class="headerlink" title="获取主链序号（get_last_mci）"></a>获取主链序号（get_last_mci）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'get_last_mci'</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回目前最大的主链序号。</p>
+<h4 id="通过Hub向设备发送消息（hub-deliver）"><a href="#通过Hub向设备发送消息（hub-deliver）" class="headerlink" title="通过Hub向设备发送消息（hub/deliver）"></a>通过Hub向设备发送消息（hub/deliver）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/deliver',</span><br><span class="line">        params: &#123;</span><br><span class="line">            to: device_address,</span><br><span class="line">            pubkey: pubkey,</span><br><span class="line">            signature: signature,</span><br><span class="line">            encrypted_package: encrypted_message</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过Hub向其它设备发送加密消息，使用方法可以参考<code>device.js</code>中的<code>sendPreparedMessageToConnectedHub()</code>函数。</p>
+<h4 id="从Hub获取配对设备临时公钥（hub-get-temp-pubkey）"><a href="#从Hub获取配对设备临时公钥（hub-get-temp-pubkey）" class="headerlink" title="从Hub获取配对设备临时公钥（hub/get_temp_pubkey）"></a>从Hub获取配对设备临时公钥（hub/get_temp_pubkey）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/get_temp_pubkey',</span><br><span class="line">        params: permanent_pubkey</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过永久公钥<code>permanent_pubkey</code>从Hub处获取对端设备的临时公钥。</p>
+<h4 id="设备向Hub更新临时公钥（hub-temp-pubkey）"><a href="#设备向Hub更新临时公钥（hub-temp-pubkey）" class="headerlink" title="设备向Hub更新临时公钥（hub/temp_pubkey）"></a>设备向Hub更新临时公钥（hub/temp_pubkey）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/temp_pubkey',</span><br><span class="line">        params: &#123;</span><br><span class="line">            temp_pubkey: temp_pubkey,</span><br><span class="line">            pubkey: permanent_pubkey,</span><br><span class="line">            signature: signature</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>向Hub更新本设备的临时公钥，设备必须登陆到Hub上。接收到请求后，对参数及签名进行验证，如果成功则返回响应消息<code>updated</code>。</p>
+<h4 id="开启通知（hub-enable-notification）"><a href="#开启通知（hub-enable-notification）" class="headerlink" title="开启通知（hub/enable_notification）"></a>开启通知（hub/enable_notification）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/enable_notification',</span><br><span class="line">        params: registrationId</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设备开启推送通知，目前还未使用。</p>
+<h4 id="关闭通知（hub-disable-notification）"><a href="#关闭通知（hub-disable-notification）" class="headerlink" title="关闭通知（hub/disable_notification）"></a>关闭通知（hub/disable_notification）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/disable_notification',</span><br><span class="line">        params: registrationId</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设备关闭推送通知，目前还未使用。</p>
+<h4 id="获取机器人列表（hub-get-bots）"><a href="#获取机器人列表（hub-get-bots）" class="headerlink" title="获取机器人列表（hub/get_bots）"></a>获取机器人列表（hub/get_bots）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/get_bots'</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回Hub节点上的机器人列表，比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[...</span><br><span class="line"> &#123; id: 27,</span><br><span class="line">    name: 'Worldopoly ICO',</span><br><span class="line">    pairing_code: 'AwyoKVsyxajATgLXa9Jhh8NBRTnUaZNHdi85c43g+GoJ@byteball.org/bb#0000',</span><br><span class="line">    description: 'Worldopoly is the world’s first mobile game combining AR, AI, Geolocationing, Blockchain, and DAG. The ICO is active until 17 May 2018, and you can buy WPT tokens with Bytes, BTC, or Ether.  WPT token is issued both on Byteball and Ethereum platforms but investors on Byteball platform receive increased bonus (even if they pay in ETH or BTC) for investments up to 30 ETH.\n\nWebsite: https://worldopoly.io' &#125;,</span><br><span class="line">  &#123; id: 28,</span><br><span class="line">    name: 'WhiteLittle Airdrop 小白币糖果机器人',</span><br><span class="line">    pairing_code: 'Ahe4jkq5GvgLQ2h5ftqRMjWBBumUEN96tWoSfEQ9TGHF@byteball.org/bb#0000',</span><br><span class="line">    description: '小白链机器人送出小白币糖果。小白链是专门为想进入区块链行业的小白们量身打造的帮助平台，其目的是建立一个基于字节雪球技术为小白们提供有效帮助的信息发现生态平台。小白链的设计初衷是构建一套合理的激励机制，能够及时得到帮助，又让提供帮助的区块链从业者得到合理的回报。\n\n开发者：123cb.net' &#125;,</span><br><span class="line">  &#123; id: 32,</span><br><span class="line">    name: 'Exchange bot for dual-chain tokens',</span><br><span class="line">    pairing_code: 'A+dAU2j/Tm9lnlmc2SryltsfVzOq9GLPxccAq+dClCxr@byteball.org/bb#f7b42a61a3ba6a34cbeeb18d37979927ad1103fc',</span><br><span class="line">    description: 'For tokens issued both on Byteball and Ethereum platforms, the bot enables seamless exchange between Byteball and Ethereum tokens.\n\nDeveloper: HDRProtocol, https://github.com/HDRProtocol/exchanger' &#125;,</span><br><span class="line"> ...]</span><br></pre></td></tr></table></figure>
+<h4 id="获取资产元数据（hub-get-asset-metadata）"><a href="#获取资产元数据（hub-get-asset-metadata）" class="headerlink" title="获取资产元数据（hub/get_asset_metadata）"></a>获取资产元数据（hub/get_asset_metadata）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/get_asset_metadata',</span><br><span class="line">        params: asset</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从Hub节点上获取已发布资产的信息，比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; metadata_unit: 'Rg3DNkDJJ2DWfIzTj3Ypz8CBGi617wl07QkJq7Z5soc=',</span><br><span class="line">  registry_address: 'AM6GTUKENBYA54FYDAKX2VLENFZIMXWG',</span><br><span class="line">  suffix: null &#125;</span><br></pre></td></tr></table></figure>
+<p>具体使用方法可以参考<code>wallet.js</code>中的<code>fetchAssetMetadata()</code>函数。</p>
+<h4 id="从Hub获取交易历史（light-get-history）"><a href="#从Hub获取交易历史（light-get-history）" class="headerlink" title="从Hub获取交易历史（light/get_history）"></a>从Hub获取交易历史（light/get_history）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/get_asset_metadata',</span><br><span class="line">        params: &#123;</span><br><span class="line">            witnesses: witnesses,</span><br><span class="line">            requested_joints: joints,</span><br><span class="line">            addresses: addresses</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请求特定交易或地址的历史数据，仅适用于轻节点，具体使用方法可以参考<code>network.js</code>中的<code>requestHistoryFor()</code>函数。轻钱包可以根据获取的历史数据构建证据链，从而验证交易的可靠性。</p>
+<p>对于轻钱包而言，它本身不保存所有的交易数据，而需要采用<code>requestFromLightVendor()</code>从<code>Vendor</code>处获取数据，目前<code>Vendor</code>为<code>Hub</code>节点。</p>
+<h4 id="获取连接证明（light-get-link-proofs）"><a href="#获取连接证明（light-get-link-proofs）" class="headerlink" title="获取连接证明（light/get_link_proofs）"></a>获取连接证明（light/get_link_proofs）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/get_link_proofs',</span><br><span class="line">        params: units</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获取特定交易的连接证明，仅适用于轻节点，具体使用方法可以参考<code>network.js</code>中的<code>checkThatEachChainElementIncludesThePrevious()</code>。</p>
+<h4 id="获取父单元及见证单元（light-get-parents-and-last-ball-and-witness-list-unit）"><a href="#获取父单元及见证单元（light-get-parents-and-last-ball-and-witness-list-unit）" class="headerlink" title="获取父单元及见证单元（light/get_parents_and_last_ball_and_witness_list_unit）"></a>获取父单元及见证单元（light/get_parents_and_last_ball_and_witness_list_unit）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/get_parents_and_last_ball_and_witness_list_unit',</span><br><span class="line">        params: &#123;</span><br><span class="line">            witnesses: witnesses</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>轻节点获取这些信息后，可用于构造自己的交易数据。返回的响应数据，比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123; parent_units: [ 'ovIwMvA9MMKgxiHrslJQhQGzUAIXlRs47grVdG/er3s=' ],</span><br><span class="line">  last_stable_mc_ball: 'osJhTYZv+HS5hGhH01A/3PKpyaxPRbtcxQEaUj/a/h4=',</span><br><span class="line">  last_stable_mc_ball_unit: '+9fxcmxM90mhIxvtJ3yo++tAoYofyoDmPqBQEwbEHDA=',</span><br><span class="line">  last_stable_mc_ball_mci: 2805208,</span><br><span class="line">  witness_list_unit: 'oj8yEksX9Ubq7lLc+p6F2uyHUuynugeVq4+ikT67X6E=' &#125;</span><br></pre></td></tr></table></figure>
+<p>具体使用方法可以参考<code>composer.js</code>中的<code>composeJoint()</code>函数。</p>
+<h4 id="查询用户认证信息（light-get-attestation）"><a href="#查询用户认证信息（light-get-attestation）" class="headerlink" title="查询用户认证信息（light/get_attestation）"></a>查询用户认证信息（light/get_attestation）</h4><p>请求消息为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: 'request',</span><br><span class="line">    content: &#123;</span><br><span class="line">        tag: tag,</span><br><span class="line">        command: 'hub/get_attestation',</span><br><span class="line">        params: &#123;</span><br><span class="line">        	attestor_address: attestor_address,</span><br><span class="line">        	field: field,</span><br><span class="line">        	value: value</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接收到请求后，如果Hub查询到相应的认证信息，返回认证信息所在的交易单元。</p>
+<h4 id="发送版本信息（version）"><a href="#发送版本信息（version）" class="headerlink" title="发送版本信息（version）"></a>发送版本信息（version）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'version'</span>,</span><br><span class="line">        body: &#123;</span><br><span class="line">            protocol_version: protocol_version,</span><br><span class="line">            alt: alt,</span><br><span class="line">            library: name,</span><br><span class="line">            library_version: version,</span><br><span class="line">            program: program,</span><br><span class="line">            program_version: program_version</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体用法可以参考<code>network.js</code>中的<code>sendVersion()</code>函数。</p>
+<h4 id="已发送完所有交易（free-joints-end）"><a href="#已发送完所有交易（free-joints-end）" class="headerlink" title="已发送完所有交易（free_joints_end）"></a>已发送完所有交易（free_joints_end）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'free_joints_end'</span>,</span><br><span class="line">        body: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用于通知对方所有的叶子交易已发送完毕，具体用法可参考<code>network.js</code>中的<code>sendFreeJoints()</code>及<code>sendJointsSinceMci()</code></p>
+<h4 id="发送隐私交易（private-payment）"><a href="#发送隐私交易（private-payment）" class="headerlink" title="发送隐私交易（private_payment）"></a>发送隐私交易（private_payment）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'private_payment'</span>,</span><br><span class="line">        body: privateElement</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用来向对方发送隐私交易的证据链，但该条<code>justsaying</code>消息并没有使用。实际上隐私资产是在两个设备之间通过加密消息进行点对点发送的，相关代码位于<code>wallet_general.js</code>的<code>sendPrivatePayments()</code>中，发送加密消息采用的是<code>device.js</code>中的<code>sendMessageToDevice()</code>（底层使用的是<code>hub/deliver</code>接口）。</p>
+<h4 id="登录Hub（hub-login）"><a href="#登录Hub（hub-login）" class="headerlink" title="登录Hub（hub/login）"></a>登录Hub（hub/login）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'hub/login'</span>,</span><br><span class="line">        body: &#123;</span><br><span class="line">            challenge: challenge,</span><br><span class="line">            pubkey: pubkey,</span><br><span class="line">			signature: signature</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该消息用于设备登录Hub。</p>
+<h4 id="获取设备新消息（hub-refresh）"><a href="#获取设备新消息（hub-refresh）" class="headerlink" title="获取设备新消息（hub/refresh）"></a>获取设备新消息（hub/refresh）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'hub/refresh'</span>,</span><br><span class="line">        body: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用于从Hub上获取该设备还未接收的消息。</p>
+<h4 id="发送配对消息（hub-challenge）"><a href="#发送配对消息（hub-challenge）" class="headerlink" title="发送配对消息（hub/challenge）"></a>发送配对消息（hub/challenge）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'hub/challenge'</span>,</span><br><span class="line">        body: challenge</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由Hub发送给设备，用于设备登录。</p>
+<h4 id="发送设备消息（hub-message）"><a href="#发送设备消息（hub-message）" class="headerlink" title="发送设备消息（hub/message）"></a>发送设备消息（hub/message）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'hub/message'</span>,</span><br><span class="line">        body: &#123;</span><br><span class="line">            message_hash: message_hash,</span><br><span class="line">            message: message</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由Hub转发给设备的消息，可配合<code>hub/deliver</code>使用，具体用法可参考<code>sendStoredDeviceMessages()</code>。</p>
+<h4 id="轻钱包交易更新消息（light-have-updates）"><a href="#轻钱包交易更新消息（light-have-updates）" class="headerlink" title="轻钱包交易更新消息（light/have_updates）"></a>轻钱包交易更新消息（light/have_updates）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'light/have_updates'</span>,</span><br><span class="line">        body: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当轻钱包使用<code>light/get_history</code>从Hub上请求交易历史时，Hub会在<code>watched_light_addresses</code>中记录下请求的地址列表或者<code>watched_light_units</code>中记录下请求的交易列表。当相关的交易达到稳定时，Hub将通过<code>light/have_updates</code>消息通知轻钱包。然后，轻钱包可以通过<code>light/get_history</code>确定已达到稳定的交易单元。</p>
+<h4 id="添加轻钱包监视地址（light-new-address-to-watch）"><a href="#添加轻钱包监视地址（light-new-address-to-watch）" class="headerlink" title="添加轻钱包监视地址（light/new_address_to_watch）"></a>添加轻钱包监视地址（light/new_address_to_watch）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'light/new_address_to_watch'</span>,</span><br><span class="line">        body: address</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>轻钱包向Hub请求将地址加入<code>watch_light_addresses</code>表中，从而可以从Hub接收相应地址的交易信息，具体用法可参考<code>network.js</code>中的<code>addLightWatchedAddress()</code>函数。</p>
+<h4 id="交易价格消息（exchange-rates）"><a href="#交易价格消息（exchange-rates）" class="headerlink" title="交易价格消息（exchange_rates）"></a>交易价格消息（exchange_rates）</h4><p>消息格式为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    type: <span class="string">'justsaying'</span>,</span><br><span class="line">    content: &#123;</span><br><span class="line">        subject: <span class="string">'exchange_rates'</span>,</span><br><span class="line">        body: exchangeRates</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由Hub广播的交易价格消息，比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ 'justsaying',</span><br><span class="line">  &#123; subject: 'exchange_rates',</span><br><span class="line">    body: &#123; GBYTE_USD: 119.1914071839, GBB_USD: 3.6949336227009 &#125; &#125; ]</span><br></pre></td></tr></table></figure>
+<h3 id="通信接口列表"><a href="#通信接口列表" class="headerlink" title="通信接口列表"></a>通信接口列表</h3><table>
+<thead>
+<tr>
+<th>type</th>
+<th>content</th>
+<th>function</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>request</td>
+<td>{tag: tag, command: command, params: params}</td>
+<td>sendRequest()</td>
+<td>通用发送请求</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘get_peers’}</td>
+<td>requestPeers()</td>
+<td>请求节点列表</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘get_witnesses’}</td>
+<td>initWitenessesIfNecessary()</td>
+<td>请求见证人列表</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘get_joint’, params: unit}</td>
+<td>requestJoints()</td>
+<td>请求交易信息</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘post_joint’, params: joint}</td>
+<td>postJointToLightVendor()</td>
+<td>发送交易信息</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘heartbeat’}</td>
+<td>heartbeat()</td>
+<td>心跳请求</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘subscribe’, params: {subscription_id, last_mci}}</td>
+<td>subscribe()</td>
+<td>订阅交易</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘catchup’, params: {witnesses, last_stable_mci, last_known_mci}}</td>
+<td>requestCatchup()</td>
+<td>同步数据</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘get_hash_tree’, params: {from_ball,to_ball}}</td>
+<td>requestNextHashTree()</td>
+<td>请求哈希树</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘get_last_mci’}</td>
+<td></td>
+<td>获取主链序号</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘hub/deliver’, params: {encrypted_package, to, pubkey, signature}}</td>
+<td></td>
+<td>通过Hub向设备发送消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘hub/get_temp_pubkey’, params: pubkey}</td>
+<td></td>
+<td>从Hub获取配对设备临时公钥</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘hub/temp_pubkey’, params: {temp_pubkey, pubkey, signature}}</td>
+<td></td>
+<td>设备向Hub更新临时公钥</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘hub/enable_notification’}</td>
+<td></td>
+<td>开启通知</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘hub/disable_notification’}</td>
+<td></td>
+<td>关闭通知</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘hub/get_bots’}</td>
+<td></td>
+<td>获取机器人列表</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘hub/get_asset_metadata’, params: asset}</td>
+<td>fetchAssetMetadata()</td>
+<td>获取资产元数据</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘light/get_history’, params: {witnesses, requested_joints, addresses}}</td>
+<td>requestHistoryFor()</td>
+<td>从Hub获取交易历史</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘light/get_link_proofs’, params: units</td>
+<td></td>
+<td>获取连接证明</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘light/get_parents_and_last_ball_and_witness_list_unit’, params: {witnesses}}</td>
+<td>composeJoint()</td>
+<td>获取父单元及见证单元</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, command: ‘light/get_attestation’, params: { attestor_address, field, value}}</td>
+<td></td>
+<td>查询用户认证信息</td>
+</tr>
+<tr>
+<td>response</td>
+<td>{tag: tag, response: response}</td>
+<td>sendResponse()</td>
+<td>通用发送响应</td>
+</tr>
+<tr>
+<td></td>
+<td>{tag: tag, response: {error: error}}</td>
+<td>sendErrorResponse()</td>
+<td>发送响应错误</td>
+</tr>
+<tr>
+<td>justsaying</td>
+<td>{subject: subject, body: body}</td>
+<td>sendJustsaying()</td>
+<td>发送其它消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘error’, body: error}</td>
+<td>sendError()</td>
+<td>发送错误消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘info’, body: content}</td>
+<td>sendInfo()</td>
+<td>发送通知消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘result’, body: content}</td>
+<td>sendResult()</td>
+<td>发送结果消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘result’, body: {unit, result: ‘error’, error}}</td>
+<td>sendErrorResult()</td>
+<td>发送错误结果</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘version’, body: {protocol_version, alt, library, library_version, program, program_version}}</td>
+<td>sendVersion()</td>
+<td>发送版本信息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘new_version’, body: {version}}</td>
+<td></td>
+<td>发现新版本</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘ hub/push_project_number’, body: { projectNumber}}</td>
+<td></td>
+<td>推送API编号</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘bugreport’, body: {message, exception}}</td>
+<td></td>
+<td>报告bug</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘free_joints_end’, body: null}</td>
+<td>sendFreeJoints()</td>
+<td>已发送完所有交易</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘private_payment’, body: privateElements}</td>
+<td></td>
+<td>发送隐私交易</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘my_url’, body: url}</td>
+<td></td>
+<td>发送连接地址</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘want_echo’, body: echo_string}</td>
+<td></td>
+<td>请求对方回应</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘your_echo’, body: echo_string}</td>
+<td></td>
+<td>发送回应信息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘hub/login’, body: {challenge, pubkey, signature}}</td>
+<td></td>
+<td>登录Hub</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘hub/refresh’, body: null}</td>
+<td></td>
+<td>获取设备新消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘hub/delete’, body: message_hash}</td>
+<td></td>
+<td>删除设备消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘hub/challenge’, body: challenge}</td>
+<td></td>
+<td>发送配对消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘hub/message’, body: {message_hash, message}}</td>
+<td>sendStoredDeviceMessages()</td>
+<td>发送设备消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘hub/message_box_status’, body: ‘has_more’/‘empty’}</td>
+<td>sendStoredDeviceMessages()</td>
+<td>设备消息状态</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘light/have_updates’, body: null}</td>
+<td></td>
+<td>轻钱包交易更新消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘light/new_address_to_watch’, body: address}</td>
+<td>addLightWatchedAddress()</td>
+<td>添加轻钱包监视地址</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘exchange_rates’, body: exchangeRates}</td>
+<td></td>
+<td>交易价格消息</td>
+</tr>
+<tr>
+<td></td>
+<td>{subject: ‘upgrade_required’, body: null}</td>
+<td></td>
+<td>强制升级消息</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/05/13/byteball-flaws/" itemprop="url">
                   Byteball目前存在的一些问题及改进方向
                 </a>
@@ -1830,149 +2392,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/16/spark-csv/" itemprop="url">
-                  Spark读取csv文件方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-16T21:13:00+08:00" content="2017-03-16">
-              2017-03-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/写点程序/" itemprop="url" rel="index">
-                    <span itemprop="name">写点程序</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/16/spark-csv/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/16/spark-csv/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/03/16/spark-csv/" class="leancloud_visitors" data-flag-title="Spark读取csv文件方法">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>直接采用split的方法是不太好的，比如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sc.textFile(<span class="string">'file.csv'</span>)</span><br><span class="line">    .map(<span class="keyword">lambda</span> line: (line.split(<span class="string">','</span>)[<span class="number">0</span>], line.split(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">    .collect()</span><br></pre></td></tr></table></figure>
-<p>这种方法容易出错，且读取的值无法自动识别类型。</p>
-<p>可以稍微改进一下，比如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line">rdd = sc.textFile(<span class="string">"file.csv"</span>)</span><br><span class="line">rdd = rdd.mapPartitions(<span class="keyword">lambda</span> x: csv.reader(x))</span><br></pre></td></tr></table></figure>
-<p>或者，先将数据用pandas读入，然后再转化为DataFrame</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkContext</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SQLContext</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">sc = SparkContext(<span class="string">'local'</span>,<span class="string">'example'</span>)  <span class="comment"># if using locally</span></span><br><span class="line">sql_sc = SQLContext(sc)</span><br><span class="line"></span><br><span class="line">Spark_Full = sc.emptyRDD()</span><br><span class="line">chunk_100k = pd.read_csv(<span class="string">"Your_Data_File.csv"</span>, chunksize=<span class="number">100000</span>)</span><br><span class="line"><span class="comment"># if you have headers in your csv file:</span></span><br><span class="line">headers = list(pd.read_csv(<span class="string">"Your_Data_File.csv"</span>, nrows=<span class="number">0</span>).columns)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunky <span class="keyword">in</span> chunk_100k:</span><br><span class="line">    Spark_Full +=  sc.parallelize(chunky.values.tolist())</span><br><span class="line"></span><br><span class="line">YourSparkDataFrame = Spark_Full.toDF(headers)</span><br><span class="line"><span class="comment"># if you do not have headers, leave empty instead:</span></span><br><span class="line"><span class="comment"># YourSparkDataFrame = Spark_Full.toDF()</span></span><br><span class="line">YourSparkDataFrame.show()</span><br></pre></td></tr></table></figure>
-<p>其实，Spark 2.0之后可以很方便使用SQLContext的读取csv文件，读取得到的格式为DataFrame：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark <span class="keyword">import</span> SparkContext</span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SQLContext</span><br><span class="line">sc = SparkContext()</span><br><span class="line">sqlctx = SQLContext(sc)</span><br><span class="line">sqlctx.read.csv(</span><br><span class="line">    <span class="string">"some_input_file.csv"</span>, header=<span class="keyword">True</span>, mode=<span class="string">"DROPMALFORMED"</span>, schema=schema</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(sqlctx.read</span><br><span class="line">    .schema(schema)</span><br><span class="line">    .option(<span class="string">"header"</span>, <span class="string">"true"</span>)</span><br><span class="line">    .option(<span class="string">"mode"</span>, <span class="string">"DROPMALFORMED"</span>)</span><br><span class="line">    .csv(<span class="string">"some_input_file.csv"</span>))</span><br></pre></td></tr></table></figure>
-<p>如果已知schema，则可以直接指定，防止自动推测发生错误</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> StructType, StructField</span><br><span class="line"><span class="keyword">from</span> pyspark.sql.types <span class="keyword">import</span> DoubleType, IntegerType, StringType</span><br><span class="line"></span><br><span class="line">schema = StructType([</span><br><span class="line">    StructField(<span class="string">"A"</span>, IntegerType()),</span><br><span class="line">    StructField(<span class="string">"B"</span>, DoubleType()),</span><br><span class="line">    StructField(<span class="string">"C"</span>, StringType())</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-<p>如果是Spark1.x，那么可以采用Databricks推出的<a href="https://github.com/databricks/spark-csv" target="_blank" rel="noopener">spark-csv</a>，其实这就是2.0版本以后读取csv的代码。</p>
-<p>另外，github上还有另一个非官方版本的<a href="https://github.com/seahboonsiew/pyspark-csv" target="_blank" rel="noopener">spark-csv</a>。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2018,7 +2437,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
