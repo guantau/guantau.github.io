@@ -4,6 +4,52 @@
   
     
     <entry>
+      <title><![CDATA[ByteBall钱包详解]]></title>
+      <url>http://blog.guantau.com/2018/06/15/byteball-wallet/</url>
+      <content type="html"><![CDATA[<h1 id="ByteBall钱包详解"><a href="#ByteBall钱包详解" class="headerlink" title="ByteBall钱包详解"></a>ByteBall钱包详解</h1><h2 id="钱包结构"><a href="#钱包结构" class="headerlink" title="钱包结构"></a>钱包结构</h2><p>顾名思义，钱包是用来保存钱的。但在数字货币的世界中，钱包里面并没有“钱”。钱包账户里有多少“钱”都是记录在区块链上的，钱包里只是存储了账户对应的<strong>私钥</strong>，账户是从私钥相应的公钥衍生出来的。只要有了私钥，你就可以在数字货币世界里证明你的身份，发送区块链上属于你的资产。因此，<strong>钱包实际上是管理和存储私钥的工具</strong>。</p>
+<p>ByteBall钱包结构与Bitcoin类似，Bitcoin对管理和存储私钥以及通过私钥生成地址制定了一系列标准（BIP, Bitcoin Improvement Proposals），主要包括：</p>
+<ul>
+<li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="noopener">BIP32</a>：定义了HD钱包（Hierarchical Deterministic Wallet），允许从单一种子产生一树状结构储存多组私钥和公钥，可以方便的备份、转移以及分层权限控制等。HD钱包包含以树状结构衍生的密钥，使得父密钥可以衍生一系列子密钥，每个子密钥又可以衍生出一系列孙密钥，以此类推，无限衍生。下图展示了HD钱包的树状结构：</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-06-17-082216.png" alt="bip33-hd-wallet"></p>
+</li>
+<li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki" target="_blank" rel="noopener">BIP39</a>：将种子用方便记忆和书写的单词表示，一般由12个单词组成，称为助记词或助记码。由一系列单词生成种子是个标准化的方法，这样易于在钱包中转移、导出和导入。比如<code>shrimp make call path pink draw gym song select brother social base</code>，其相应的私钥为<code>xprv9s21ZrQH143K4HQ8sBPNNkXHNuVYfivR96gtpJzMWCJVF5hdYjzT5nVQu6GfHAQLPstQtFp9GTWADUcKgzaV5EyL5JxT2rxkyg51ReGTVg8</code>。</p>
+</li>
+<li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0043.mediawiki" target="_blank" rel="noopener">BIP43</a>：为HD钱包路径引入<code>purpose</code>字段，路径记作<code>m / purpose&#39; / *</code>，比如<code>m / 0&#39; / *</code>表示BIP32的默认账户。</p>
+</li>
+<li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki" target="_blank" rel="noopener">BIP44</a>：定义HD钱包路径字段，赋予树状结构中的各层特殊的意义，从而支持多币种、多账户，路径定义为：</p>
+<p><code>m / purpose&#39; / coin_type&#39; / account&#39; / change / address_index</code></p>
+<p>其中，<code>purpose&#39;</code>固定是<code>44&#39;</code>，代表使用BIP44；<code>coin_type&#39;</code>用来表示不同币种，例如Bitcoin就是<code>0&#39;</code>，Bitcoin Testnet是<code>1&#39;</code>，Ethereum是<code>60&#39;</code>；<code>account&#39;</code>表示账户编码；<code>change</code>用来表示该地址是否为找零地址；<code>address_index</code>为地址编号。</p>
+</li>
+<li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0045.mediawiki" target="_blank" rel="noopener">BIP45</a>：定义多签名HD钱包路径字段，从而支持多签名地址，路径定义为：</p>
+<p><code>m / purpose&#39; / cosigner_index / change / address_index</code></p>
+<p>其中，<code>purpose</code>固定是<code>45&#39;</code>，代表使用BIP45；<code>cosigner_index</code>表示多签名用户编号；其余字段与BIP44相同。</p>
+</li>
+</ul>
+<p>ByteBall钱包采用的是符合BIP44标准的HD钱包，其采用的路径结构为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m / 44&apos; / 0&apos; / account&apos; / change / address_index</span><br></pre></td></tr></table></figure>
+<p>此外，除了使用<code>account</code>来标识账户外，还使用了该账户公钥的哈希值对账户进行唯一表示，表示方法为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> wallet = crypto.createHash(<span class="string">"sha256"</span>).update(xPubKey, <span class="string">"utf8"</span>).digest(<span class="string">"base64"</span>);</span><br></pre></td></tr></table></figure>
+<p>ByteBall中还有一类特殊的地址，即设备地址，其采用的路径结构为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m / 1&apos; / *</span><br></pre></td></tr></table></figure>
+<p>ByteBall钱包使用了<code>bitcore-lib</code>和<code>bitcore-mnemonic</code>两个库进行钱包管理，简单的使用方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Mnemonic = <span class="built_in">require</span>(<span class="string">'bitcore-mnemonic'</span>);</span><br><span class="line"><span class="keyword">var</span> Bitcore = <span class="built_in">require</span>(<span class="string">'bitcore-lib'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成助记词</span></span><br><span class="line"><span class="comment">// 'fee decorate step culture autumn game social very lemon drum embrace much'</span></span><br><span class="line"><span class="keyword">var</span> mnemonic = <span class="keyword">new</span> Mnemonic();          </span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成HD钱包私钥</span></span><br><span class="line"><span class="comment">// &lt;HDPrivateKey: xprv9s21ZrQH143K2P4n8N1MYXW4NPfPuH7K3z4uYe6iRxHHXMEUJQRriizTdMuN6rh5XLH4okZm69c7THSN7M5Lk8WSFXDd6b9DBcb6nAdxw7n&gt;</span></span><br><span class="line"><span class="keyword">var</span> xPrivKey = mnemonic.toHDPrivateKey();   </span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成HD钱包公钥，account=0</span></span><br><span class="line"><span class="comment">// &lt;HDPublicKey: xpub6BqpEDyiVUcuzwzhn3jznUooytK5k9weeZqoM9vRpKbaHJGdyXZ3uk6HzpwYfCbxUuTsn41RgTpsTqA44uC4Ce2vRAZAcr9n5EyRtZxczbs&gt;</span></span><br><span class="line"><span class="keyword">var</span> xPubKey = Bitcore.HDPublicKey(xPrivKey.derive(<span class="string">"m/44'/0'/0'"</span>)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成设备私钥，用于产生设备地址</span></span><br><span class="line"><span class="comment">// &lt;HDPrivateKey: xprv9u8BXQraRhyRypxQj4ffhEohzDyjLbqezoCuFCHpLHazDbi9ymLb1zp6aKmDpTpyxXw8Uc6HbCRSZMEtW71Eie1QPi2T3RweoKWrdymxGEf&gt;</span></span><br><span class="line"><span class="keyword">var</span> devicePrivKey = xPrivKey.derive(<span class="string">"m/1'"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="地址生成"><a href="#地址生成" class="headerlink" title="地址生成"></a>地址生成</h2><p>ByteBall中包括三类地址：</p>
+<ul>
+<li>普通地址</li>
+<li>共享地址</li>
+<li>设备地址</li>
+</ul>
+<p>其中，普通地址和共享地址都是通过地址定义脚本生成的，二者的区别类似于Bitcoin中的P2PKH地址和P2SH地址，具体细节可参考<a href="https://bbfans.org/2018/05/21/byteball%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%E5%9C%B0%E5%9D%80%E3%80%81%E8%84%9A%E6%9C%AC%E5%8F%8A%E5%90%88%E7%BA%A6/" target="_blank" rel="noopener">《ByteBall原理解析（三）地址、脚本及合约》</a>；设备地址是采用设备公钥生成的，地址格式和校验规则与普通地址相同，只是前缀添加了<code>0</code>。</p>
+<p>给定需要生成地址的对象，ByteBall生成地址时采用的是<code>ripemd160</code>哈希，并给地址加上校验，使用的是<code>byteballcore/object_hash.js</code>中的函数<code>getChash160()</code>函数。</p>
+<p>具体来说，设备地址生成方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ecdsa = <span class="built_in">require</span>(<span class="string">'secp256k1'</span>);  <span class="comment">// 椭圆曲线非对称加密</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取设备公钥</span></span><br><span class="line"><span class="keyword">var</span> pubkey = ecdsa.publicKeyCreate(devicePrivKey.privateKey.bn.toBuffer(&#123;<span class="attr">size</span>:<span class="number">32</span>&#125;), <span class="literal">true</span>).toString(<span class="string">'base64'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成设备地址</span></span><br><span class="line"><span class="keyword">var</span> objectHash = <span class="built_in">require</span>(<span class="string">'byteballcore/object_hash.js'</span>);</span><br><span class="line"><span class="keyword">var</span> device_address = <span class="string">'0'</span> + objectHash.getChash160(pubkey);</span><br></pre></td></tr></table></figure>
+<p>普通地址生成方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// change=0 address_index=0，生成公钥</span></span><br><span class="line"><span class="keyword">var</span> pubkey = xPubKey.derive(<span class="string">'m/0/0'</span>).publicKey.toBuffer().toString(<span class="string">'base64'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设定地址定义脚本，为单签名</span></span><br><span class="line"><span class="keyword">var</span> arrDefinition = [<span class="string">"sig"</span>, &#123;<span class="string">"pubkey"</span>: pubkey&#125;];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成地址</span></span><br><span class="line"><span class="keyword">var</span> address = objectHash.getChash160(arrDefinition);</span><br></pre></td></tr></table></figure>
+<p>共享地址的生成方法与普通地址基本一致，唯一的差别在于地址定义脚本要更加复杂一些，具体细节可参考前面给出的那篇文章。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[ByteBall网络节点通信协议详解]]></title>
       <url>http://blog.guantau.com/2018/06/14/byteball-network-protocol/</url>
       <content type="html"><![CDATA[<h2 id="ByteBall网络节点通信协议详解"><a href="#ByteBall网络节点通信协议详解" class="headerlink" title="ByteBall网络节点通信协议详解"></a>ByteBall网络节点通信协议详解</h2><p>P2P网络是区块链网络的基础，网络中各个节点通过相互交换消息实现各种功能，包括收发交易、数据同步等操作。本文将对ByteBall网络节点的通信接口进行详细分析。</p>

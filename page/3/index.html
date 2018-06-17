@@ -289,6 +289,147 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/21/xiaomi-mini/" itemprop="url">
+                  在小米路由器mini上实现去广告
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-21T23:31:01+08:00" content="2016-08-21">
+              2016-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/弄点工具/" itemprop="url" rel="index">
+                    <span itemprop="name">弄点工具</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/21/xiaomi-mini/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/21/xiaomi-mini/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/21/xiaomi-mini/" class="leancloud_visitors" data-flag-title="在小米路由器mini上实现去广告">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>所谓去广告，指的是去掉网页上弹出的乱七八糟的广告，还有视频网站播放前的广告。常见的几款去广告软件包括：</p>
+<ol>
+<li>ADSafe：目前支持Windows和Android，去除效果还不错。</li>
+<li>AD Muncher（奶牛）：老牌的广告去除软件，原来收费，现在已免费，仅支持Windows。</li>
+<li>bloxy（保护伞）：仅支持Windows。</li>
+<li>adbyby：目前支持平台最全的，包括Windows、Linux、Mac、Openwrt。</li>
+<li>ADMon：目前支持Windows平台。</li>
+<li>Adblock：浏览器插件，也就是只能在浏览器上使用。</li>
+</ol>
+<p>对于非插件的去广告软件来讲，其原理是用带过滤功能的开源代理服务器privoxy加上Adblock-Easylist China及Easylist的开源广告规则库来实现的，通过正则表达式和CSS进行过滤。</p>
+<p>在路由器上部署是最理想的，这样所有的设备都能共享了，这么看来只有用adbyby了。</p>
+<p>小米路由器mini开通ssh后就可以干活了，用scp把下载的adbyby传到/tmp目录下，修改配置文件adhook.ini中扩展规则为 <a href="https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" target="_blank" rel="noopener">https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt</a> 即可。</p>
+<p>广告无踪影，生活顿时又美好了一点点！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/21/zotero-tips/" itemprop="url">
                   zotero的一些使用经验
                 </a>
@@ -1532,7 +1673,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
