@@ -289,6 +289,160 @@
             
               
                 
+                <a class="post-title-link" href="/2018/06/26/byteball-wallet2/" itemprop="url">
+                  再论ByteBall钱包
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-06-26T12:42:55+08:00" content="2018-06-26">
+              2018-06-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/谈点区块链/" itemprop="url" rel="index">
+                    <span itemprop="name">谈点区块链</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/06/26/byteball-wallet2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/26/byteball-wallet2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/06/26/byteball-wallet2/" class="leancloud_visitors" data-flag-title="再论ByteBall钱包">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ByteBall的钱包类型分为两种：</p>
+<ol>
+<li>单设备钱包：该类型钱包仅由单一设备控制，它与特定设备地址是绑定的，钱包中的地址为单签名地址；</li>
+<li>多设备钱包：该类型钱包由多个设备共同控制，它与若干个设备地址绑定，钱包中的地址为多签名地址。</li>
+</ol>
+<p>在之前的文章<a href="https://bbfans.org/2018/06/17/byteball%E9%92%B1%E5%8C%85%E8%AF%A6%E8%A7%A3/" target="_blank" rel="noopener">《ByteBall钱包详解》</a>中，我们提到，ByteBall的地址分为三种：</p>
+<ol>
+<li>普通地址：地址定义中不包含其它地址，采用BASE32编码，长度为32，比如<code>A2WWHN7755YZVMXCBLMFWRSLKSZJN3FU</code>；</li>
+<li>共享地址：地址定义中包含了其它地址，地址格式与普通地址相同，通常用作智能合约地址；</li>
+<li>设备地址：生成方法及地址格式类似普通地址，但在设备地址在头部添加了一个0，长度为33，比如<code>05FV4WNIEU4OHIAIF7XEIRC2QRRLFPAC3</code>。</li>
+</ol>
+<p>因此，ByteBall的钱包与地址可以总结为下面这张图：</p>
+<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-06-25-144238.png" alt="byteball-wallet"></p>
+<p>其中：设备具有唯一的设备地址；普通地址包括单签名地址和多签名地址，单设备钱包生成单签名地址，多设备钱包生成多签名地址；多个普通地址可以共同构成共享地址。</p>
+<h2 id="单签名地址"><a href="#单签名地址" class="headerlink" title="单签名地址"></a>单签名地址</h2><p>单设备钱包由单一设备生成，假设设备地址为<code>DEVICE_ADDRESS</code>，单设备钱包中单签名地址定义的模板为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">["sig", &#123;pubkey: '$pubkey@DEVICE_ADDRESS'&#125;]</span><br></pre></td></tr></table></figure>
+<p>具体在生成地址时，<code>$pubkey@DEVICE_ADDRESS</code>会替换成相应的公钥。</p>
+<h2 id="多签名地址"><a href="#多签名地址" class="headerlink" title="多签名地址"></a>多签名地址</h2><p>多设备钱包由多个设备共同控制。假设3个设备的地址分别为<code>DEVICE_A_ADDRESS</code>、<code>DEVICE_B_ADDRESS</code>以及<code>DEVICE_C_ADDRESS</code>。我们需要生成一个<code>2-3</code>的多设备钱包，即3个设备中至少需要2个设备签名才可以生效，则相应的多设备钱包中多签名地址定义的模板为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"r of set"</span>, &#123;</span><br><span class="line">    required: 2,</span><br><span class="line">    set: [</span><br><span class="line">        ["sig", &#123;pubkey: '$pubkey@DEVICE_A_ADDRESS'&#125;],</span><br><span class="line">        ["sig", &#123;pubkey: '$pubkey@DEVICE_B_ADDRESS'&#125;],</span><br><span class="line">        ["sig", &#123;pubkey: '$pubkey@DEVICE_C_ADDRESS'&#125;],</span><br><span class="line">    ]</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>在创建多设备钱包时，设备之间会通过加密消息相互交换<code>xPubKey</code>。这样，不同的设备可以依据相同的地址路径生成相同的地址。</p>
+<h2 id="共享地址"><a href="#共享地址" class="headerlink" title="共享地址"></a>共享地址</h2><p>共享地址本质上可以认为是智能合约的地址，例如<code>flight delay insurance</code>的地址定义（或者智能合约）示例为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"or"</span>,[</span><br><span class="line">    [<span class="string">"and"</span>,[</span><br><span class="line">       [<span class="string">"seen"</span>,&#123;<span class="attr">"what"</span>:<span class="string">"output"</span>,<span class="attr">"address"</span>:<span class="string">"this address"</span>,<span class="attr">"asset"</span>:<span class="string">"base"</span>,<span class="attr">"amount"</span>:<span class="number">22664</span>&#125;],</span><br><span class="line">       [<span class="string">"or"</span>,[</span><br><span class="line">           [<span class="string">"and"</span>,[</span><br><span class="line">               [<span class="string">"address"</span>,<span class="string">"TTD2AVY4W2VH62NJXIP7R67XBHWZRQRJ"</span>],</span><br><span class="line">               [<span class="string">"in data feed"</span>,[[<span class="string">"GFK3RDAPQLLNCMQEVGGD2KCPZTLSG3HN"</span>],<span class="string">"MU5152-2018-06-18"</span>,<span class="string">"&gt;"</span>,<span class="string">"60"</span>,<span class="number">2810590</span>]]]],</span><br><span class="line">           [<span class="string">"and"</span>,[</span><br><span class="line">               [<span class="string">"address"</span>,<span class="string">"4JZOKE43GALLZA4P63NXT7NYAJLSMNYZ"</span>],</span><br><span class="line">               [<span class="string">"in data feed"</span>,[[<span class="string">"I2ADHGP4HL6J37NQAD73J7E5SKFIXJOT"</span>],<span class="string">"timestamp"</span>,<span class="string">"&gt;"</span>,<span class="number">1529442000000</span>]]]],</span><br><span class="line">           [<span class="string">"and"</span>,[</span><br><span class="line">               [<span class="string">"address"</span>,<span class="string">"4JZOKE43GALLZA4P63NXT7NYAJLSMNYZ"</span>],</span><br><span class="line">               [<span class="string">"in data feed"</span>,[[<span class="string">"GFK3RDAPQLLNCMQEVGGD2KCPZTLSG3HN"</span>],<span class="string">"MU5152-2018-06-18"</span>,<span class="string">"&lt;="</span>,<span class="string">"60"</span>,<span class="number">2810590</span>]]]]]]]],</span><br><span class="line">    [<span class="string">"and"</span>,[</span><br><span class="line">        [<span class="string">"address"</span>,<span class="string">"4JZOKE43GALLZA4P63NXT7NYAJLSMNYZ"</span>],</span><br><span class="line">        [<span class="string">"not"</span>,[<span class="string">"seen"</span>,&#123;<span class="attr">"what"</span>:<span class="string">"output"</span>,<span class="attr">"address"</span>:<span class="string">"this address"</span>,<span class="attr">"asset"</span>:<span class="string">"base"</span>,<span class="attr">"amount"</span>:<span class="number">22664</span>&#125;]],</span><br><span class="line">        [<span class="string">"in data feed"</span>,[[<span class="string">"I2ADHGP4HL6J37NQAD73J7E5SKFIXJOT"</span>],<span class="string">"timestamp"</span>,<span class="string">"&gt;"</span>,<span class="number">1529034037936</span>]]]]]</span><br></pre></td></tr></table></figure>
+<p>上述地址定义中共涉及到两个地址<code>TTD2AVY4W2VH62NJXIP7R67XBHWZRQRJ</code>及<code>4JZOKE43GALLZA4P63NXT7NYAJLSMNYZ</code>，它是这两个地址的共享地址。</p>
+<p>通过上述地址定义，可以得到该共享地址为<code>WDCIIWRDHSNNE2DQZ7YVU53USELZBLGV</code>。其中，地址的签名路径包括：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    r.0.1.0.0: "TTD2AVY4W2VH62NJXIP7R67XBHWZRQRJ",</span><br><span class="line">    r.0.1.1.0: "4JZOKE43GALLZA4P63NXT7NYAJLSMNYZ"</span><br><span class="line">    r.0.1.2.0: "4JZOKE43GALLZA4P63NXT7NYAJLSMNYZ"</span><br><span class="line">    r.1.0: "4JZOKE43GALLZA4P63NXT7NYAJLSMNYZ"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只有满足合约中相应的条件，且具有相应路径的签名，才可以对共享地址中的资产进行操作。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/06/15/byteball-wallet/" itemprop="url">
                   ByteBall钱包详解
                 </a>
@@ -2204,169 +2358,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/10/learn-from-linux/" itemprop="url">
-                  我从linux上学习到了什么
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-08-10T12:15:55+08:00" content="2017-08-10">
-              2017-08-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/聊点感想/" itemprop="url" rel="index">
-                    <span itemprop="name">聊点感想</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/08/10/learn-from-linux/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/10/learn-from-linux/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/08/10/learn-from-linux/" class="leancloud_visitors" data-flag-title="我从linux上学习到了什么">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>如果把Linux、Windows、MacOS比作三种类型的姑娘的话：MacOS就是女神，漂亮昂贵；Windows就是普通姑娘，朴实耐用；Linux则是女汉子，结实能干。<br>谨以此文纪念过往十年纠缠在Linux上的那些时间。</p>
-</blockquote>
-<h2 id="我是怎么上路的"><a href="#我是怎么上路的" class="headerlink" title="我是怎么上路的"></a>我是怎么上路的</h2><p>作为一个上大学以前从未接触过电脑，上C语言程序设计课程时用VC6.0写个几十行程序都哆哆嗦嗦的土包子，我想我本没有机会碰到这个东西的。直到有一天去实验室参加项目，老师和师兄们说你得先学习Linux。于是乎，我便揣着安装盘、捧着入门书开始学习Linux。彼时，请高手帮忙才能装上Red Hat。只记得初见到那黑乎乎的界面和一串串的字符命令，顿时有种秒变黑客的感觉。</p>
-<p>接着，我修了一门《Linux程序设计》课程，系统性的学习了Linux的发展历史和程序设计的相关知识。这时，我才知道Unix、GNU、Linux的那些故事，知道除了Windows还有其他系统可以让计算机工作起来，知道操作系统史上那些鼎鼎大名的人物。与此同时，我还接触到了Knuth和TeX，知道除了Office以外还有这样一个东西可以让文章排版得这么漂亮，而且还免费，历史还那么悠长，当然TeX又是另外的故事了。</p>
-<p>然后，在网上看到了王垠写的《完全用GNU/Linux工作》，文中鲜明尖锐甚至有些极端的观点煽动性十足，简直像是能量满满的鸡血。他主页上晒出的各种狂拽酷炫叼炸天的奇淫巧计简直像是毒品一样，让人欲罢不能地一一尝试。当时的自己觉得仿佛找到了一条通往牛B闪闪的道路，好像可以成为一只特立独行的猪。</p>
-<p>再然后，我就开始一遍遍的被虐：不断地重装系统、配置中文、配置界面；不断地处理各种莫名其妙出现的错误；不断地解决各种依赖关系、编译调试；不断地奔走各个论坛和博客中求救。</p>
-<p>虽然我并没有因此变得牛逼或富有，但在这一路上，我发现我还是有所收获的。</p>
-<h2 id="从GUI到CLI"><a href="#从GUI到CLI" class="headerlink" title="从GUI到CLI"></a>从GUI到CLI</h2><p>CLI是与计算机交互的更本质的方式；而GUI则更像是将面向用户的再次包装。</p>
-<p>从GUI到CLI：</p>
-<ul>
-<li>可以提升效率，大部分情况下，相比于只利用了两个手指头的鼠标，十个手指头的敲击效率要高很多。</li>
-<li>可以有更大的操作空间，大部分情况下，相比于只能按照固定流程执行的GUI，CLI能够更加灵活地进行操作。</li>
-</ul>
-<h2 id="从代码到程序"><a href="#从代码到程序" class="headerlink" title="从代码到程序"></a>从代码到程序</h2><p>通过一遍遍的折腾，代码是怎么通过编译、链接进而生成可执行程序的过程是烂熟于心，这其中可能碰到的各种稀奇古怪的问题也几乎都见过。虽然没有什么高深的技术，但也让我在工作中碰到类似的情况时可以很轻松的面对。</p>
-<h2 id="Unix哲学"><a href="#Unix哲学" class="headerlink" title="Unix哲学"></a>Unix哲学</h2><p>Linux与Unix一脉相承，其哲学也得到了很好地继承。因此，虽然入门门槛高，但跨过以后，很多事情就变得一致起来。</p>
-<p>三条主要的哲学思想：</p>
-<ol>
-<li>程序应该只关注一个目标，并尽可能把它做好。</li>
-<li>让程序能够互相协同工作。</li>
-<li>应该让程序处理文本数据流，因为这是一个通用的接口。</li>
-</ol>
-<p>核心就是KISS原则：Keep It Simple, Stupid! 基础就是只有做好一件事情，你才能做更多地事情。</p>
-<p>不仅是系统设计，生活亦是如此。</p>
-<h2 id="自由是有代价的"><a href="#自由是有代价的" class="headerlink" title="自由是有代价的"></a>自由是有代价的</h2><p>自由是需要付出代价的，至少需要时间成本。当你需要某种工具时，Linux可能给你提供一堆自由软件，但你需要时间去折腾它，甚至去改造它。</p>
-<p>当系统将程序切分得很细时，虽然组合起来自由度很高，但同时也会带来依赖性的问题。程序A依赖于程序B，程序B又依赖于程序C，程序C又依赖于程序D，只要其中一环出了问题，程序就无法正常工作。</p>
-<p>需要思考的是，如何处理好其中的平衡。</p>
-<h2 id="创造与分享"><a href="#创造与分享" class="headerlink" title="创造与分享"></a>创造与分享</h2><p>工具就是工具，不管你用得再好，创造出有用的东西才是最重要的。那些载入史册的人物，是因为创造了优秀的东西才名流千古的，比如Dennis Ritchie、Ken Thompson、Richard Stallman、Linus Torvalds、Donald Knuth等等。</p>
-<p>当有一样东西你需要而又没有，或者有但不好用的时候，你就需要创造。虽然从学习到创造并不是那么容易，需要一定天赋和训练，但我们要朝着这个方向努力。</p>
-<p>创造出的东西只有分享才能发挥更大的作用，不管是在集市上还是教堂里，分享给其他人才能使其变得更好。开放自己与他人沟通的渠道，并尝试主动发出信号，而不仅仅是被动接收。分享的范围越大，可能带来的增益也会越大。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2407,7 +2403,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
