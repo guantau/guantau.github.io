@@ -289,6 +289,153 @@
             
               
                 
+                <a class="post-title-link" href="/2018/08/08/byteball-private-communication/" itemprop="url">
+                  ByteBall加密通信原理解析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-08-08T17:30:55+08:00" content="2018-08-08">
+              2018-08-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/谈点区块链/" itemprop="url" rel="index">
+                    <span itemprop="name">谈点区块链</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/08/08/byteball-private-communication/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/08/08/byteball-private-communication/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/08/byteball-private-communication/" class="leancloud_visitors" data-flag-title="ByteBall加密通信原理解析">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ByteBall网络中提供了端到端的加密通道，可以实现用户设备之间的加密通信，从而用于发送加密文本消息、发送隐私资产、进行多签名交易、签订智能合约、提供机器人服务等。下面我们将对ByteBall中加密通信实现的基本思路和主要过程进行解析。</p>
+<h2 id="加密通信基本思路"><a href="#加密通信基本思路" class="headerlink" title="加密通信基本思路"></a>加密通信基本思路</h2><p>从功能的角度来看，加密通道采用存储-转发的方式来实现，这个任务由Hub来完成。消息发送方将加密消息发送到Hub，Hub再将消息转发给接收方。网络中可以存在多个Hub，用户设备可以选择自己信任的Hub进行连接。从这个角度看，Hub在设备加密通信中扮演的角色类似于邮件服务器。用户设备使用其设备地址在Hub上进行注册，生成类似邮件地址进行通信，比如<code>device_pubkey@hub.domainname.com</code>。<code>device_pubkey</code>是由设备地址的公钥，当用户设备在不同的Hub之间切换时，<code>device_pubkey</code>保持不变。有一点需要注意的是，Hub之间不会进行消息中继，用户设备只有连接到相同Hub上才可以进行通信。</p>
+<p>从安全的角度来看，用户设备与Hub之间的传输通道、用户设备与设备之间的传输内容均采用了加密。用户设备与Hub之间采用websocket保持连接，连接采用TLS加密。用户设备发送的消息内容采用ECDH+AES进行加密，并采用ECDSA进行签名验证。由于发送的消息是采用端到端加密的，Hub作为唯一的中间方也是无法查看或者修改其内容的。当消息发送成功后，Hub会删除相应的消息，且不保存任何副本。此外，为了进一步确保转发安全，用户设备还会定期更新其加密公钥（称为临时公钥）。</p>
+<h2 id="加密通信主要过程"><a href="#加密通信主要过程" class="headerlink" title="加密通信主要过程"></a>加密通信主要过程</h2><h3 id="设备登录Hub"><a href="#设备登录Hub" class="headerlink" title="设备登录Hub"></a>设备登录Hub</h3><p>当用户设备连接到Hub时，Hub会向其发送一个登录验证消息<code>hub/challenge</code>，包括一个长度为30的BASE64编码的字符串。随后，用户设备会向Hub发送登录消息<code>hub/login</code>，包括Hub发送的登录字符串、永久公钥和临时公钥。</p>
+<p>当用户设备的永久私钥、临时私钥或者连接的Hub地址发生变化时，都需要重新发起登录过程。用户设备采用<code>hub/temp_pubkey</code>每分钟向Hub更新自己的临时公钥。当设备登录Hub后<code>hub/login</code>或者刷新消息时<code>hub/refresh</code>，可以从Hub获取消息状态<code>hub/message_box_status</code>。</p>
+<h3 id="建立加密通道"><a href="#建立加密通道" class="headerlink" title="建立加密通道"></a>建立加密通道</h3><p>在发送方连接到接收方所在的Hub完成登录过程后，设备之间进行加密通信主要包括以下几个步骤：</p>
+<ol>
+<li>从Hub获取接收方的临时公钥（使用<code>hub/get_temp_pubkey</code>）；</li>
+<li>发送方生成一次性的消息加密钥匙对（包含私钥及公钥）；</li>
+<li>通过接收方临时公钥和刚生成的一次性私钥得到ECDH共享密钥；</li>
+<li>利用ECDH共享密钥对消息内容进行AES加密；</li>
+<li>发送方将加密后的消息内容、初始向量、一次性公钥打包为数据包；</li>
+<li>采用设备永久公钥对数据包进行签名；</li>
+<li>采用<code>hub/deliver</code>向Hub发送数据包。</li>
+</ol>
+<p>Hub收到发送方的数据包后，向接收方采用<code>hub/message</code>转发数据包，从而建立起发送方与接收方之间的加密通道，即发送方的消息可通过加密通道到达接收方。</p>
+<p>当接收方Hub无法连接时，发送方将待发送消息采用接收方的永久公钥加密并本地存储。当接收方Hub可以连接时，发送方将存储的加密消息再使用接收方的临时公钥进行二次加密，然后再发送给对方。这样可以保证在发送方的数据库中不存储明文消息。</p>
+<h3 id="设备配对"><a href="#设备配对" class="headerlink" title="设备配对"></a>设备配对</h3><p>在建立起设备之间的加密通道后，设备之间还需要进行配对（或者称为认证）才能正式开始通信。配对发起方需要已知对方的地址及配对字符串，格式为<code>device_pubkey@hub.domainname.com#randomstring</code>，其中<code>device_pubkey</code>为设备地址公钥、<code>hub.domainname.com</code>为Hub地址、<code>randomstring</code>为配对字符串。设备配对主要用来获取对方设备的名称、公钥、地址及所在Hub，同时对对方身份进行验证。配对的设备存储在数据表<code>correspondent_devices</code>中。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>设备之间配对完成后就可以通过加密通道进行通信，对于加密消息的处理集中在<code>byteballcore/wallet.js</code>中的<code>handleMessageFromHub</code>函数中。用户设备之间的加密通信能力赋予了ByteBall钱包极其灵活及多样的功能，是ByteBall系统设计中非常重要的一个组成部分。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/06/26/byteball-wallet2/" itemprop="url">
                   再论ByteBall钱包
                 </a>
@@ -2198,166 +2345,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/12/14/byteball1/" itemprop="url">
-                  DAG Blockchain之Byteball原理解析（一）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-12-14T21:15:55+08:00" content="2017-12-14">
-              2017-12-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/谈点区块链/" itemprop="url" rel="index">
-                    <span itemprop="name">谈点区块链</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/12/14/byteball1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/14/byteball1/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/12/14/byteball1/" class="leancloud_visitors" data-flag-title="DAG Blockchain之Byteball原理解析（一）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="DAG数学基础"><a href="#DAG数学基础" class="headerlink" title="DAG数学基础"></a>DAG数学基础</h2><p><strong>定义：</strong>在有向图$G=(V, E)$中，对于任意一个顶点$v \in V$，都不存在一条路径$p=(e_1,e_2,\dots), e_i\in E$，使得从$v$开始出发到$v$终止，则$G$称为有向无环图（DAG, Directed Acyclic Graph）</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-08-dag.png" width="300px"></p>
-<p>在图论中，相比于一般图，DAG的很多问题可以在多项式级甚至线性复杂度条件下得到求解。DAG具有以下几条数学性质：</p>
-<ul>
-<li>DAG具有拓扑顺序，即DAG的所有节点可以转换为节点序列（线性化），使得每条边的起始节点位于终止节点之前，且该过程可以在线性复杂度条件下完成；</li>
-<li>DAG中相互连通的节点可以进行排序，如果从节点$u$出发可到达节点$v$，则可称为$u\le v$；</li>
-<li>DAG具有唯一的传递闭包；</li>
-<li>DAG具有唯一的传递规约，传递规约的边数最大不超过$V-1$条，$V$是DAG的节点数；</li>
-<li>DAG中给定两个节点，其最短路径和最长路径可以在线性时间内求解。</li>
-</ul>
-<p>DAG常用来做任务的调度规划，比如Spark在做并行处理时使用DAG来任务规划，Git采用DAG来做版本管理。DAG在区块链上的应用可以参考 <a href="http://mp.weixin.qq.com/s/nSTNI9LXWh7QTPX7NTuupw" target="_blank" rel="noopener">《DAG也许是真正的区块链3.0》</a>，下面将对使用DAG作为区块链的Byteball原理进行详细的解析。</p>
-<h2 id="Byteball的区块链结构"><a href="#Byteball的区块链结构" class="headerlink" title="Byteball的区块链结构"></a>Byteball的区块链结构</h2><p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-12-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-12-12%2020.07.48.png" alt="Byteball区块链结构"></p>
-<p>Byteball区块链如上图所示，其基本组成为单元(unit)，所有单元共同构成DAG。其中，单元G为创世交易，它与所有单元连通，且是从所有单元出发到达的终点。</p>
-<blockquote>
-<p><strong>父单元与子单元：</strong>从单元A出发可直接到达单元B，即单元A到单元B的路径长度为1，则单元B称为单元A的父单元，单元A称为单元B的子单元。</p>
-<p><strong>直接包含：</strong>如果单元A为单位B的子单元，则单元A直接包含或者验证了单元B。</p>
-<p><strong>间接包含：</strong>如果从单元A出发到达单元B的路径长度大于1，则单元A间接包含或者验证了单元B。</p>
-<p><strong>顶端单元：</strong>不具有任何子单元的单元，也可称为无子单元或未经验证的单元。</p>
-<p><strong>创世单元：</strong>由创世交易构成的单元，不具有任何父单元。</p>
-</blockquote>
-<p>相比于Bitcoin中一对一的链式区块结构，Byteball中单元在发出时，可以同时包含多个父单元，因此可以容纳更多的交易并获得更快的确认。由于进入DAG的单元将被所有与其连通的单元直接或间接地验证，如果要修改该单元的内容，则需要相应地修改验证了它的所有单元。直观上来讲，将要修改的单元数量（归属于不同的用户）像滚雪球一样急速增加，从而使得修改无法实现，这也是DAG可以作为区块链的重要基础。</p>
-<p>单元的结构如下所示，其主要由三部分组成：</p>
-<ol>
-<li>单元数据：数据以<code>message</code>的形式构成；</li>
-<li>地址签名：输入所需的相应地址签名；</li>
-<li>父单元：当前单元的父单元列表。</li>
-</ol>
-<p>从中可以看出Byteball采用的交易模型是UTXO，即当前交易输出作为后续交易的输入。所有bytes是在创世交易中发出，因此Byteball本质上就是一种完全预挖的币。bytes可用于支付手续费，或在地址之间相互传输。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  version: '1.0',</span><br><span class="line">  alt: '1',</span><br><span class="line">  messages: [ &#123;</span><br><span class="line">    app: 'payment',</span><br><span class="line">    payload_location: 'inline',</span><br><span class="line">    payload_hash: 'AegecfpDzh8xvdyIABdynrcP6CTd4Pt42gvRiv0Ftjg=', </span><br><span class="line">    payload: &#123;</span><br><span class="line">      inputs: [&#123;</span><br><span class="line">        unit: '7yctnKyuAk5P+mFgFQDdDLza88nkceXYjsTs4e3doQA=', </span><br><span class="line">        message_index: 0,</span><br><span class="line">        output_index: 1</span><br><span class="line">      &#125; ],</span><br><span class="line">      outputs: [</span><br><span class="line">        &#123; address: 'DJ6LV5GPCLMGRW7ZB55IVGJRPDJPOQU6', amount: 208 &#125;,</span><br><span class="line">        &#123; address: 'Z36JFFX2AH7X5JQ2V2C6AQUUOWFESKZ2', amount: 3505 &#125;</span><br><span class="line">      ] &#125;</span><br><span class="line">  &#125; ],</span><br><span class="line">  authors: [ &#123;</span><br><span class="line">    address: 'DJ6LV5GPCLMGRW7ZB55IVGJRPDJPOQU6', </span><br><span class="line">    authentifiers: &#123;</span><br><span class="line">      r: '3eQPIFiPVLRwBwEzxUR5thqn+zlFfLXUrzAmgemAqOk35UvDpa4h79Fd6TbPbGfb8VMiJzqdNGHCKyAjl786mw=='</span><br><span class="line">    &#125; </span><br><span class="line">  &#125; ],</span><br><span class="line">  parent_units: [ </span><br><span class="line">    'B63mnJ4yNNAE+6J+L6AhQ3EY7EO1Lj7QmAM9PS8X0pg=',</span><br><span class="line">    'D6O1/D9L8vCMhv+8f70JecF93UoLKDp3e2+b92Yh2mI=',</span><br><span class="line">    'ZxqzWP6q6hDNF50Wax8HUK212lH/KSIRdW5a6T9h3DM='</span><br><span class="line">  ],</span><br><span class="line">  last_ball: '8S2ya9lULt5abF1Z4lIJ4x5zYY9MtEALCl+jPDLsnsw=', </span><br><span class="line">  last_ball_unit: 'bhdxFqVUut6V3N2D6Tyt+/YD6X0W+QnC95dMcJJWdtw=', </span><br><span class="line">  witness_list_unit: 'f252ZI2MN3xu8wFJ+LktVDGsay2Udzi/AUauE9ZaifY='</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当某个单元达到稳定之后，就可以生成球(ball)，此时它的状态（是否有效）将确定性的固定下来，球的结构如下所示：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  unit: "hash of unit",</span><br><span class="line">  parent_balls: [array of hashes of balls based on parent units], </span><br><span class="line">  is_nonserial: true, // this field included only if the unit is nonserial</span><br><span class="line">  skiplist_balls: [array of earlier balls used to build skiplist]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>单元的结构中还包括见证人列表单元，这是为了节省存储空间，表示当前单元的见证人列表与其相同。关于球、见证人我们再后续解析共识算法时会详细讨论到。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2403,7 +2390,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2420,7 +2407,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

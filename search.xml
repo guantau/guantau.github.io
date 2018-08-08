@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title><![CDATA[ByteBall加密通信原理解析]]></title>
+      <url>http://blog.guantau.com/2018/08/08/byteball-private-communication/</url>
+      <content type="html"><![CDATA[<p>ByteBall网络中提供了端到端的加密通道，可以实现用户设备之间的加密通信，从而用于发送加密文本消息、发送隐私资产、进行多签名交易、签订智能合约、提供机器人服务等。下面我们将对ByteBall中加密通信实现的基本思路和主要过程进行解析。</p>
+<h2 id="加密通信基本思路"><a href="#加密通信基本思路" class="headerlink" title="加密通信基本思路"></a>加密通信基本思路</h2><p>从功能的角度来看，加密通道采用存储-转发的方式来实现，这个任务由Hub来完成。消息发送方将加密消息发送到Hub，Hub再将消息转发给接收方。网络中可以存在多个Hub，用户设备可以选择自己信任的Hub进行连接。从这个角度看，Hub在设备加密通信中扮演的角色类似于邮件服务器。用户设备使用其设备地址在Hub上进行注册，生成类似邮件地址进行通信，比如<code>device_pubkey@hub.domainname.com</code>。<code>device_pubkey</code>是由设备地址的公钥，当用户设备在不同的Hub之间切换时，<code>device_pubkey</code>保持不变。有一点需要注意的是，Hub之间不会进行消息中继，用户设备只有连接到相同Hub上才可以进行通信。</p>
+<p>从安全的角度来看，用户设备与Hub之间的传输通道、用户设备与设备之间的传输内容均采用了加密。用户设备与Hub之间采用websocket保持连接，连接采用TLS加密。用户设备发送的消息内容采用ECDH+AES进行加密，并采用ECDSA进行签名验证。由于发送的消息是采用端到端加密的，Hub作为唯一的中间方也是无法查看或者修改其内容的。当消息发送成功后，Hub会删除相应的消息，且不保存任何副本。此外，为了进一步确保转发安全，用户设备还会定期更新其加密公钥（称为临时公钥）。</p>
+<h2 id="加密通信主要过程"><a href="#加密通信主要过程" class="headerlink" title="加密通信主要过程"></a>加密通信主要过程</h2><h3 id="设备登录Hub"><a href="#设备登录Hub" class="headerlink" title="设备登录Hub"></a>设备登录Hub</h3><p>当用户设备连接到Hub时，Hub会向其发送一个登录验证消息<code>hub/challenge</code>，包括一个长度为30的BASE64编码的字符串。随后，用户设备会向Hub发送登录消息<code>hub/login</code>，包括Hub发送的登录字符串、永久公钥和临时公钥。</p>
+<p>当用户设备的永久私钥、临时私钥或者连接的Hub地址发生变化时，都需要重新发起登录过程。用户设备采用<code>hub/temp_pubkey</code>每分钟向Hub更新自己的临时公钥。当设备登录Hub后<code>hub/login</code>或者刷新消息时<code>hub/refresh</code>，可以从Hub获取消息状态<code>hub/message_box_status</code>。</p>
+<h3 id="建立加密通道"><a href="#建立加密通道" class="headerlink" title="建立加密通道"></a>建立加密通道</h3><p>在发送方连接到接收方所在的Hub完成登录过程后，设备之间进行加密通信主要包括以下几个步骤：</p>
+<ol>
+<li>从Hub获取接收方的临时公钥（使用<code>hub/get_temp_pubkey</code>）；</li>
+<li>发送方生成一次性的消息加密钥匙对（包含私钥及公钥）；</li>
+<li>通过接收方临时公钥和刚生成的一次性私钥得到ECDH共享密钥；</li>
+<li>利用ECDH共享密钥对消息内容进行AES加密；</li>
+<li>发送方将加密后的消息内容、初始向量、一次性公钥打包为数据包；</li>
+<li>采用设备永久公钥对数据包进行签名；</li>
+<li>采用<code>hub/deliver</code>向Hub发送数据包。</li>
+</ol>
+<p>Hub收到发送方的数据包后，向接收方采用<code>hub/message</code>转发数据包，从而建立起发送方与接收方之间的加密通道，即发送方的消息可通过加密通道到达接收方。</p>
+<p>当接收方Hub无法连接时，发送方将待发送消息采用接收方的永久公钥加密并本地存储。当接收方Hub可以连接时，发送方将存储的加密消息再使用接收方的临时公钥进行二次加密，然后再发送给对方。这样可以保证在发送方的数据库中不存储明文消息。</p>
+<h3 id="设备配对"><a href="#设备配对" class="headerlink" title="设备配对"></a>设备配对</h3><p>在建立起设备之间的加密通道后，设备之间还需要进行配对（或者称为认证）才能正式开始通信。配对发起方需要已知对方的地址及配对字符串，格式为<code>device_pubkey@hub.domainname.com#randomstring</code>，其中<code>device_pubkey</code>为设备地址公钥、<code>hub.domainname.com</code>为Hub地址、<code>randomstring</code>为配对字符串。设备配对主要用来获取对方设备的名称、公钥、地址及所在Hub，同时对对方身份进行验证。配对的设备存储在数据表<code>correspondent_devices</code>中。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>设备之间配对完成后就可以通过加密通道进行通信，对于加密消息的处理集中在<code>byteballcore/wallet.js</code>中的<code>handleMessageFromHub</code>函数中。用户设备之间的加密通信能力赋予了ByteBall钱包极其灵活及多样的功能，是ByteBall系统设计中非常重要的一个组成部分。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[再论ByteBall钱包]]></title>
       <url>http://blog.guantau.com/2018/06/26/byteball-wallet2/</url>
       <content type="html"><![CDATA[<p>ByteBall的钱包类型分为两种：</p>
