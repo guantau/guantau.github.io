@@ -92,12 +92,12 @@
 <meta property="og:site_name" content="奔跑的小站">
 <meta property="og:description" content="Byteball的网络结构从节点功能角度来讲，Byteball网络节点可以分为中继节点（Relay）、中枢节点（Hub）、播报节点（Oracle）、见证人节点（Witness）、钱包节点（Wallet）：  中继节点（Relay）：负责向与其连接的节点转发单元，存储整个Byteball区块链数据库，但它本身不保存任何私钥，也不发送任何单元； 中枢节点（Hub）：负责为连接到它的设备提供端到端的加密">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-01-25-byteball_network-1.png">
-<meta property="og:updated_time" content="2018-01-26T15:38:31.612Z">
+<meta property="og:image" content="http://pic.bitbili.com/2018-01-25-byteball_network-1.png">
+<meta property="og:updated_time" content="2018-12-02T02:50:50.901Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DAG Blockchain之Byteball原理解析（四）">
 <meta name="twitter:description" content="Byteball的网络结构从节点功能角度来讲，Byteball网络节点可以分为中继节点（Relay）、中枢节点（Hub）、播报节点（Oracle）、见证人节点（Witness）、钱包节点（Wallet）：  中继节点（Relay）：负责向与其连接的节点转发单元，存储整个Byteball区块链数据库，但它本身不保存任何私钥，也不发送任何单元； 中枢节点（Hub）：负责为连接到它的设备提供端到端的加密">
-<meta name="twitter:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-01-25-byteball_network-1.png">
+<meta name="twitter:image" content="http://pic.bitbili.com/2018-01-25-byteball_network-1.png">
 
 
 
@@ -377,7 +377,7 @@
 <li>钱包节点（Wallet）：负责与用户交互，收发交易、消息等。</li>
 </ul>
 <p>下图给出了Byteball网络结构的示意图：</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-01-25-byteball_network-1.png" alt="Byteball网络结构"></p>
+<p><img src="http://pic.bitbili.com/2018-01-25-byteball_network-1.png" alt="Byteball网络结构"></p>
 <h3 id="轻节点及其验证过程"><a href="#轻节点及其验证过程" class="headerlink" title="轻节点及其验证过程"></a>轻节点及其验证过程</h3><p>从是否存储了完整的区块链数据角度来讲，节点也可以分为全节点和轻节点，全节点保存了完整的区块链数据，而轻节点没有。用户在安装钱包时可以选择是使用全节点还是轻节点。轻节点仅存储与其地址相关的那些单元，它需要从全节点上下载所需要的数据，请求条件包括它信任的见证人列表以及它关注的地址。</p>
 <blockquote>
 <p><strong>跳跃列表：</strong>假设直接位于主链上的球的MCI为$i$，如果$i\bmod10=0$，则该球具有跳跃列表（<code>skiplist_balls</code>），跳跃列表中的值指向之前的球；对于$i$尾数具有的每一个$0$，跳跃列表中都有一个MCI值与之对应；跳跃列表中的MCI值等于在保持尾数$0$个数相同的情况下最接近$i$的MCI，比如$i=3000$时，对应的跳跃列表为$[2990, 2900, 2000]$。</p>

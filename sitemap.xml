@@ -2,6 +2,76 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.guantau.com/2016/08/21/mobile-data/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.918Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2018/01/19/byteball3/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.915Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2017/12/14/byteball1/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.913Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2018/06/15/byteball-wallet/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.912Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2017/12/19/byteball2/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.910Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2018/06/26/byteball-wallet2/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.908Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/25/house-money/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.907Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2018/05/13/byteball-flaws/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.904Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2016/08/21/zotero-tips/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.903Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guantau.com/2018/01/26/byteball4/</loc>
+    
+    <lastmod>2018-12-02T02:50:50.901Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.guantau.com/2018/08/08/byteball-private-communication/</loc>
     
     <lastmod>2018-08-08T09:30:31.351Z</lastmod>
@@ -9,30 +79,9 @@
   </url>
   
   <url>
-    <loc>http://blog.guantau.com/2018/06/26/byteball-wallet2/</loc>
-    
-    <lastmod>2018-06-26T04:43:41.022Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2018/06/15/byteball-wallet/</loc>
-    
-    <lastmod>2018-06-17T15:52:51.256Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.guantau.com/2018/06/14/byteball-network-protocol/</loc>
     
     <lastmod>2018-06-14T14:40:51.045Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2018/05/13/byteball-flaws/</loc>
-    
-    <lastmod>2018-05-13T14:38:23.185Z</lastmod>
     
   </url>
   
@@ -58,37 +107,9 @@
   </url>
   
   <url>
-    <loc>http://blog.guantau.com/2018/01/26/byteball4/</loc>
-    
-    <lastmod>2018-01-26T15:38:31.612Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2018/01/19/byteball3/</loc>
-    
-    <lastmod>2018-01-20T16:08:29.427Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2017/12/19/byteball2/</loc>
-    
-    <lastmod>2017-12-18T16:15:32.964Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.guantau.com/2016/08/21/texting-habits/</loc>
     
     <lastmod>2017-12-17T03:35:28.934Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/25/house-money/</loc>
-    
-    <lastmod>2017-12-17T03:34:11.166Z</lastmod>
     
   </url>
   
@@ -110,20 +131,6 @@
     <loc>http://blog.guantau.com/2016/08/21/pkm-tools/</loc>
     
     <lastmod>2017-12-17T03:33:15.522Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/zotero-tips/</loc>
-    
-    <lastmod>2017-12-17T03:32:09.869Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2016/08/21/mobile-data/</loc>
-    
-    <lastmod>2017-12-17T03:31:50.649Z</lastmod>
     
   </url>
   
@@ -166,13 +173,6 @@
     <loc>http://blog.guantau.com/2017/03/16/spark-csv/</loc>
     
     <lastmod>2017-12-17T03:28:02.180Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guantau.com/2017/12/14/byteball1/</loc>
-    
-    <lastmod>2017-12-17T03:27:38.980Z</lastmod>
     
   </url>
   

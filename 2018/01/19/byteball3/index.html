@@ -92,12 +92,12 @@
 <meta property="og:site_name" content="奔跑的小站">
 <meta property="og:description" content="Byteball的地址、脚本及合约地址的定义Byteball中用户使用地址进行收发交易。地址本质上对应的是一段具有特定含义的脚本，该脚本称为地址的定义。任何能够使地址定义脚本输出为真（也称作解锁该脚本）的人具有使用该地址资产的权限。与Bitcoin类似，最常用的地址定义脚本是公钥（采用BASE64编码），即具有相应私钥的人可以使用该地址的资产，比如 1[&quot;sig&quot;,&amp;#123;&quot;pubkey&quot;:&quot;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-01-19-byteball-address.png">
-<meta property="og:updated_time" content="2018-01-20T16:08:29.427Z">
+<meta property="og:image" content="http://pic.bitbili.com/2018-01-19-byteball-address.png">
+<meta property="og:updated_time" content="2018-12-02T02:50:50.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DAG Blockchain之Byteball原理解析（三）">
 <meta name="twitter:description" content="Byteball的地址、脚本及合约地址的定义Byteball中用户使用地址进行收发交易。地址本质上对应的是一段具有特定含义的脚本，该脚本称为地址的定义。任何能够使地址定义脚本输出为真（也称作解锁该脚本）的人具有使用该地址资产的权限。与Bitcoin类似，最常用的地址定义脚本是公钥（采用BASE64编码），即具有相应私钥的人可以使用该地址的资产，比如 1[&quot;sig&quot;,&amp;#123;&quot;pubkey&quot;:&quot;">
-<meta name="twitter:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-01-19-byteball-address.png">
+<meta name="twitter:image" content="http://pic.bitbili.com/2018-01-19-byteball-address.png">
 
 
 
@@ -371,7 +371,7 @@
         <h2 id="Byteball的地址、脚本及合约"><a href="#Byteball的地址、脚本及合约" class="headerlink" title="Byteball的地址、脚本及合约"></a>Byteball的地址、脚本及合约</h2><h3 id="地址的定义"><a href="#地址的定义" class="headerlink" title="地址的定义"></a>地址的定义</h3><p>Byteball中用户使用地址进行收发交易。地址本质上对应的是一段具有特定含义的脚本，该脚本称为地址的定义。任何能够使地址定义脚本输出为真（也称作解锁该脚本）的人具有使用该地址资产的权限。与Bitcoin类似，最常用的地址定义脚本是公钥（采用BASE64编码），即具有相应私钥的人可以使用该地址的资产，比如</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"sig"</span>,&#123;<span class="attr">"pubkey"</span>:<span class="string">"Ald9tkgiUZQQ1djpZgv2ez7xf1ZvYAsTLhudhvn0931w"</span>&#125;]</span><br></pre></td></tr></table></figure>
 <p>对于地址定义脚本进行哈希，再加上校验位就得到了地址，Byteball的地址采用BASE32编码。Byteball地址的校验位并不是全部放在尾部，而是穿插着放在哈希值中间，防止有攻击者在地址中间进行恶意修改。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-01-19-byteball-address.png" alt=""></p>
+<p><img src="http://pic.bitbili.com/2018-01-19-byteball-address.png" alt=""></p>
 <p>按照此流程，上面公钥脚本对应的地址为：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A2WWHN7755YZVMXCBLMFWRSLKSZJN3FU</span><br></pre></td></tr></table></figure>
 <p>如果地址仅用于接收交易，其定义脚本可以不对外公布。但是当用户首次使用该地址进行发送交易时，他需要在发送的单元中声明该地址的定义脚本，比如</p>

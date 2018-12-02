@@ -92,12 +92,12 @@
 <meta property="og:site_name" content="奔跑的小站">
 <meta property="og:description" content="ByteBall的钱包类型分为两种：  单设备钱包：该类型钱包仅由单一设备控制，它与特定设备地址是绑定的，钱包中的地址为单签名地址； 多设备钱包：该类型钱包由多个设备共同控制，它与若干个设备地址绑定，钱包中的地址为多签名地址。  在之前的文章《ByteBall钱包详解》中，我们提到，ByteBall的地址分为三种：  普通地址：地址定义中不包含其它地址，采用BASE32编码，长度为32，比如A2W">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-06-25-144238.png">
-<meta property="og:updated_time" content="2018-06-26T04:43:41.022Z">
+<meta property="og:image" content="http://pic.bitbili.com/2018-06-25-144238.png">
+<meta property="og:updated_time" content="2018-12-02T02:50:50.908Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再论ByteBall钱包">
 <meta name="twitter:description" content="ByteBall的钱包类型分为两种：  单设备钱包：该类型钱包仅由单一设备控制，它与特定设备地址是绑定的，钱包中的地址为单签名地址； 多设备钱包：该类型钱包由多个设备共同控制，它与若干个设备地址绑定，钱包中的地址为多签名地址。  在之前的文章《ByteBall钱包详解》中，我们提到，ByteBall的地址分为三种：  普通地址：地址定义中不包含其它地址，采用BASE32编码，长度为32，比如A2W">
-<meta name="twitter:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-06-25-144238.png">
+<meta name="twitter:image" content="http://pic.bitbili.com/2018-06-25-144238.png">
 
 
 
@@ -380,7 +380,7 @@
 <li>设备地址：生成方法及地址格式类似普通地址，但在设备地址在头部添加了一个0，长度为33，比如<code>05FV4WNIEU4OHIAIF7XEIRC2QRRLFPAC3</code>。</li>
 </ol>
 <p>因此，ByteBall的钱包与地址可以总结为下面这张图：</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-06-25-144238.png" alt="byteball-wallet"></p>
+<p><img src="http://pic.bitbili.com/2018-06-25-144238.png" alt="byteball-wallet"></p>
 <p>其中：设备具有唯一的设备地址；普通地址包括单签名地址和多签名地址，单设备钱包生成单签名地址，多设备钱包生成多签名地址；多个普通地址可以共同构成共享地址。</p>
 <h2 id="单签名地址"><a href="#单签名地址" class="headerlink" title="单签名地址"></a>单签名地址</h2><p>单设备钱包由单一设备生成，假设设备地址为<code>DEVICE_ADDRESS</code>，单设备钱包中单签名地址定义的模板为：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">["sig", &#123;pubkey: '$pubkey@DEVICE_ADDRESS'&#125;]</span><br></pre></td></tr></table></figure>

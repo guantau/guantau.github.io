@@ -92,17 +92,17 @@
 <meta property="og:site_name" content="奔跑的小站">
 <meta property="og:description" content="Selected from Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10). Translated by tau @ 2015.8.16  5. 基于时空数据的人类移动行为分析手机数据中记录了大量用户的移动行为，目前已有许多项目对此开展了研究。大">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/mobile-data-14.png">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/mobile-data-15.png">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/mobile-data-16.png">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/mobile-data-17.png">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/mobile-data-18.png">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/mobile-data-19.png">
-<meta property="og:updated_time" content="2017-12-17T03:31:50.649Z">
+<meta property="og:image" content="http://pic.bitbili.com/mobile-data-14.png">
+<meta property="og:image" content="http://pic.bitbili.com/mobile-data-15.png">
+<meta property="og:image" content="http://pic.bitbili.com/mobile-data-16.png">
+<meta property="og:image" content="http://pic.bitbili.com/mobile-data-17.png">
+<meta property="og:image" content="http://pic.bitbili.com/mobile-data-18.png">
+<meta property="og:image" content="http://pic.bitbili.com/mobile-data-19.png">
+<meta property="og:updated_time" content="2018-12-02T02:50:50.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="手机数据分析的最新研究进展">
 <meta name="twitter:description" content="Selected from Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10). Translated by tau @ 2015.8.16  5. 基于时空数据的人类移动行为分析手机数据中记录了大量用户的移动行为，目前已有许多项目对此开展了研究。大">
-<meta name="twitter:image" content="http://oc7urqs4c.bkt.clouddn.com/mobile-data-14.png">
+<meta name="twitter:image" content="http://pic.bitbili.com/mobile-data-14.png">
 
 
 
@@ -374,19 +374,19 @@
 
       
         <blockquote>
-<p>Selected from <a href="http://oc7urqs4c.bkt.clouddn.com/mobile-data.pdf" target="_blank" rel="noopener"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
+<p>Selected from <a href="http://pic.bitbili.com/mobile-data.pdf" target="_blank" rel="noopener"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
 <p>Translated by tau @ 2015.8.16</p>
 </blockquote>
 <h2 id="5-基于时空数据的人类移动行为分析"><a href="#5-基于时空数据的人类移动行为分析" class="headerlink" title="5. 基于时空数据的人类移动行为分析"></a>5. 基于时空数据的人类移动行为分析</h2><p>手机数据中记录了大量用户的移动行为，目前已有许多项目对此开展了研究。大量的手机APP提供了基于位置的服务（LBS, Location Based Service）表明了时空数据挖掘上面还有很多潜在应用。本节中，我们主要关注那些在人类移动行为建模和分析上给出了新结论或新方法的研究。</p>
 <a id="more"></a>
 <h3 id="5-1-个人移动行为规律"><a href="#5-1-个人移动行为规律" class="headerlink" title="5.1 个人移动行为规律"></a>5.1 个人移动行为规律</h3><p>这里用于分析的移动轨迹指的是基站编号序列。如图14所示，通过对100,000个用户超过6个月数据的分析，Gonzalez等人发现人类轨迹表现出非常强的时空规律性[97]。不同于以往将人类行为建模为随机行走或Levy飞行。他们的结果显示，人类在不同的活动半径下都表现出非常类似的行为模式。个人移动的规律性主要表现为在绝大部分时间里用户都活动在一小部分位置。如果进行归一化处理，并把零点移至合适的位置，所有用户的移动模式都可以用一个函数来描述。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-14.png" alt="图14 用户在某个位置的概率分布"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-14.png" alt="图14 用户在某个位置的概率分布"></p>
 <p>这些结论得到了Song等人[98]的支持，他们也给出了数据表现出的行为模式与传统随机行走和Levy飞行模型的差别。此外，作者还给出了一种模型用来判断用户移动的倾向性。在他们的模型中，每当用户改变位置时，用户选择新位置的概率与已访问的位置数成反比，即$p_{new}=S^{-\gamma}$，其中$S$是已访问的位置数，$\gamma$是常数。当然，用户也可能直接访问以前已访问的地址。尽管他们的模型很简单，但是可以解释用户访问的地址数目随时间增长的变化规律，以及用户访问每个位置的概率分布。</p>
 <p>在另一项研究中，Csaji等人发现每个人经常访问地点的数目非常少[99]。这里经常访问的地点定义为用户有超过5%的电话由该基站位置发出。作者从Portugal手机数据集中随机选出100,000个用户，统计结果表明平均经常访问地点数为2.14，95%的用户经常访问的地点少于4个。</p>
 <p>Bagrow等人则将经常访问地点聚类成为“栖息地”[100]。主要的“栖息地”代表了每天典型的移动行为，而次要的“栖息地”则代表了偶发的旅行行为。有趣的是，他们认为在每个“栖息地”的移动行为都表现出统一的变化模式，即相比于总体的移动行为，“栖息地”的活动半径通常都小很多。</p>
 <p>然而，这些研究结果都给出了移动行为具有一致性的和可预测性，但它们大多是基于发达国家的数据，而在发展中国家则还要考虑文化和语言的因素。Amini等人分析比较了葡萄牙和科特迪瓦人们的移动模式，并指出那些在发达国家数据中表现比较好的模型在科特迪瓦的数据中并不适用[101]。例如，他们指出科特迪瓦的上班族比葡萄牙的要移动更长的距离，且他们的移动模式要更加多样化。</p>
 <p>如果人的移动轨迹不是随机的，如果人经常会回到他以前到过的地方，那么人类的移动行为是否可以预测。Song等人[102]研究了这个问题，并给出了在已知位置访问历史的条件下，在多大程度上可以预测用户接下来的位置。他们采用用户位置序列的熵率来描述可预测性。在计算熵率时，除了要考虑每个位置的访问频率，还要考虑这些访问之间的时间相关性。如图15所示，他们的结果表明，对于某个特定用户，其移动的时间相关性将大大降低不确定性。利用Fano不等式，他们推断出只要有合适的算法，就可能平均意义上预测出用户93%的位置。最有意思的是，不仅平均意义上用户具有高可预测性，而且所有人类都具有很高的预测性。那些经常进行长距离旅行的可预测性并不比经常呆在某个地方的人要差，Song的结果表明所有人类的可预测性是一致的。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-15.png" alt="图15 用户位置序列的熵率"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-15.png" alt="图15 用户位置序列的熵率"></p>
 <p>前面这些研究工作都集中在人类的移动行为的可预测性到底有多大，但他们并没有提供任何预测算法，也就是说这些研究仅具有理论价值。Calabrese等人则提出了人类位置的预测模型[103]。他们的算法不仅基于当前用户的历史移动行为，并且基于群体的移动行为，比如需要利用地理特征和POI（Point of Interest）。预测则是综合个体行为和群体行为的结果。个体行为采用的是一阶近似模型，利用Markov链来表示，其中，状态是用户访问的位置，从状态i转移到状态j的概率与数据中观测到的次数成正比。群体行为则用距离影响、POI和访问密度进行加权平均。在包含1百万个人4个月的数据集上，他们的模型在预测用户下一个位置上可以达到60%的准确率。</p>
 <p>Calabrese等人使用的Markov链方法是基于Park等人的研究[104]。他们指出，用户活动半径随时间的变化可以用Markov链转移矩阵的特征分解来解释。更准确地说，转移矩阵的特征向量包含了用户移动的信息。</p>
 <p>除了细粒度的移动行为，Simini等人研究了城市之间的移动行为，并提出了辐射模型[105]，突破了重力模型的一些局限。<br>辐射模型是一种随机模型，城市$i$的人进入另一个城市$j$工作，其概率与城市$i$中的类似工作的数目相关。<br>在给定城市中，工作数目也是随机变量，与城市的总人口相关。如果我们把城市 $i$ 和 $j$ 的距离定义为 $d_{ij}$ ，在两个城市之间平均移动次数与两个城市的人口相关（假设分别为 $m_i$ 和 $n<em>j$ ），还与 $d</em>{ij}$ 范围内的人口数目 $s<em>{ij}$ 相关。<br>$$<br>\langle T</em>{ij} \rangle=T_i \frac{m_i n_j}{(m<em>i+s</em>{ij})(m_i+n<em>j+s</em>{ij})}<br>$$<br>其中，$T_i$是从城市$i$出发的移动次数。</p>
@@ -394,17 +394,17 @@
 <p>移动行为乍看是随机运动，可是却遵守严格的规律。数学模型、预测算法和可视化工具（比如Martino的工作[107]）做了开拓性的研究，可以用来构建更好的人类移动模型，可以用来预测流行病爆发。从个体层面来看，这种规律看起来严格地主宰我们日常的行为，比如Eagle和Pentland表明用户移动模式的6个特征向量就足够描述90%的差异[108]。他们还观察到群体行为具有一致性，这将在下一节描述。</p>
 <h3 id="5-2-群体行为的一致性"><a href="#5-2-群体行为的一致性" class="headerlink" title="5.2 群体行为的一致性"></a>5.2 群体行为的一致性</h3><p>这些数据集可以从更高的层面进行研究。更实际地说，这些大量的数据允许我们去观察和测量人类和环境的交互，还可以度量这些交互的一致性。</p>
 <p>最早得项目，比如Mobile Landscape[109]和Real Time Rome[110]已经开拓了这种研究。然而，Reades等人做了进一步研究[111]，他们利用基站信号作为社区的数字特征。他们指出类似的地点表现出类似的特征，基于基站天线记录的数据，可以对城市空间聚类。聚类表明了城市的划分，比如居民区、商业区、酒吧或公园。简短来说，这种技术可作为简单地人口普查方法，某些地方政府可能对此有兴趣。通过特征分解，有可能进一步获得空间使用的差异[112]。图16中给出了工作日中的四种主要特征向量。通过类似的方法，Csaji等人[99]用k-means聚类不同地方的活动模式，用来检测哪些地方表现出相同的呼叫模式，从而识别出哪些地方表现出显著的工作或家庭呼叫模式。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-16.png" alt="图16 工作日的4个特征向量"></p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-17.png" alt="图17 集群的周模式"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-16.png" alt="图16 工作日的4个特征向量"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-17.png" alt="图17 集群的周模式"></p>
 <p>Karikoski和Soikkeli研究了非常类似的问题，他们利用了Aalto大学OtaSizzle项目中收集的手机数据[113]。作者研究了是否不同环境条件下是否会引发不同的手机使用模式。从用户的移动轨迹中，他们将地点分为了几类：家、办公室、其它有意义的地方、其他地方（指的是路过的地方）。他们指出了在不同的位置环境下，用户有不同的手机使用模式。比如，当人们在家时语音通话通常更长且更频繁使用，而在办公室时则更常使用短信且通话时间也更短。在使用了相同数据的论文中，Jo等人研究了环境、时间与服务使用之间的关联，并给出了典型的手机服务使用模式[114]。作者进一步采用了k-means方法对典型的行为进行聚类，并将用户分为morning-type和evening-type。Trestian等人也研究了类似的问题，他们发现不同的地点对人们使用哪些手机应用也有影响[115]。Naboulsi等人采用类似的方法通过网络快照区分通话模式，网络快照指的是在给定时间窗口内的流量聚合[116]。他们通过对比通过网络的流量的大小和分布计算两个快照之间的相似性。他们进一步给出了典型的使用模式，并提出了一种方法检测网络中的异常行为。有趣的是，虽然方法是类似的，但Naboulsi等人的研究仅仅是基于天线到天线之间的流量，而与前面的研究使用的数据有所差异。</p>
 <p>除了对城市内部的分析外，Isaacman等人研究不同城市居住地的行为差异[117]。通过分析洛杉矶和纽约上万个居住地的移动行为，他们发现洛杉矶人们的平均移动距离是纽约的2倍。他们对于这个现象的解释是人群密度的不均和城市地形的差异。Noulas等人的工作中[53]，通过分析Foursquare位置数据，给出了不同城市的距离指数。距离指数反映了两个地方$i$和$j$关于可能的机会的个数（人口、POI）的差异。给定地理距离$r_{ij}$以及以$i$为圆心的机会个数分布，距离指数可以计算为</p>
 <p>$$<br>rank(i,j)=\int_0^{2\pi}\int<em>0^{r</em>{ij}} p_i(r,\theta)r\, \mathrm{d} r \mathrm{d}\theta<br>$$</p>
 <p>相比于人口密度小的城市，人口密度大的城市会在更短的物理距离中有更多的机会，因此人们移动的距离要更短。这里物理距离需要用指数距离来加权。在近期的研究中，Louail等人提出了另一种通过分析城市地理结构量化这种差别的方法，数据采用了31个西班牙大都市的热点或POI[118]。通过利用热点的地理结构，以及不同类型城市的不同和相似性，作者展示了人们之间的平均距离在一天中是变化的。他们将城市区分为单中心城市和多中心城市，单中心城市更依赖于土地利用，而多中心城市更注重土地混合使用。Trasarti等人也分析了人们密度的相关性，并在城市和国家层面上揭示了人口随时间变化的高度相关性[119]。</p>
 <p>如果在城市中检测热点和POI是可行的，那么是否可以进一步推断人们参与活动的类型。Jiang等人最初提出了一种方法[120]，先对人们待过的或经过的地方进行刻画，然后依据他们访问特定地点的时间来推断他们参与的活动。在许多情况下，对用户的移动行为进行建模可以从“起点-终点”矩阵开始，它描述了人们在特定时间段中在“起点-终点”地址之间移动次数[121-123]。通过给出哪些时空点和哪些活动对应，Alexander等人提出了预测“起点-终点”矩阵的方法。作者从Boston地区数据得到的结果和调查的结果是一致的。</p>
 <h3 id="5-3-异常情况监测"><a href="#5-3-异常情况监测" class="headerlink" title="5.3 异常情况监测"></a>5.3 异常情况监测</h3><p>如果数据包含大量人口的时空数据，它既可以用来对群体的活动规律进行研究，也可以用来研究对群体对紧急情况的反应。许多近期的论文研究了这个问题。Candia等人最开始关注天线端的时序活动[93]。他们提出了一种基于个体行为波动的方法。从图18来看，在异常的情况下，用户将与他们平常的行为表现出很大得波动，但总体平均和普通行为接近。方差可以表示为<br>$$<br>\sigma(a,t,T)=\sqrt{\frac{1}{N-1} \sum_{i=1}^N \left(n_i(a,t,T)-\langle n(a,t,T) \rangle \right)^2}<br>$$<br>其中，地点为$a$，时间区间为$[t,t+T]$，个体行为$n_i(a,t,T)$，平均期望行为为$\langle n(a,t,T) \rangle$。与平常的方差比较，可以识别出那些用户表现异常的位置，以及那些可能在异常情况下在空间上聚集的地方。在异常情况下，人群的反应可以看做是时间和空间上的错乱。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-18.png" alt="图18 异常事件中活动的变化"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-18.png" alt="图18 异常事件中活动的变化"></p>
 <p>在相关的论文中，Bagrow等人分析了在不同情况下人群的反应，比如爆炸、飞机失事或地震[124]。他们观察到，目击者和他们的邻居在事件后马上会表现出信息的扰动。这种反应通常表现在会与平常不经常联系的人的通话，而不是在经常联系节点的通话提升上。通过对信息传播路径的更详细的分析表明群体反应的有效性。在事件发生的数分钟内，从目击者开始的3-4度范围的人都被联系上。Gao等人进一步分析了这些动态变化[125]，在爆炸或飞机失事中相互通话的情况急剧增加，比如回拨。尽管有着不同的特性，同类型的行为扰动都在大规模事件中表现出来，比如音乐会或者游行[125,126]。Altshuler等人最近提出了一种“社会放大器”的方法用来检测异常行为，进而检测突发事件[127]。网络的胶合点是指那些具有高度数的节点，他们可以很好地连接剩余的网络，通过激活他们可以很快地通过社交网络扩散信息。利用这些特殊的节点作为社交放大器，作者指出只要分析那些和网络胶合点行为类似的节点就可以有效地检测整个网络的异常，从而发现突发事件。这种方法具有计算上的优势，因为它只需关注网络中的部分节点，这比监视整个网络要容易得多。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-19.png" alt="图19 突发事件中活动的变化"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-19.png" alt="图19 突发事件中活动的变化"></p>
 <p>除了检测突发事件意外，Lu等人研究在灾难以后人群的移动行为是否可以预测，他们采用的是2010年海地地震前后的数据[128]。有趣的是，人们的移动轨迹的可预测性很高，且在地震后的三个月内逐步提高。作者的研究表明人们离开首都后的目的地和他们以前的移动模式高度相关。因此，只要稍加利用，手机数据可以用来监视突发事件，并预测自然灾害后人们的移动行为。这些结果对许多人道主义组织来说将非常有帮助，他们可以尝试通过大数据来挽救生命。2011年日本地震和海啸，许多研究小组共同发起项目，通过联合多种大数据源（比如GPS设备、手机、Twitter和Facebook）来分析将来如何通过这些数据挽救生命。Kryvasheyeu等人做了类似的研究，他们对2012年Sandy飓风期间的Twitter数据进行研究，通过测量朋友关系强度来给出警告[129]。这个领域的研究还需要继续，尤其是目前这么多数据源可以利用的条件下，如何协同使用这些数据源。</p>
 <h3 id="5-4-移动行为和社会网络关系"><a href="#5-4-移动行为和社会网络关系" class="headerlink" title="5.4 移动行为和社会网络关系"></a>5.4 移动行为和社会网络关系</h3><p>移动轨迹和社会交往通常会在一个数据集中出现，从而可以用来研究移动行为和社会网络关系。Calabrese等人的工作发现，相互联系的用户大多数在至少一年的时间内在物理空间中碰面一次[130]。而且，用户绝大多数在碰面之前或之后会相互联系。有趣的是，用户之间的碰面频率和他们联系的频率以及相隔的距离高度相关。</p>
 <p>是否可以进一步通过移动数据预测社会网络关系呢？Wang等人研究发现社交网络中未连接的节点，但是拓扑位置相近、移动模式类似的人容易建立连接。也就是说，通过移动相似性和拓扑距离，他们能够提高传统链路预测算法的性能，从而获得平均准确率75%和召回率66%[131]。类似地，Eagle等人在跨度4年的数据中发现，当从一个地方搬到另一个地方时，人们的社交网络发生剧烈地变化[132]。</p>

@@ -43,7 +43,7 @@
 <li>设备地址：生成方法及地址格式类似普通地址，但在设备地址在头部添加了一个0，长度为33，比如<code>05FV4WNIEU4OHIAIF7XEIRC2QRRLFPAC3</code>。</li>
 </ol>
 <p>因此，ByteBall的钱包与地址可以总结为下面这张图：</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-06-25-144238.png" alt="byteball-wallet"></p>
+<p><img src="http://pic.bitbili.com/2018-06-25-144238.png" alt="byteball-wallet"></p>
 <p>其中：设备具有唯一的设备地址；普通地址包括单签名地址和多签名地址，单设备钱包生成单签名地址，多设备钱包生成多签名地址；多个普通地址可以共同构成共享地址。</p>
 <h2 id="单签名地址"><a href="#单签名地址" class="headerlink" title="单签名地址"></a>单签名地址</h2><p>单设备钱包由单一设备生成，假设设备地址为<code>DEVICE_ADDRESS</code>，单设备钱包中单签名地址定义的模板为：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">["sig", &#123;pubkey: '$pubkey@DEVICE_ADDRESS'&#125;]</span><br></pre></td></tr></table></figure>
@@ -67,7 +67,7 @@
 <p>ByteBall钱包结构与Bitcoin类似，Bitcoin对管理和存储私钥以及通过私钥生成地址制定了一系列标准（BIP, Bitcoin Improvement Proposals），主要包括：</p>
 <ul>
 <li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="noopener">BIP32</a>：定义了HD钱包（Hierarchical Deterministic Wallet），允许从单一种子产生一树状结构储存多组私钥和公钥，可以方便的备份、转移以及分层权限控制等。HD钱包包含以树状结构衍生的密钥，使得父密钥可以衍生一系列子密钥，每个子密钥又可以衍生出一系列孙密钥，以此类推，无限衍生。下图展示了HD钱包的树状结构：</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-06-17-082216.png" alt="bip33-hd-wallet"></p>
+<p><img src="http://pic.bitbili.com/2018-06-17-082216.png" alt="bip33-hd-wallet"></p>
 </li>
 <li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki" target="_blank" rel="noopener">BIP39</a>：将种子用方便记忆和书写的单词表示，一般由12个单词组成，称为助记词或助记码。由一系列单词生成种子是个标准化的方法，这样易于在钱包中转移、导出和导入。比如<code>shrimp make call path pink draw gym song select brother social base</code>，其相应的私钥为<code>xprv9s21ZrQH143K4HQ8sBPNNkXHNuVYfivR96gtpJzMWCJVF5hdYjzT5nVQu6GfHAQLPstQtFp9GTWADUcKgzaV5EyL5JxT2rxkyg51ReGTVg8</code>。</p>
 </li>
@@ -562,10 +562,10 @@
 </blockquote>
 <p>DAG作为Byteball底层数据结构，其相应的数据很自然地应该使用图数据库进行存储。这需要重新设计Byteball的数据库，并重写大量Byteball底层的代码。同时，还需要一个高性能的serverless embedded graph database，比如基于leveldb的<a href="https://github.com/levelgraph/levelgraph" target="_blank" rel="noopener">levelgraph</a>。采用图数据库的一个最大好处是可以减少大量的SQL多表联合查询，并简化确认交易时的多级回溯操作，从而提高其处理性能。</p>
 <h2 id="Hub节点问题"><a href="#Hub节点问题" class="headerlink" title="Hub节点问题"></a>Hub节点问题</h2><p>在Byteball网络中，Hub节点是网络中的骨干节点，它们之间构成P2P网络，其它节点需要通过它们进行相互通信。全网中可以存在多个Hub，用户可以自由选择其想要接入的Hub。这里需要说明的是，Relay节点具有与Hub节点类似的功能，只是不提供端到端的信息加密服务。在下面的讨论中，不特殊说明的话，将Hub/Relay节点统一称为Hub节点。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-05-12-byteball-network.png" alt="byteball网络结构"></p>
+<p><img src="http://pic.bitbili.com/2018-05-12-byteball-network.png" alt="byteball网络结构"></p>
 <p>从技术角度来讲，Hub节点是在全节点钱包的基础上，提供一些额外的数据转发功能。从数据存储的角度来看：轻钱包是不保存完整的账本数据的；全节点钱包和见证人保存完整的账本数据，但仅供它们自己使用；只有Hub节点保存完整的账本数据，并与其它的节点进行共享。</p>
 <p>试想如果Hub节点作恶，它可以拒绝为与其连接的钱包等其它节点提供Byteball网络接入服务，拒绝为它们广播、共享交易数据。还有一种极端情况，如果所有见证人节点都连接在同一个Hub节点上，那么它将成为整个网络中的霸主。其它Hub节点如果不能得到该Hub节点的服务，则其它Hub节点广播的所有交易都无法得到网络的确认。这也就是说，那些Hub节点都无法正常工作了。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-05-13-byteball-hub-flaw.png" alt="Hub节点中心化"></p>
+<p><img src="http://pic.bitbili.com/2018-05-13-byteball-hub-flaw.png" alt="Hub节点中心化"></p>
 <p>Hub节点在账本数据的有效性、可靠性及安全性方面起着十分重要的作用。然而，在Byteball目前的实现下，Hub节点是完全没有收益激励的，同时还要承担相应的服务器开支。实际上，目前全网主要使用的还是官方提供的Hub节点（wss://byteball.org/bb/)。</p>
 <blockquote>
 <p><strong>那么，对于扮演如此重要角色的Hub节点，是否应该给予经济激励，并限制其部分权力？</strong></p>
@@ -696,7 +696,7 @@
 <li>钱包节点（Wallet）：负责与用户交互，收发交易、消息等。</li>
 </ul>
 <p>下图给出了Byteball网络结构的示意图：</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-01-25-byteball_network-1.png" alt="Byteball网络结构"></p>
+<p><img src="http://pic.bitbili.com/2018-01-25-byteball_network-1.png" alt="Byteball网络结构"></p>
 <h3 id="轻节点及其验证过程"><a href="#轻节点及其验证过程" class="headerlink" title="轻节点及其验证过程"></a>轻节点及其验证过程</h3><p>从是否存储了完整的区块链数据角度来讲，节点也可以分为全节点和轻节点，全节点保存了完整的区块链数据，而轻节点没有。用户在安装钱包时可以选择是使用全节点还是轻节点。轻节点仅存储与其地址相关的那些单元，它需要从全节点上下载所需要的数据，请求条件包括它信任的见证人列表以及它关注的地址。</p>
 <blockquote>
 <p><strong>跳跃列表：</strong>假设直接位于主链上的球的MCI为$i$，如果$i\bmod10=0$，则该球具有跳跃列表（<code>skiplist_balls</code>），跳跃列表中的值指向之前的球；对于$i$尾数具有的每一个$0$，跳跃列表中都有一个MCI值与之对应；跳跃列表中的MCI值等于在保持尾数$0$个数相同的情况下最接近$i$的MCI，比如$i=3000$时，对应的跳跃列表为$[2990, 2900, 2000]$。</p>
@@ -747,7 +747,7 @@
       <content type="html"><![CDATA[<h2 id="Byteball的地址、脚本及合约"><a href="#Byteball的地址、脚本及合约" class="headerlink" title="Byteball的地址、脚本及合约"></a>Byteball的地址、脚本及合约</h2><h3 id="地址的定义"><a href="#地址的定义" class="headerlink" title="地址的定义"></a>地址的定义</h3><p>Byteball中用户使用地址进行收发交易。地址本质上对应的是一段具有特定含义的脚本，该脚本称为地址的定义。任何能够使地址定义脚本输出为真（也称作解锁该脚本）的人具有使用该地址资产的权限。与Bitcoin类似，最常用的地址定义脚本是公钥（采用BASE64编码），即具有相应私钥的人可以使用该地址的资产，比如</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"sig"</span>,&#123;<span class="attr">"pubkey"</span>:<span class="string">"Ald9tkgiUZQQ1djpZgv2ez7xf1ZvYAsTLhudhvn0931w"</span>&#125;]</span><br></pre></td></tr></table></figure>
 <p>对于地址定义脚本进行哈希，再加上校验位就得到了地址，Byteball的地址采用BASE32编码。Byteball地址的校验位并不是全部放在尾部，而是穿插着放在哈希值中间，防止有攻击者在地址中间进行恶意修改。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-01-19-byteball-address.png" alt=""></p>
+<p><img src="http://pic.bitbili.com/2018-01-19-byteball-address.png" alt=""></p>
 <p>按照此流程，上面公钥脚本对应的地址为：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A2WWHN7755YZVMXCBLMFWRSLKSZJN3FU</span><br></pre></td></tr></table></figure>
 <p>如果地址仅用于接收交易，其定义脚本可以不对外公布。但是当用户首次使用该地址进行发送交易时，他需要在发送的单元中声明该地址的定义脚本，比如</p>
@@ -822,7 +822,7 @@
       <title><![CDATA[DAG Blockchain之Byteball原理解析（二）]]></title>
       <url>http://blog.guantau.com/2017/12/19/byteball2/</url>
       <content type="html"><![CDATA[<h2 id="Byteball的共识算法"><a href="#Byteball的共识算法" class="headerlink" title="Byteball的共识算法"></a>Byteball的共识算法</h2><h3 id="主链"><a href="#主链" class="headerlink" title="主链"></a>主链</h3><p>在Byteball中，从任何一个顶端单元出发到达创世单元的最优路径称为<strong>候选主链（Candidate Mainchain）</strong>。最优路径通过选择最优父单元产生，选择策略用于保证整个网络的安全性。不同的候选主链会在某个单元位置交叉（最差的情况是在创世单元交叉），该交叉点称为<strong>稳定点（Stable Point）</strong>。对于所有候选主链，从稳定点到创世单元的路径完全相同，该路径称为<strong>稳定主链（Stable Mainchain）</strong>。稳定主链是一条确定的路径，从候选路径变为稳定主链是一个从不确定逐渐变成确定的过程。后续讨论中，如果没有明确区分，主链一般指的是候选主链。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-17-byteball-mainchain.png" alt="主链"></p>
+<p><img src="http://pic.bitbili.com/2017-12-17-byteball-mainchain.png" alt="主链"></p>
 <p>DAG中的每个单元要么直接位于主链上，要么经过较短的路径就能到达主链，主链可以形象地看作是一条连接着许多侧面道路的高速公路。一个单元一旦进入DAG中，它所在的主链也相应确定，因为后续单元只能作为其子单元，而无法更改其父单元。</p>
 <p>给定一条主链，与之相关的所有单元均可以在此基础上进行排序，其序号称为<strong>主链序号（MCI, Main Chain Index）</strong>。创世单元的MCI为0，依次加1直到链尾。对于不在主链上的单元，其MCI等于主链上最先包含（直接或者间接）该单元的那个单元的MCI。MCI代表了从主链视角来看单元在DAG中的总序，对于发生冲突的双花交易，MCI较小的单元为有效单元。</p>
 <h3 id="最优父单元的选择策略"><a href="#最优父单元的选择策略" class="headerlink" title="最优父单元的选择策略"></a>最优父单元的选择策略</h3><blockquote>
@@ -845,16 +845,16 @@
 <p><strong>双花交易：</strong>相同地址发出的任何无序的交易都视为双花交易，即使它们没有使用相同的输出，也可称为冲突交易或者矛盾交易。</p>
 </blockquote>
 <p>因此，在相同地址的所有单元都连通的情况下，在路径上出现较早的交易为有效交易。如果有攻击者特意制造出双花交易，那么可以通过主链序号来解决，主链序号较小的交易为有效交易。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-17-byteball-double-spend-1.png" alt="双花交易"></p>
+<p><img src="http://pic.bitbili.com/2017-12-17-byteball-double-spend-1.png" alt="双花交易"></p>
 <p>上图给出了一种攻击场景，攻击者制造出一条影子链，并在上面发布双花交易。当影子链接入到真实的DAG中时，根据最优父单元选择策略，影子链上的见证人个数少，因此它不会成为主链的一部分，从而解决了这种场景下的双花问题。<strong>值得注意的是，如果大多数见证人与攻击者合谋，并在其影子链上发布单元，则攻击者有可能攻击成功。</strong></p>
 <h3 id="单元成为稳定点的条件"><a href="#单元成为稳定点的条件" class="headerlink" title="单元成为稳定点的条件"></a>单元成为稳定点的条件</h3><p>根据上面的分析可知，所有候选主链在稳定点之后到达创世单元的路径完全相同，即稳定主链成为最终状态。这也意味着，从稳定主链上单元直接或间接包含的那些单元也将无法再被篡改。因此，只要随着新单元的不断加入，稳定点可以不断地向后扩展，且不同的用户节点的稳定点扩展方式保持一致，则全网的所有用户节点可以<strong>实现共识</strong>。</p>
 <p>对于所有单元，如果只保留其与其最优父单元的连接，则DAG将退化为一棵树$T$，所有的候选主链只可能从这棵树中产生。下面根据稳定点是否具有多个子单元分两种情况对稳定点的扩展方式进行讨论。</p>
 <blockquote>
 <p><strong>当前主链：</strong>在DAG中，从不同顶端单元出发具有不同的候选主链，从见证级别最高的顶端节点出发的候选主链称为当前主链（Current Mainchain）。</p>
 </blockquote>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-18-byteball-tree1.png" alt="稳定点不分叉"></p>
+<p><img src="http://pic.bitbili.com/2017-12-18-byteball-tree1.png" alt="稳定点不分叉"></p>
 <p>假设当前稳定点的见证人列表为$W$，单元级别为$l$，它只有一个子单元，如上图所示。以$W$作为见证人列表，从当前主链的顶端节点进行回溯，直到遇见$W$中的大部分见证人，记录这些见证人发出的单元中的最小见证级别，记作$min_wl$。如果$min_wl&gt;l$，则扩展当前稳定点至其子单元，否则不进行扩展。由于大部分见证人已经在当前主链上了，后续这些见证人发布的单元将继续支持当前路径，从而使得稳定点可以向前扩展。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-18-byteball-tree2.png" alt="稳定点分叉"></p>
+<p><img src="http://pic.bitbili.com/2017-12-18-byteball-tree2.png" alt="稳定点分叉"></p>
 <p>假设当前稳定点具有多个子单元，如上图所示。在当前稳定点的所有子单元中（除了位于当前主链的子单元），找出见证级别大于当前稳定点的子单元，并将其中最大的单元级别记为$max_l$。也就是说，除了当前主链外，当前稳定点其它分支上的单元见证级别将不超过$max_l$。如果$min_wl&gt;max_l$，那么稳定点可以沿当前主链向前扩展。</p>
 <p>随着稳定点的不断前进，稳定主链及其相关单元的状态被最终确定下来。只要DAG中的单元相同，其形成的主链和稳定点也是相同的。因此，不同的用户节点，只要最终收到相同的单元，它们最终将达到一致的状态。</p>
 ]]></content>
@@ -864,7 +864,7 @@
       <title><![CDATA[DAG Blockchain之Byteball原理解析（一）]]></title>
       <url>http://blog.guantau.com/2017/12/14/byteball1/</url>
       <content type="html"><![CDATA[<h2 id="DAG数学基础"><a href="#DAG数学基础" class="headerlink" title="DAG数学基础"></a>DAG数学基础</h2><p><strong>定义：</strong>在有向图$G=(V, E)$中，对于任意一个顶点$v \in V$，都不存在一条路径$p=(e_1,e_2,\dots), e_i\in E$，使得从$v$开始出发到$v$终止，则$G$称为有向无环图（DAG, Directed Acyclic Graph）</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-08-dag.png" width="300px"></p>
+<p><img src="http://pic.bitbili.com/2017-12-08-dag.png" width="300px"></p>
 <p>在图论中，相比于一般图，DAG的很多问题可以在多项式级甚至线性复杂度条件下得到求解。DAG具有以下几条数学性质：</p>
 <ul>
 <li>DAG具有拓扑顺序，即DAG的所有节点可以转换为节点序列（线性化），使得每条边的起始节点位于终止节点之前，且该过程可以在线性复杂度条件下完成；</li>
@@ -874,7 +874,7 @@
 <li>DAG中给定两个节点，其最短路径和最长路径可以在线性时间内求解。</li>
 </ul>
 <p>DAG常用来做任务的调度规划，比如Spark在做并行处理时使用DAG来任务规划，Git采用DAG来做版本管理。DAG在区块链上的应用可以参考 <a href="http://mp.weixin.qq.com/s/nSTNI9LXWh7QTPX7NTuupw" target="_blank" rel="noopener">《DAG也许是真正的区块链3.0》</a>，下面将对使用DAG作为区块链的Byteball原理进行详细的解析。</p>
-<h2 id="Byteball的区块链结构"><a href="#Byteball的区块链结构" class="headerlink" title="Byteball的区块链结构"></a>Byteball的区块链结构</h2><p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-12-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-12-12%2020.07.48.png" alt="Byteball区块链结构"></p>
+<h2 id="Byteball的区块链结构"><a href="#Byteball的区块链结构" class="headerlink" title="Byteball的区块链结构"></a>Byteball的区块链结构</h2><p><img src="http://pic.bitbili.com/2017-12-12-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-12-12%2020.07.48.png" alt="Byteball区块链结构"></p>
 <p>Byteball区块链如上图所示，其基本组成为单元(unit)，所有单元共同构成DAG。其中，单元G为创世交易，它与所有单元连通，且是从所有单元出发到达的终点。</p>
 <blockquote>
 <p><strong>父单元与子单元：</strong>从单元A出发可直接到达单元B，即单元A到单元B的路径长度为1，则单元B称为单元A的父单元，单元A称为单元B的子单元。</p>
@@ -1164,8 +1164,8 @@
 </tr>
 </tbody>
 </table>
-<p>那么，画出房产持有成本随月数的曲线如下图所示：<br><img src="http://oc7urqs4c.bkt.clouddn.com/house_money.png" alt="房产持有成本曲线"></p>
-<p>假设房价每年的上涨幅度为$6\%$，画出房价随月数的变化曲线如下图所示<br><img src="http://oc7urqs4c.bkt.clouddn.com/price-money.png" alt="房价上涨曲线"></p>
+<p>那么，画出房产持有成本随月数的曲线如下图所示：<br><img src="http://pic.bitbili.com/house_money.png" alt="房产持有成本曲线"></p>
+<p>假设房价每年的上涨幅度为$6\%$，画出房价随月数的变化曲线如下图所示<br><img src="http://pic.bitbili.com/price-money.png" alt="房价上涨曲线"></p>
 <p>对应至每一年的持有成本如下表所示，在相应的时间点将售价减去持有成本即为得到的收益。</p>
 <table>
 <thead>
@@ -1346,7 +1346,7 @@
 <h1 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h1><p>如果将首付款、手续费以及月供用于理财，这种方式是否会比购买房产更划算？</p>
 <h2 id="理财总收入"><a href="#理财总收入" class="headerlink" title="理财总收入"></a>理财总收入</h2><p>假设投资理财的年收益率为$p\%$（月利率为$\alpha=p\%/12$），那么，第m个月的投资理财总收入为<br>$$<br>\begin{align}<br>L_m &amp;=(P+F)\cdot(1+\alpha)^m+x\cdot (1+\alpha)^{m-1}+\cdots+x\\<br>&amp;=(P+F)\cdot(1+\alpha)^m+x\cdot\frac{(1+\alpha)^m-1}{\alpha}<br>\end{align}<br>$$</p>
 <h2 id="理财收益"><a href="#理财收益" class="headerlink" title="理财收益"></a>理财收益</h2><p>在第m个月，投资理财的利润为$L_m-A_m$。</p>
-<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><p>以上一节中的数据为例，假设投资理财的年收益率为6%，那么投资理财收入如下图所示<br><img src="http://oc7urqs4c.bkt.clouddn.com/fin_money.png" alt="投资理财收入"></p>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><p>以上一节中的数据为例，假设投资理财的年收益率为6%，那么投资理财收入如下图所示<br><img src="http://pic.bitbili.com/fin_money.png" alt="投资理财收入"></p>
 <p>具体到每一年，投资理财所得收入及相应的利润为</p>
 <table>
 <thead>
@@ -1545,19 +1545,19 @@
       <title><![CDATA[手机数据分析的最新研究进展]]></title>
       <url>http://blog.guantau.com/2016/08/21/mobile-data/</url>
       <content type="html"><![CDATA[<blockquote>
-<p>Selected from <a href="http://oc7urqs4c.bkt.clouddn.com/mobile-data.pdf" target="_blank" rel="noopener"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
+<p>Selected from <a href="http://pic.bitbili.com/mobile-data.pdf" target="_blank" rel="noopener"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
 <p>Translated by tau @ 2015.8.16</p>
 </blockquote>
 <h2 id="5-基于时空数据的人类移动行为分析"><a href="#5-基于时空数据的人类移动行为分析" class="headerlink" title="5. 基于时空数据的人类移动行为分析"></a>5. 基于时空数据的人类移动行为分析</h2><p>手机数据中记录了大量用户的移动行为，目前已有许多项目对此开展了研究。大量的手机APP提供了基于位置的服务（LBS, Location Based Service）表明了时空数据挖掘上面还有很多潜在应用。本节中，我们主要关注那些在人类移动行为建模和分析上给出了新结论或新方法的研究。</p>
 <a id="more"></a>
 <h3 id="5-1-个人移动行为规律"><a href="#5-1-个人移动行为规律" class="headerlink" title="5.1 个人移动行为规律"></a>5.1 个人移动行为规律</h3><p>这里用于分析的移动轨迹指的是基站编号序列。如图14所示，通过对100,000个用户超过6个月数据的分析，Gonzalez等人发现人类轨迹表现出非常强的时空规律性[97]。不同于以往将人类行为建模为随机行走或Levy飞行。他们的结果显示，人类在不同的活动半径下都表现出非常类似的行为模式。个人移动的规律性主要表现为在绝大部分时间里用户都活动在一小部分位置。如果进行归一化处理，并把零点移至合适的位置，所有用户的移动模式都可以用一个函数来描述。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-14.png" alt="图14 用户在某个位置的概率分布"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-14.png" alt="图14 用户在某个位置的概率分布"></p>
 <p>这些结论得到了Song等人[98]的支持，他们也给出了数据表现出的行为模式与传统随机行走和Levy飞行模型的差别。此外，作者还给出了一种模型用来判断用户移动的倾向性。在他们的模型中，每当用户改变位置时，用户选择新位置的概率与已访问的位置数成反比，即$p_{new}=S^{-\gamma}$，其中$S$是已访问的位置数，$\gamma$是常数。当然，用户也可能直接访问以前已访问的地址。尽管他们的模型很简单，但是可以解释用户访问的地址数目随时间增长的变化规律，以及用户访问每个位置的概率分布。</p>
 <p>在另一项研究中，Csaji等人发现每个人经常访问地点的数目非常少[99]。这里经常访问的地点定义为用户有超过5%的电话由该基站位置发出。作者从Portugal手机数据集中随机选出100,000个用户，统计结果表明平均经常访问地点数为2.14，95%的用户经常访问的地点少于4个。</p>
 <p>Bagrow等人则将经常访问地点聚类成为“栖息地”[100]。主要的“栖息地”代表了每天典型的移动行为，而次要的“栖息地”则代表了偶发的旅行行为。有趣的是，他们认为在每个“栖息地”的移动行为都表现出统一的变化模式，即相比于总体的移动行为，“栖息地”的活动半径通常都小很多。</p>
 <p>然而，这些研究结果都给出了移动行为具有一致性的和可预测性，但它们大多是基于发达国家的数据，而在发展中国家则还要考虑文化和语言的因素。Amini等人分析比较了葡萄牙和科特迪瓦人们的移动模式，并指出那些在发达国家数据中表现比较好的模型在科特迪瓦的数据中并不适用[101]。例如，他们指出科特迪瓦的上班族比葡萄牙的要移动更长的距离，且他们的移动模式要更加多样化。</p>
 <p>如果人的移动轨迹不是随机的，如果人经常会回到他以前到过的地方，那么人类的移动行为是否可以预测。Song等人[102]研究了这个问题，并给出了在已知位置访问历史的条件下，在多大程度上可以预测用户接下来的位置。他们采用用户位置序列的熵率来描述可预测性。在计算熵率时，除了要考虑每个位置的访问频率，还要考虑这些访问之间的时间相关性。如图15所示，他们的结果表明，对于某个特定用户，其移动的时间相关性将大大降低不确定性。利用Fano不等式，他们推断出只要有合适的算法，就可能平均意义上预测出用户93%的位置。最有意思的是，不仅平均意义上用户具有高可预测性，而且所有人类都具有很高的预测性。那些经常进行长距离旅行的可预测性并不比经常呆在某个地方的人要差，Song的结果表明所有人类的可预测性是一致的。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-15.png" alt="图15 用户位置序列的熵率"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-15.png" alt="图15 用户位置序列的熵率"></p>
 <p>前面这些研究工作都集中在人类的移动行为的可预测性到底有多大，但他们并没有提供任何预测算法，也就是说这些研究仅具有理论价值。Calabrese等人则提出了人类位置的预测模型[103]。他们的算法不仅基于当前用户的历史移动行为，并且基于群体的移动行为，比如需要利用地理特征和POI（Point of Interest）。预测则是综合个体行为和群体行为的结果。个体行为采用的是一阶近似模型，利用Markov链来表示，其中，状态是用户访问的位置，从状态i转移到状态j的概率与数据中观测到的次数成正比。群体行为则用距离影响、POI和访问密度进行加权平均。在包含1百万个人4个月的数据集上，他们的模型在预测用户下一个位置上可以达到60%的准确率。</p>
 <p>Calabrese等人使用的Markov链方法是基于Park等人的研究[104]。他们指出，用户活动半径随时间的变化可以用Markov链转移矩阵的特征分解来解释。更准确地说，转移矩阵的特征向量包含了用户移动的信息。</p>
 <p>除了细粒度的移动行为，Simini等人研究了城市之间的移动行为，并提出了辐射模型[105]，突破了重力模型的一些局限。<br>辐射模型是一种随机模型，城市$i$的人进入另一个城市$j$工作，其概率与城市$i$中的类似工作的数目相关。<br>在给定城市中，工作数目也是随机变量，与城市的总人口相关。如果我们把城市 $i$ 和 $j$ 的距离定义为 $d_{ij}$ ，在两个城市之间平均移动次数与两个城市的人口相关（假设分别为 $m_i$ 和 $n<em>j$ ），还与 $d</em>{ij}$ 范围内的人口数目 $s<em>{ij}$ 相关。<br>$$<br>\langle T</em>{ij} \rangle=T_i \frac{m_i n_j}{(m<em>i+s</em>{ij})(m_i+n<em>j+s</em>{ij})}<br>$$<br>其中，$T_i$是从城市$i$出发的移动次数。</p>
@@ -1565,17 +1565,17 @@
 <p>移动行为乍看是随机运动，可是却遵守严格的规律。数学模型、预测算法和可视化工具（比如Martino的工作[107]）做了开拓性的研究，可以用来构建更好的人类移动模型，可以用来预测流行病爆发。从个体层面来看，这种规律看起来严格地主宰我们日常的行为，比如Eagle和Pentland表明用户移动模式的6个特征向量就足够描述90%的差异[108]。他们还观察到群体行为具有一致性，这将在下一节描述。</p>
 <h3 id="5-2-群体行为的一致性"><a href="#5-2-群体行为的一致性" class="headerlink" title="5.2 群体行为的一致性"></a>5.2 群体行为的一致性</h3><p>这些数据集可以从更高的层面进行研究。更实际地说，这些大量的数据允许我们去观察和测量人类和环境的交互，还可以度量这些交互的一致性。</p>
 <p>最早得项目，比如Mobile Landscape[109]和Real Time Rome[110]已经开拓了这种研究。然而，Reades等人做了进一步研究[111]，他们利用基站信号作为社区的数字特征。他们指出类似的地点表现出类似的特征，基于基站天线记录的数据，可以对城市空间聚类。聚类表明了城市的划分，比如居民区、商业区、酒吧或公园。简短来说，这种技术可作为简单地人口普查方法，某些地方政府可能对此有兴趣。通过特征分解，有可能进一步获得空间使用的差异[112]。图16中给出了工作日中的四种主要特征向量。通过类似的方法，Csaji等人[99]用k-means聚类不同地方的活动模式，用来检测哪些地方表现出相同的呼叫模式，从而识别出哪些地方表现出显著的工作或家庭呼叫模式。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-16.png" alt="图16 工作日的4个特征向量"></p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-17.png" alt="图17 集群的周模式"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-16.png" alt="图16 工作日的4个特征向量"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-17.png" alt="图17 集群的周模式"></p>
 <p>Karikoski和Soikkeli研究了非常类似的问题，他们利用了Aalto大学OtaSizzle项目中收集的手机数据[113]。作者研究了是否不同环境条件下是否会引发不同的手机使用模式。从用户的移动轨迹中，他们将地点分为了几类：家、办公室、其它有意义的地方、其他地方（指的是路过的地方）。他们指出了在不同的位置环境下，用户有不同的手机使用模式。比如，当人们在家时语音通话通常更长且更频繁使用，而在办公室时则更常使用短信且通话时间也更短。在使用了相同数据的论文中，Jo等人研究了环境、时间与服务使用之间的关联，并给出了典型的手机服务使用模式[114]。作者进一步采用了k-means方法对典型的行为进行聚类，并将用户分为morning-type和evening-type。Trestian等人也研究了类似的问题，他们发现不同的地点对人们使用哪些手机应用也有影响[115]。Naboulsi等人采用类似的方法通过网络快照区分通话模式，网络快照指的是在给定时间窗口内的流量聚合[116]。他们通过对比通过网络的流量的大小和分布计算两个快照之间的相似性。他们进一步给出了典型的使用模式，并提出了一种方法检测网络中的异常行为。有趣的是，虽然方法是类似的，但Naboulsi等人的研究仅仅是基于天线到天线之间的流量，而与前面的研究使用的数据有所差异。</p>
 <p>除了对城市内部的分析外，Isaacman等人研究不同城市居住地的行为差异[117]。通过分析洛杉矶和纽约上万个居住地的移动行为，他们发现洛杉矶人们的平均移动距离是纽约的2倍。他们对于这个现象的解释是人群密度的不均和城市地形的差异。Noulas等人的工作中[53]，通过分析Foursquare位置数据，给出了不同城市的距离指数。距离指数反映了两个地方$i$和$j$关于可能的机会的个数（人口、POI）的差异。给定地理距离$r_{ij}$以及以$i$为圆心的机会个数分布，距离指数可以计算为</p>
 <p>$$<br>rank(i,j)=\int_0^{2\pi}\int<em>0^{r</em>{ij}} p_i(r,\theta)r\, \mathrm{d} r \mathrm{d}\theta<br>$$</p>
 <p>相比于人口密度小的城市，人口密度大的城市会在更短的物理距离中有更多的机会，因此人们移动的距离要更短。这里物理距离需要用指数距离来加权。在近期的研究中，Louail等人提出了另一种通过分析城市地理结构量化这种差别的方法，数据采用了31个西班牙大都市的热点或POI[118]。通过利用热点的地理结构，以及不同类型城市的不同和相似性，作者展示了人们之间的平均距离在一天中是变化的。他们将城市区分为单中心城市和多中心城市，单中心城市更依赖于土地利用，而多中心城市更注重土地混合使用。Trasarti等人也分析了人们密度的相关性，并在城市和国家层面上揭示了人口随时间变化的高度相关性[119]。</p>
 <p>如果在城市中检测热点和POI是可行的，那么是否可以进一步推断人们参与活动的类型。Jiang等人最初提出了一种方法[120]，先对人们待过的或经过的地方进行刻画，然后依据他们访问特定地点的时间来推断他们参与的活动。在许多情况下，对用户的移动行为进行建模可以从“起点-终点”矩阵开始，它描述了人们在特定时间段中在“起点-终点”地址之间移动次数[121-123]。通过给出哪些时空点和哪些活动对应，Alexander等人提出了预测“起点-终点”矩阵的方法。作者从Boston地区数据得到的结果和调查的结果是一致的。</p>
 <h3 id="5-3-异常情况监测"><a href="#5-3-异常情况监测" class="headerlink" title="5.3 异常情况监测"></a>5.3 异常情况监测</h3><p>如果数据包含大量人口的时空数据，它既可以用来对群体的活动规律进行研究，也可以用来研究对群体对紧急情况的反应。许多近期的论文研究了这个问题。Candia等人最开始关注天线端的时序活动[93]。他们提出了一种基于个体行为波动的方法。从图18来看，在异常的情况下，用户将与他们平常的行为表现出很大得波动，但总体平均和普通行为接近。方差可以表示为<br>$$<br>\sigma(a,t,T)=\sqrt{\frac{1}{N-1} \sum_{i=1}^N \left(n_i(a,t,T)-\langle n(a,t,T) \rangle \right)^2}<br>$$<br>其中，地点为$a$，时间区间为$[t,t+T]$，个体行为$n_i(a,t,T)$，平均期望行为为$\langle n(a,t,T) \rangle$。与平常的方差比较，可以识别出那些用户表现异常的位置，以及那些可能在异常情况下在空间上聚集的地方。在异常情况下，人群的反应可以看做是时间和空间上的错乱。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-18.png" alt="图18 异常事件中活动的变化"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-18.png" alt="图18 异常事件中活动的变化"></p>
 <p>在相关的论文中，Bagrow等人分析了在不同情况下人群的反应，比如爆炸、飞机失事或地震[124]。他们观察到，目击者和他们的邻居在事件后马上会表现出信息的扰动。这种反应通常表现在会与平常不经常联系的人的通话，而不是在经常联系节点的通话提升上。通过对信息传播路径的更详细的分析表明群体反应的有效性。在事件发生的数分钟内，从目击者开始的3-4度范围的人都被联系上。Gao等人进一步分析了这些动态变化[125]，在爆炸或飞机失事中相互通话的情况急剧增加，比如回拨。尽管有着不同的特性，同类型的行为扰动都在大规模事件中表现出来，比如音乐会或者游行[125,126]。Altshuler等人最近提出了一种“社会放大器”的方法用来检测异常行为，进而检测突发事件[127]。网络的胶合点是指那些具有高度数的节点，他们可以很好地连接剩余的网络，通过激活他们可以很快地通过社交网络扩散信息。利用这些特殊的节点作为社交放大器，作者指出只要分析那些和网络胶合点行为类似的节点就可以有效地检测整个网络的异常，从而发现突发事件。这种方法具有计算上的优势，因为它只需关注网络中的部分节点，这比监视整个网络要容易得多。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/mobile-data-19.png" alt="图19 突发事件中活动的变化"></p>
+<p><img src="http://pic.bitbili.com/mobile-data-19.png" alt="图19 突发事件中活动的变化"></p>
 <p>除了检测突发事件意外，Lu等人研究在灾难以后人群的移动行为是否可以预测，他们采用的是2010年海地地震前后的数据[128]。有趣的是，人们的移动轨迹的可预测性很高，且在地震后的三个月内逐步提高。作者的研究表明人们离开首都后的目的地和他们以前的移动模式高度相关。因此，只要稍加利用，手机数据可以用来监视突发事件，并预测自然灾害后人们的移动行为。这些结果对许多人道主义组织来说将非常有帮助，他们可以尝试通过大数据来挽救生命。2011年日本地震和海啸，许多研究小组共同发起项目，通过联合多种大数据源（比如GPS设备、手机、Twitter和Facebook）来分析将来如何通过这些数据挽救生命。Kryvasheyeu等人做了类似的研究，他们对2012年Sandy飓风期间的Twitter数据进行研究，通过测量朋友关系强度来给出警告[129]。这个领域的研究还需要继续，尤其是目前这么多数据源可以利用的条件下，如何协同使用这些数据源。</p>
 <h3 id="5-4-移动行为和社会网络关系"><a href="#5-4-移动行为和社会网络关系" class="headerlink" title="5.4 移动行为和社会网络关系"></a>5.4 移动行为和社会网络关系</h3><p>移动轨迹和社会交往通常会在一个数据集中出现，从而可以用来研究移动行为和社会网络关系。Calabrese等人的工作发现，相互联系的用户大多数在至少一年的时间内在物理空间中碰面一次[130]。而且，用户绝大多数在碰面之前或之后会相互联系。有趣的是，用户之间的碰面频率和他们联系的频率以及相隔的距离高度相关。</p>
 <p>是否可以进一步通过移动数据预测社会网络关系呢？Wang等人研究发现社交网络中未连接的节点，但是拓扑位置相近、移动模式类似的人容易建立连接。也就是说，通过移动相似性和拓扑距离，他们能够提高传统链路预测算法的性能，从而获得平均准确率75%和召回率66%[131]。类似地，Eagle等人在跨度4年的数据中发现，当从一个地方搬到另一个地方时，人们的社交网络发生剧烈地变化[132]。</p>
@@ -1772,7 +1772,7 @@
 <h3 id="abbreviations-for-zotero"><a href="#abbreviations-for-zotero" class="headerlink" title="abbreviations-for-zotero"></a><a href="http://citationstylist.org/abbreviations-for-zotero/" target="_blank" rel="noopener">abbreviations-for-zotero</a></h3><p>期刊名简写插件。</p>
 <h3 id="Better-bibtex"><a href="#Better-bibtex" class="headerlink" title="Better bibtex"></a><a href="https://zotplus.github.io/better-bibtex/" target="_blank" rel="noopener">Better bibtex</a></h3><p>可以选择在导出bibtex格式时保留哪些域，去掉哪些域。</p>
 <h2 id="配合工具"><a href="#配合工具" class="headerlink" title="配合工具"></a>配合工具</h2><h3 id="Docear"><a href="#Docear" class="headerlink" title="Docear"></a><a href="http://www.docear.org" target="_blank" rel="noopener">Docear</a></h3><p>仅仅用Zotero将文献按照一定的分类、标签组织起来其实还是不够的。要文献真正能派上用场，还需要进一步精细地对文献进行组织。比如文献[5]给出的这几张图：</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/docear-1.jpg" alt="1.jpg"><br><img src="http://oc7urqs4c.bkt.clouddn.com/docear-2.jpg" alt="2.jpg"><br><img src="http://oc7urqs4c.bkt.clouddn.com/docear-3.jpg" alt="3.jpg"></p>
+<p><img src="http://pic.bitbili.com/docear-1.jpg" alt="1.jpg"><br><img src="http://pic.bitbili.com/docear-2.jpg" alt="2.jpg"><br><img src="http://pic.bitbili.com/docear-3.jpg" alt="3.jpg"></p>
 <p>Docear就是这样一种文献整理工具，并能够将Zotero中存储的大量信息链接起来。</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>[1] <a href="https://www.zotero.org/support/zh/quick_start_guide" target="_blank" rel="noopener">Zotero快速入门</a><br>[2] <a href="https://www.zotero.org/support/zh/tips_and_tricks" target="_blank" rel="noopener">Zotero常用技巧</a><br>[3] <a href="http://emuch.net/html/201410/7981977.html" target="_blank" rel="noopener">参考文献管理工具zotero的使用经验分享</a><br>[4] <a href="http://blog.sina.com.cn/s/blog_565e747c01014toj.html" target="_blank" rel="noopener">Zotero文献管理、科研笔记不完全教程</a><br>[5] <a href="http://blog.sina.com.cn/s/blog_6daf1c5b0100z8nn.html" target="_blank" rel="noopener">科研文献资料的高效管理</a><br>[6] <a href="http://www.douban.com/group/topic/48495741/" target="_blank" rel="noopener">Zotero同步不足的解决方案</a><br>[7] <a href="http://www.cnblogs.com/huashiyiqike/p/3265177.html" target="_blank" rel="noopener">文献管理软件Zotero的一点使用感受</a></p>
 ]]></content>

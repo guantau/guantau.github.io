@@ -92,12 +92,12 @@
 <meta property="og:site_name" content="奔跑的小站">
 <meta property="og:description" content="钱包结构顾名思义，钱包是用来保存钱的。但在数字货币的世界中，钱包里面并没有“钱”。钱包账户里有多少“钱”都是记录在区块链上的，钱包里只是存储了账户对应的私钥，账户是从私钥相应的公钥衍生出来的。只要有了私钥，你就可以在数字货币世界里证明你的身份，发送区块链上属于你的资产。因此，钱包实际上是管理和存储私钥的工具。 ByteBall钱包结构与Bitcoin类似，Bitcoin对管理和存储私钥以及通过私钥">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-06-17-082216.png">
-<meta property="og:updated_time" content="2018-06-17T15:52:51.256Z">
+<meta property="og:image" content="http://pic.bitbili.com/2018-06-17-082216.png">
+<meta property="og:updated_time" content="2018-12-02T02:50:50.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ByteBall钱包详解">
 <meta name="twitter:description" content="钱包结构顾名思义，钱包是用来保存钱的。但在数字货币的世界中，钱包里面并没有“钱”。钱包账户里有多少“钱”都是记录在区块链上的，钱包里只是存储了账户对应的私钥，账户是从私钥相应的公钥衍生出来的。只要有了私钥，你就可以在数字货币世界里证明你的身份，发送区块链上属于你的资产。因此，钱包实际上是管理和存储私钥的工具。 ByteBall钱包结构与Bitcoin类似，Bitcoin对管理和存储私钥以及通过私钥">
-<meta name="twitter:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-06-17-082216.png">
+<meta name="twitter:image" content="http://pic.bitbili.com/2018-06-17-082216.png">
 
 
 
@@ -372,7 +372,7 @@
 <p>ByteBall钱包结构与Bitcoin类似，Bitcoin对管理和存储私钥以及通过私钥生成地址制定了一系列标准（BIP, Bitcoin Improvement Proposals），主要包括：</p>
 <ul>
 <li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki" target="_blank" rel="noopener">BIP32</a>：定义了HD钱包（Hierarchical Deterministic Wallet），允许从单一种子产生一树状结构储存多组私钥和公钥，可以方便的备份、转移以及分层权限控制等。HD钱包包含以树状结构衍生的密钥，使得父密钥可以衍生一系列子密钥，每个子密钥又可以衍生出一系列孙密钥，以此类推，无限衍生。下图展示了HD钱包的树状结构：</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-06-17-082216.png" alt="bip33-hd-wallet"></p>
+<p><img src="http://pic.bitbili.com/2018-06-17-082216.png" alt="bip33-hd-wallet"></p>
 </li>
 <li><p><a href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki" target="_blank" rel="noopener">BIP39</a>：将种子用方便记忆和书写的单词表示，一般由12个单词组成，称为助记词或助记码。由一系列单词生成种子是个标准化的方法，这样易于在钱包中转移、导出和导入。比如<code>shrimp make call path pink draw gym song select brother social base</code>，其相应的私钥为<code>xprv9s21ZrQH143K4HQ8sBPNNkXHNuVYfivR96gtpJzMWCJVF5hdYjzT5nVQu6GfHAQLPstQtFp9GTWADUcKgzaV5EyL5JxT2rxkyg51ReGTVg8</code>。</p>
 </li>

@@ -92,13 +92,13 @@
 <meta property="og:site_name" content="奔跑的小站">
 <meta property="og:description" content="Byteball是一种基于DAG技术的新型数字资产平台，它不仅支持P2P支付，还支持智能合约、预言机、隐私资产、ICO等功能。Byteball的钱包设计得十分强大，并且人性化。但通过对Byteball的仔细研究会发现，其在设计和实现上还是存在一定的缺陷。如果能很好地解决这些问题，Byteball必将跻身主流的数字资产平台。 网络性能问题一份对byteball主网的最新测试给出了三点结论：  交易处">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-05-12-byteball-network.png">
-<meta property="og:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-05-13-byteball-hub-flaw.png">
-<meta property="og:updated_time" content="2018-05-13T14:38:23.185Z">
+<meta property="og:image" content="http://pic.bitbili.com/2018-05-12-byteball-network.png">
+<meta property="og:image" content="http://pic.bitbili.com/2018-05-13-byteball-hub-flaw.png">
+<meta property="og:updated_time" content="2018-12-02T02:50:50.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Byteball目前存在的一些问题及改进方向">
 <meta name="twitter:description" content="Byteball是一种基于DAG技术的新型数字资产平台，它不仅支持P2P支付，还支持智能合约、预言机、隐私资产、ICO等功能。Byteball的钱包设计得十分强大，并且人性化。但通过对Byteball的仔细研究会发现，其在设计和实现上还是存在一定的缺陷。如果能很好地解决这些问题，Byteball必将跻身主流的数字资产平台。 网络性能问题一份对byteball主网的最新测试给出了三点结论：  交易处">
-<meta name="twitter:image" content="http://oc7urqs4c.bkt.clouddn.com/2018-05-12-byteball-network.png">
+<meta name="twitter:image" content="http://pic.bitbili.com/2018-05-12-byteball-network.png">
 
 
 
@@ -382,10 +382,10 @@
 </blockquote>
 <p>DAG作为Byteball底层数据结构，其相应的数据很自然地应该使用图数据库进行存储。这需要重新设计Byteball的数据库，并重写大量Byteball底层的代码。同时，还需要一个高性能的serverless embedded graph database，比如基于leveldb的<a href="https://github.com/levelgraph/levelgraph" target="_blank" rel="noopener">levelgraph</a>。采用图数据库的一个最大好处是可以减少大量的SQL多表联合查询，并简化确认交易时的多级回溯操作，从而提高其处理性能。</p>
 <h2 id="Hub节点问题"><a href="#Hub节点问题" class="headerlink" title="Hub节点问题"></a>Hub节点问题</h2><p>在Byteball网络中，Hub节点是网络中的骨干节点，它们之间构成P2P网络，其它节点需要通过它们进行相互通信。全网中可以存在多个Hub，用户可以自由选择其想要接入的Hub。这里需要说明的是，Relay节点具有与Hub节点类似的功能，只是不提供端到端的信息加密服务。在下面的讨论中，不特殊说明的话，将Hub/Relay节点统一称为Hub节点。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-05-12-byteball-network.png" alt="byteball网络结构"></p>
+<p><img src="http://pic.bitbili.com/2018-05-12-byteball-network.png" alt="byteball网络结构"></p>
 <p>从技术角度来讲，Hub节点是在全节点钱包的基础上，提供一些额外的数据转发功能。从数据存储的角度来看：轻钱包是不保存完整的账本数据的；全节点钱包和见证人保存完整的账本数据，但仅供它们自己使用；只有Hub节点保存完整的账本数据，并与其它的节点进行共享。</p>
 <p>试想如果Hub节点作恶，它可以拒绝为与其连接的钱包等其它节点提供Byteball网络接入服务，拒绝为它们广播、共享交易数据。还有一种极端情况，如果所有见证人节点都连接在同一个Hub节点上，那么它将成为整个网络中的霸主。其它Hub节点如果不能得到该Hub节点的服务，则其它Hub节点广播的所有交易都无法得到网络的确认。这也就是说，那些Hub节点都无法正常工作了。</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2018-05-13-byteball-hub-flaw.png" alt="Hub节点中心化"></p>
+<p><img src="http://pic.bitbili.com/2018-05-13-byteball-hub-flaw.png" alt="Hub节点中心化"></p>
 <p>Hub节点在账本数据的有效性、可靠性及安全性方面起着十分重要的作用。然而，在Byteball目前的实现下，Hub节点是完全没有收益激励的，同时还要承担相应的服务器开支。实际上，目前全网主要使用的还是官方提供的Hub节点（wss://byteball.org/bb/)。</p>
 <blockquote>
 <p><strong>那么，对于扮演如此重要角色的Hub节点，是否应该给予经济激励，并限制其部分权力？</strong></p>

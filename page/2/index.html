@@ -369,7 +369,7 @@
         
           
             <h2 id="DAG数学基础"><a href="#DAG数学基础" class="headerlink" title="DAG数学基础"></a>DAG数学基础</h2><p><strong>定义：</strong>在有向图$G=(V, E)$中，对于任意一个顶点$v \in V$，都不存在一条路径$p=(e_1,e_2,\dots), e_i\in E$，使得从$v$开始出发到$v$终止，则$G$称为有向无环图（DAG, Directed Acyclic Graph）</p>
-<p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-08-dag.png" width="300px"></p>
+<p><img src="http://pic.bitbili.com/2017-12-08-dag.png" width="300px"></p>
 <p>在图论中，相比于一般图，DAG的很多问题可以在多项式级甚至线性复杂度条件下得到求解。DAG具有以下几条数学性质：</p>
 <ul>
 <li>DAG具有拓扑顺序，即DAG的所有节点可以转换为节点序列（线性化），使得每条边的起始节点位于终止节点之前，且该过程可以在线性复杂度条件下完成；</li>
@@ -379,7 +379,7 @@
 <li>DAG中给定两个节点，其最短路径和最长路径可以在线性时间内求解。</li>
 </ul>
 <p>DAG常用来做任务的调度规划，比如Spark在做并行处理时使用DAG来任务规划，Git采用DAG来做版本管理。DAG在区块链上的应用可以参考 <a href="http://mp.weixin.qq.com/s/nSTNI9LXWh7QTPX7NTuupw" target="_blank" rel="noopener">《DAG也许是真正的区块链3.0》</a>，下面将对使用DAG作为区块链的Byteball原理进行详细的解析。</p>
-<h2 id="Byteball的区块链结构"><a href="#Byteball的区块链结构" class="headerlink" title="Byteball的区块链结构"></a>Byteball的区块链结构</h2><p><img src="http://oc7urqs4c.bkt.clouddn.com/2017-12-12-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-12-12%2020.07.48.png" alt="Byteball区块链结构"></p>
+<h2 id="Byteball的区块链结构"><a href="#Byteball的区块链结构" class="headerlink" title="Byteball的区块链结构"></a>Byteball的区块链结构</h2><p><img src="http://pic.bitbili.com/2017-12-12-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-12-12%2020.07.48.png" alt="Byteball区块链结构"></p>
 <p>Byteball区块链如上图所示，其基本组成为单元(unit)，所有单元共同构成DAG。其中，单元G为创世交易，它与所有单元连通，且是从所有单元出发到达的终点。</p>
 <blockquote>
 <p><strong>父单元与子单元：</strong>从单元A出发可直接到达单元B，即单元A到单元B的路径长度为1，则单元B称为单元A的父单元，单元A称为单元B的子单元。</p>
@@ -1601,7 +1601,7 @@
       
         
           <blockquote>
-<p>Selected from <a href="http://oc7urqs4c.bkt.clouddn.com/mobile-data.pdf" target="_blank" rel="noopener"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
+<p>Selected from <a href="http://pic.bitbili.com/mobile-data.pdf" target="_blank" rel="noopener"><em>Blondel et al. A survey of results on mobile phone datasets analysis. EPJ Data Science. 2015, 4(10).</em></a></p>
 <p>Translated by tau @ 2015.8.16</p>
 </blockquote>
 <h2 id="5-基于时空数据的人类移动行为分析"><a href="#5-基于时空数据的人类移动行为分析" class="headerlink" title="5. 基于时空数据的人类移动行为分析"></a>5. 基于时空数据的人类移动行为分析</h2><p>手机数据中记录了大量用户的移动行为，目前已有许多项目对此开展了研究。大量的手机APP提供了基于位置的服务（LBS, Location Based Service）表明了时空数据挖掘上面还有很多潜在应用。本节中，我们主要关注那些在人类移动行为建模和分析上给出了新结论或新方法的研究。</p>
